@@ -3,13 +3,15 @@ import {
   ConflictException,
   Injectable,
   InternalServerErrorException,
+  UnauthorizedException,
 } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-// import { UpdateAuthDto } from './dto/update-auth.dto';
+import { SignupAuthDto } from './dto/signup-auth';
 import { PrismaService } from '../../config/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
 import { JwtAuthService } from '../../config/jwt/jwt.service';
 import { CreateJwt } from '../../config/jwt/dto/create-jwt.dto';
+import { LoginAuthDto } from './dto/login-auth.dto';
+import { Role } from '../../enum/role.enum';
 
 @Injectable()
 export class AuthService {
@@ -19,7 +21,7 @@ export class AuthService {
   ) {}
 
   //API - User Register
-  async register(userData: CreateAuthDto) {
+  async signup(userData: SignupAuthDto) {
     try {
       // Check required fields
       const { username, email, password, role } = userData;
@@ -57,7 +59,6 @@ export class AuthService {
       });
 
       const payload = {
-        id: newUser.id,
         email: newUser.email,
         role: newUser.role,
       };
@@ -87,19 +88,76 @@ export class AuthService {
     }
   }
 
-  // findAll() {
-  //   return `This action returns all auth`;
-  // }
-  //
-  // findOne(id: number) {
-  //   return `This action returns a #${id} auth`;
-  // }
-  //
-  // update(id: number, updateAuthDto: UpdateAuthDto) {
-  //   return `This action updates a #${id} auth`;
-  // }
-  //
-  // remove(id: number) {
-  //   return `This action removes a #${id} auth`;
-  // }
+  //API - User login
+  async login(userData: LoginAuthDto) {
+    const { email, password, role } = userData;
+
+    try {
+      //Validate fields
+      if (!email || !password || !role) {
+        throw new BadRequestException('All fields are required.');
+      }
+
+      let tokenPayload: CreateJwt;
+
+      //Handle admin login
+      if (role === Role.ADMIN) {
+        if (
+          email === process.env.ADMIN_EMAIL &&
+          password === process.env.ADMIN_PASSWORD
+        ) {
+          tokenPayload = { email: email, role: role };
+          const accessToken = await this.jwt.generateToken(tokenPayload);
+          return {
+            success: true,
+            status: 200,
+            message: `${role} has been logged in.`,
+            accessToken,
+          };
+        } else {
+          throw new UnauthorizedException('Invalid admin credentials.');
+        }
+      }
+
+      //Handle regular user login
+      const user = await this.DB.user.findUnique({ where: { email } });
+      if (!user) {
+        throw new ConflictException('User not found.');
+      }
+
+      //Compare password
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        throw new UnauthorizedException('Invalid credentials.');
+      }
+
+      //Generate JWT
+      tokenPayload = { email: email, role: role };
+      const accessToken = await this.jwt.generateToken(tokenPayload);
+
+      return {
+        success: true,
+        status: 200,
+        message: `${role} has been logged in.`,
+        accessToken,
+      };
+    } catch (error: unknown) {
+      // Structured logging
+      console.log('Login failed', { error, userData });
+
+      // Handle known errors
+      if (
+        error instanceof BadRequestException ||
+        error instanceof ConflictException ||
+        error instanceof UnauthorizedException
+      ) {
+        throw error;
+      }
+
+      // Fallback for unexpected errors
+      throw new InternalServerErrorException(
+        'Login failed. Please try again later.',
+      );
+    }
+  }
 }
