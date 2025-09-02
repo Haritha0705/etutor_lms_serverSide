@@ -130,6 +130,14 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.RefreshTokenScalarFieldEnum = {
+  id: 'id',
+  token: 'token',
+  userId: 'userId',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.StudentProfileScalarFieldEnum = {
   id: 'id',
   studentId: 'studentId',
@@ -173,6 +181,7 @@ exports.Role = exports.$Enums.Role = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  RefreshToken: 'RefreshToken',
   StudentProfile: 'StudentProfile',
   InstructorProfile: 'InstructorProfile'
 };

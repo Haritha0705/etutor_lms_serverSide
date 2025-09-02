@@ -15,16 +15,26 @@ enum Role {
 }
 
 model User {
-  id         Int      @id @default(autoincrement())
-  email      String   @unique
-  username   String   @unique
-  password   String
-  role       Role
-  enrolledAt DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id           Int            @id @default(autoincrement())
+  email        String         @unique
+  username     String         @unique
+  password     String
+  role         Role
+  refreshToken RefreshToken[]
+  enrolledAt   DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
 
   studentProfile    StudentProfile?    @relation("StudentUserProfile")
   instructorProfile InstructorProfile? @relation("InstructorUserProfile")
+}
+
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  expiresAt DateTime
+  createdAt DateTime @default(now())
 }
 
 model StudentProfile {

@@ -20,8 +20,13 @@ export class AuthController {
     return this.authService.login(userData);
   }
 
+  @Post('logout')
+  logout(@Body() refreshToken: RefreshTokenDto) {
+    return this.authService.logout(refreshToken.refreshToken);
+  }
+
   @Post('refresh')
   refresh(@Body() refreshToken: RefreshTokenDto) {
-    return this.authService.refresh(refreshToken);
+    return this.authService.refresh(refreshToken.refreshToken);
   }
 }

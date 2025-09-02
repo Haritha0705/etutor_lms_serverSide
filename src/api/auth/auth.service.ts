@@ -3,6 +3,7 @@ import {
   ConflictException,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { SignupAuthDto } from './dto/signup-auth';
@@ -12,7 +13,6 @@ import { JwtAuthService } from '../../config/jwt/jwt.service';
 import { CreateJwt } from '../../config/jwt/dto/create-jwt.dto';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { Role } from '../../enum/role.enum';
-import { RefreshTokenDto } from '../../config/jwt/dto/RefreshTokenDto';
 
 @Injectable()
 export class AuthService {
@@ -66,6 +66,15 @@ export class AuthService {
       };
 
       const tokens = await this.jwt.generateToken(payloadToSign);
+
+      // Save refresh token in DB
+      await this.DB.refreshToken.create({
+        data: {
+          token: tokens.refreshToken,
+          userId: newUser.id,
+          expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        },
+      });
 
       return {
         success: true,
@@ -141,6 +150,15 @@ export class AuthService {
       };
       const tokens = await this.jwt.generateToken(payloadToLogin);
 
+      // Save refresh token in DB
+      await this.DB.refreshToken.create({
+        data: {
+          token: tokens.refreshToken,
+          userId: user.id,
+          expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        },
+      });
+
       return {
         success: true,
         status: 200,
@@ -167,27 +185,85 @@ export class AuthService {
     }
   }
 
-  async refresh(refreshToken: RefreshTokenDto) {
-    if (!refreshToken) {
-      throw new BadRequestException('Refresh token is required');
+  async logout(refreshToken: string) {
+    try {
+      //Validate input
+      if (!refreshToken) {
+        throw new BadRequestException('Refresh token is required.');
+      }
+
+      //Check if token exists
+      const existingToken = await this.DB.refreshToken.findUnique({
+        where: { token: refreshToken },
+      });
+
+      if (!existingToken) {
+        throw new NotFoundException(
+          'Refresh token not found or already invalidated',
+        );
+      }
+
+      //Delete the token
+      await this.DB.refreshToken.delete({
+        where: { token: refreshToken },
+      });
+
+      //Return success response
+      return {
+        success: true,
+        status: 200,
+        message: 'Logged out successfully.',
+      };
+    } catch (error) {
+      //Centralized error handling
+      if (
+        error instanceof BadRequestException ||
+        error instanceof NotFoundException
+      ) {
+        throw error;
+      }
+
+      console.error('Logout error:', error);
+      throw new InternalServerErrorException(
+        'Something went wrong while logging out. Please try again later.',
+      );
     }
+  }
 
-    // Verify refresh token
-    const payload: CreateJwt = await this.jwt.verifyRefreshToken(refreshToken);
+  async refresh(refreshToken: string) {
+    try {
+      if (!refreshToken)
+        throw new BadRequestException('Refresh token required');
 
-    // Generate new tokens
-    const payloadToRefresh: CreateJwt = {
-      userId: payload.userId,
-      email: payload.email,
-      role: payload.role,
-    };
-    const tokens = await this.jwt.generateToken(payloadToRefresh);
+      const tokenRecord = await this.DB.refreshToken.findUnique({
+        where: { token: refreshToken },
+      });
+      if (!tokenRecord)
+        throw new UnauthorizedException('Refresh token invalid');
 
-    return {
-      success: true,
-      status: 200,
-      message: 'Tokens refreshed successfully',
-      token: tokens,
-    };
+      const payload = await this.jwt.verifyRefreshToken(refreshToken);
+
+      // Generate new tokens
+      const tokens = await this.jwt.generateToken(payload);
+
+      // Save new refresh token in DB and delete old one
+      await this.DB.refreshToken.delete({ where: { token: refreshToken } });
+      await this.DB.refreshToken.create({
+        data: {
+          token: tokens.refreshToken,
+          userId: payload.userId,
+          expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        },
+      });
+
+      return {
+        success: true,
+        status: 200,
+        message: 'Tokens refreshed successfully',
+        token: tokens,
+      };
+    } catch (e) {
+      console.log('Refresh token failed. Please try again later.', e);
+    }
   }
 }

@@ -8,7 +8,6 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { CreateJwt } from './dto/create-jwt.dto';
 import { Role } from '../../enum/role.enum';
-import { RefreshTokenDto } from './dto/RefreshTokenDto';
 
 @Injectable()
 export class JwtAuthService {
@@ -59,14 +58,11 @@ export class JwtAuthService {
     }
   }
 
-  async verifyRefreshToken(refreshToken: RefreshTokenDto, roles?: Role[]) {
+  async verifyRefreshToken(refreshToken: string, roles?: Role[]) {
     try {
-      const payload = await this.jwt.verifyAsync<CreateJwt>(
-        refreshToken.refreshToken,
-        {
-          secret: process.env.REFRESH_SECRET,
-        },
-      );
+      const payload = await this.jwt.verifyAsync<CreateJwt>(refreshToken, {
+        secret: process.env.REFRESH_SECRET,
+      });
 
       if (roles && !roles.includes(payload.role)) {
         throw new ForbiddenException(
