@@ -14,8 +14,9 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { Roles } from '../../decorator/roles/roles.decorator';
 import { Role } from '../../enum/role.enum';
 import { NoCache } from '../../decorator/no-cache/no-cache.decorator';
+import { Public } from '../../decorator/public/public.decorator';
 
-@Roles(Role.ADMIN, Role.INSTRUCTOR)
+@Roles(Role.INSTRUCTOR)
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}

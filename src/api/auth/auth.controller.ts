@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { SignupAuthDto } from './dto/signup-auth';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { Public } from '../../decorator/public/public.decorator';
+import { RefreshTokenDto } from '../../config/jwt/dto/RefreshTokenDto';
 
 @Public()
 @Controller('auth')
@@ -17,5 +18,10 @@ export class AuthController {
   @Post('login')
   login(@Body() userData: LoginAuthDto) {
     return this.authService.login(userData);
+  }
+
+  @Post('refresh')
+  refresh(@Body() refreshToken: RefreshTokenDto) {
+    return this.authService.refresh(refreshToken);
   }
 }

@@ -8,39 +8,81 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { CreateJwt } from './dto/create-jwt.dto';
 import { Role } from '../../enum/role.enum';
+import { RefreshTokenDto } from './dto/RefreshTokenDto';
 
 @Injectable()
 export class JwtAuthService {
   constructor(private readonly jwt: JwtService) {}
 
-  async generateToken(payload: CreateJwt): Promise<string> {
+  async generateToken(
+    payload: CreateJwt,
+  ): Promise<{ accessToken: string; refreshToken: string }> {
     try {
-      return await this.jwt.signAsync(payload);
+      const tokenPayload = {
+        userId: payload.userId,
+        email: payload.email,
+        role: payload.role,
+      };
+      const accessToken = await this.jwt.signAsync(tokenPayload, {
+        secret: process.env.ACCESS_SECRET,
+        expiresIn: '15m',
+      });
+      const refreshToken = await this.jwt.signAsync(tokenPayload, {
+        secret: process.env.REFRESH_SECRET,
+        expiresIn: '7d',
+      });
+      return { accessToken, refreshToken };
     } catch (err) {
       console.log(err);
       throw new InternalServerErrorException('Internal Server Error');
     }
   }
 
-  async verifyToken(token: string, roles?: Role[]): Promise<boolean> {
+  async verifyAccessToken(accessToken: string, roles?: Role[]) {
     try {
-      const payload = await this.jwt.verifyAsync<CreateJwt>(token);
+      const payload = await this.jwt.verifyAsync<CreateJwt>(accessToken, {
+        secret: process.env.ACCESS_SECRET,
+      });
 
       if (roles && !roles.includes(payload.role)) {
         throw new ForbiddenException(
           'You are not authorized to access this route',
         );
       }
-
-      return true;
+      return payload;
     } catch (err: any) {
-      if (err?.name === 'TokenExpiredError') {
-        throw new UnauthorizedException('Token has expired');
+      if (err.name === 'TokenExpiredError') {
+        throw new UnauthorizedException('Access token expired');
+      }
+      if (err instanceof HttpException) throw err;
+      throw new UnauthorizedException('Access token invalid');
+    }
+  }
+
+  async verifyRefreshToken(refreshToken: RefreshTokenDto, roles?: Role[]) {
+    try {
+      const payload = await this.jwt.verifyAsync<CreateJwt>(
+        refreshToken.refreshToken,
+        {
+          secret: process.env.REFRESH_SECRET,
+        },
+      );
+
+      if (roles && !roles.includes(payload.role)) {
+        throw new ForbiddenException(
+          'You are not authorized to access this route',
+        );
+      }
+      return payload;
+    } catch (err: any) {
+      console.log('Refresh Token Error:', err);
+      if (err.name === 'TokenExpiredError') {
+        throw new UnauthorizedException('Refresh token expired');
       }
       if (err instanceof HttpException) {
         throw err;
       }
-      throw new UnauthorizedException('Invalid or malformed token');
+      throw new UnauthorizedException('Refresh token invalid');
     }
   }
 }

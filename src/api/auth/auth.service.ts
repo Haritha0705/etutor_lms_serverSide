@@ -12,6 +12,7 @@ import { JwtAuthService } from '../../config/jwt/jwt.service';
 import { CreateJwt } from '../../config/jwt/dto/create-jwt.dto';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { Role } from '../../enum/role.enum';
+import { RefreshTokenDto } from '../../config/jwt/dto/RefreshTokenDto';
 
 @Injectable()
 export class AuthService {
@@ -58,19 +59,20 @@ export class AuthService {
         },
       });
 
-      const payload = {
+      const payloadToSign: CreateJwt = {
+        userId: newUser.id,
         email: newUser.email,
-        role: newUser.role,
+        role: newUser.role as Role,
       };
 
-      const accessToken = await this.jwt.generateToken(payload as CreateJwt);
+      const tokens = await this.jwt.generateToken(payloadToSign);
 
       return {
         success: true,
         status: 201,
         user: newUser,
         message: 'Check your email to verify your account.',
-        accessToken,
+        token: tokens,
       };
     } catch (error: unknown) {
       console.error('User registration error:', error);
@@ -98,7 +100,7 @@ export class AuthService {
         throw new BadRequestException('All fields are required.');
       }
 
-      let tokenPayload: CreateJwt;
+      let payloadToLogin: CreateJwt;
 
       //Handle admin login
       if (role === Role.ADMIN) {
@@ -106,13 +108,13 @@ export class AuthService {
           email === process.env.ADMIN_EMAIL &&
           password === process.env.ADMIN_PASSWORD
         ) {
-          tokenPayload = { email: email, role: role };
-          const accessToken = await this.jwt.generateToken(tokenPayload);
+          payloadToLogin = { userId: 0, email: email, role: Role.ADMIN };
+          const tokens = await this.jwt.generateToken(payloadToLogin);
           return {
             success: true,
             status: 200,
             message: `${role} has been logged in.`,
-            accessToken,
+            token: tokens,
           };
         } else {
           throw new UnauthorizedException('Invalid admin credentials.');
@@ -132,14 +134,18 @@ export class AuthService {
       }
 
       //Generate JWT
-      tokenPayload = { email: email, role: role };
-      const accessToken = await this.jwt.generateToken(tokenPayload);
+      payloadToLogin = {
+        userId: user.id,
+        email: user.email,
+        role: user.role as Role,
+      };
+      const tokens = await this.jwt.generateToken(payloadToLogin);
 
       return {
         success: true,
         status: 200,
         message: `${role} has been logged in.`,
-        accessToken,
+        token: tokens,
       };
     } catch (error: unknown) {
       // Structured logging
@@ -159,5 +165,29 @@ export class AuthService {
         'Login failed. Please try again later.',
       );
     }
+  }
+
+  async refresh(refreshToken: RefreshTokenDto) {
+    if (!refreshToken) {
+      throw new BadRequestException('Refresh token is required');
+    }
+
+    // Verify refresh token
+    const payload: CreateJwt = await this.jwt.verifyRefreshToken(refreshToken);
+
+    // Generate new tokens
+    const payloadToRefresh: CreateJwt = {
+      userId: payload.userId,
+      email: payload.email,
+      role: payload.role,
+    };
+    const tokens = await this.jwt.generateToken(payloadToRefresh);
+
+    return {
+      success: true,
+      status: 200,
+      message: 'Tokens refreshed successfully',
+      token: tokens,
+    };
   }
 }

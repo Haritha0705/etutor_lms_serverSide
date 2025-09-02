@@ -5,14 +5,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtGuard } from '../../guard/jwtguard/jwtguard.guard';
 
 @Module({
-  imports: [
-    JwtModule.register({
-      secret: process.env.JWT_SECRET,
-      signOptions: {
-        expiresIn: '1h',
-      },
-    }),
-  ],
+  imports: [JwtModule.register({})],
   providers: [
     {
       provide: APP_GUARD,
