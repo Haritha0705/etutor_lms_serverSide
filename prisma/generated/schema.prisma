@@ -24,6 +24,7 @@ model User {
   firstName  String?
   lastName   String?
   avatarUrl  String?
+  isVerified Boolean  @default(false)
   enrolledAt DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
@@ -38,6 +39,14 @@ model RefreshToken {
   token     String   @unique
   userId    Int
   user      User     @relation(fields: [userId], references: [id])
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model Otp {
+  id        Int      @id @default(autoincrement())
+  email     String
+  code      String
   expiresAt DateTime
   createdAt DateTime @default(now())
 }

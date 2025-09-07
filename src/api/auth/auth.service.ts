@@ -14,12 +14,15 @@ import { CreateJwt } from '../../config/jwt/dto/create-jwt.dto';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { Role } from '../../enum/role.enum';
 import { OAuthUserDto } from './dto/oauth-user.dto';
+import { MailerService } from '@nestjs-modules/mailer';
+import { VerifyOtpDto } from './dto/verify-otp.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly DB: PrismaService,
     private readonly jwt: JwtAuthService,
+    private readonly mailerService: MailerService,
   ) {}
 
   //API - User Register
@@ -338,5 +341,47 @@ export class AuthService {
       user: safeUser,
       token: tokens,
     };
+  }
+
+  async sendOtp(email: string): Promise<{ message: string }> {
+    const user = await this.DB.user.findUnique({ where: { email } });
+    if (!user) return { message: 'Email not registered' };
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const expireAt = new Date(Date.now() + 10 * 60 * 1000);
+
+    await this.DB.otp.create({
+      data: {
+        email,
+        code: otp,
+        expiresAt: expireAt,
+      },
+    });
+
+    await this.mailerService.sendMail({
+      to: email,
+      subject: 'Your OTP Code',
+      html: `<p>Your OTP code is <b>${otp}</b>. It will expire in 10 minutes.</p>`,
+    });
+
+    return { message: 'OTP sent to email' };
+  }
+
+  async verifyOtp(body: VerifyOtpDto): Promise<{ message: string }> {
+    const record = await this.DB.otp.findFirst({
+      where: { email: body.email, code: body.otp },
+    });
+
+    if (!record) return { message: 'Invalid or expired OTP' };
+    if (new Date() > record.expiresAt) return { message: 'OTP expired' };
+
+    await this.DB.otp.delete({ where: { id: record.id } });
+
+    await this.DB.user.update({
+      where: { email: body.email },
+      data: { isVerified: true },
+    });
+
+    return { message: 'Email verified successfully' };
   }
 }

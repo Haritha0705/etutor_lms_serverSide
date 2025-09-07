@@ -13,6 +13,8 @@ import { LoginAuthDto } from './dto/login-auth.dto';
 import { Public } from '../../decorator/public/public.decorator';
 import { RefreshTokenDto } from '../../config/jwt/dto/RefreshTokenDto';
 import { GoogleAuthGuard } from '../../guard/google-auth/google-auth.guard';
+import { SendOtpDto } from './dto/send-otp.dto';
+import { VerifyOtpDto } from './dto/verify-otp.dto';
 
 @Public()
 @Controller('auth')
@@ -45,10 +47,19 @@ export class AuthController {
 
   @Get('google/callback')
   @UseGuards(GoogleAuthGuard)
-  async googleCallback(@Req() req, @Res() res) {
+  async googleCallback(@Req() req:any, @Res() res:any) {
     const user = (req as any).user;
     const response = await this.authService.loginWithGoogle(user);
-
     return res.json(response);
+  }
+
+  @Post('send-otp')
+  sendOtp(@Body() sendOtpDto: SendOtpDto) {
+    return this.authService.sendOtp(sendOtpDto.email);
+  }
+
+  @Post('verify-otp')
+  verifyOtp(@Body() verifyOtpDto: VerifyOtpDto) {
+    return this.authService.verifyOtp(verifyOtpDto);
   }
 }

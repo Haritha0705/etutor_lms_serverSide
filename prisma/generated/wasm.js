@@ -130,6 +130,7 @@ exports.Prisma.UserScalarFieldEnum = {
   firstName: 'firstName',
   lastName: 'lastName',
   avatarUrl: 'avatarUrl',
+  isVerified: 'isVerified',
   enrolledAt: 'enrolledAt',
   updatedAt: 'updatedAt'
 };
@@ -138,6 +139,14 @@ exports.Prisma.RefreshTokenScalarFieldEnum = {
   id: 'id',
   token: 'token',
   userId: 'userId',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.OtpScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  code: 'code',
   expiresAt: 'expiresAt',
   createdAt: 'createdAt'
 };
@@ -186,6 +195,7 @@ exports.Role = exports.$Enums.Role = {
 exports.Prisma.ModelName = {
   User: 'User',
   RefreshToken: 'RefreshToken',
+  Otp: 'Otp',
   StudentProfile: 'StudentProfile',
   InstructorProfile: 'InstructorProfile'
 };
