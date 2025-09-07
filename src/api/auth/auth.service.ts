@@ -403,7 +403,7 @@ export class AuthService {
     }
   }
 
-  async generateResetToken(email: string) {
+  async ResetPasswordLink(email: string) {
     try {
       if (!email) throw new BadRequestException('Email is required');
 

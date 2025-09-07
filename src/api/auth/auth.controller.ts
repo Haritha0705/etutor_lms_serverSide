@@ -17,6 +17,7 @@ import { SendOtpDto } from './dto/send-otp.dto';
 import { VerifyOtpDto } from './dto/verify-otp.dto';
 import { RequestResetPasswordDto } from './dto/request-reset-password.dto';
 import { ResetPasswordDto } from './dto/Reset-password.dto';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
 
 @Public()
 @Controller('auth')
@@ -65,9 +66,14 @@ export class AuthController {
     return this.authService.verifyOtp(verifyOtpDto);
   }
 
+  @Post('forgot-password')
+  forgotPassword(@Body() dto: ForgotPasswordDto) {
+    return this.authService.ResetPasswordLink(dto.email);
+  }
+
   @Post('request-reset')
   requestReset(@Body() dto: RequestResetPasswordDto) {
-    return this.authService.generateResetToken(dto.email);
+    return this.authService.ResetPasswordLink(dto.email);
   }
 
   @Post('reset-password')
