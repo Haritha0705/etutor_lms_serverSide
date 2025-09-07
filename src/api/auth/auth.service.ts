@@ -16,6 +16,7 @@ import { Role } from '../../enum/role.enum';
 import { OAuthUserDto } from './dto/oauth-user.dto';
 import { MailerService } from '@nestjs-modules/mailer';
 import { VerifyOtpDto } from './dto/verify-otp.dto';
+import { randomBytes } from 'crypto';
 
 @Injectable()
 export class AuthService {
@@ -276,7 +277,6 @@ export class AuthService {
 
     let user = await this.DB.user.findUnique({ where: { email } });
     if (user) {
-      // optional: update avatar or googleId if new
       if (!user.googleId || (avatarUrl && user.avatarUrl !== avatarUrl)) {
         user = await this.DB.user.update({
           where: { id: user.id },
@@ -383,5 +383,76 @@ export class AuthService {
     });
 
     return { message: 'Email verified successfully' };
+  }
+
+  async generateResetToken(email: string) {
+    try {
+      if (!email) throw new BadRequestException('Email is required');
+
+      const user = await this.DB.user.findUnique({ where: { email } });
+      if (!user) throw new BadRequestException('User not found');
+
+      const token = randomBytes(32).toString('hex');
+      console.log(token);
+      const expiry = new Date(
+        Date.now() +
+          Number(process.env.RESET_PASSWORD_JWT_EXPIRE_IN) * 60 * 1000,
+      );
+
+      await this.DB.user.update({
+        where: { email },
+        data: {
+          resetPasswordToken: token,
+          resetPasswordTokenExpiry: expiry,
+        },
+      });
+
+      const resetLink = `https://yourfrontend.com/reset-password?token=${token}&email=${email}`;
+
+      await this.mailerService.sendMail({
+        to: email,
+        subject: 'Password Reset',
+        text: `Click here to reset your password: ${resetLink}`,
+      });
+
+      return { message: 'Reset email sent if user exists' };
+    } catch (error) {
+      console.error('generateResetToken error:', error);
+      throw new InternalServerErrorException('Could not generate reset token');
+    }
+  }
+
+  async resetPassword(email: string, token: string, newPassword: string) {
+    try {
+      if (!email || !token || !newPassword) {
+        throw new BadRequestException('All fields are required');
+      }
+
+      const user = await this.DB.user.findUnique({ where: { email } });
+      if (
+        !user ||
+        user.resetPasswordToken !== token ||
+        !user.resetPasswordTokenExpiry ||
+        user.resetPasswordTokenExpiry < new Date()
+      ) {
+        throw new BadRequestException('Invalid or expired token');
+      }
+
+      const hashed = await bcrypt.hash(newPassword, 10);
+
+      await this.DB.user.update({
+        where: { email },
+        data: {
+          password: hashed,
+          resetPasswordToken: null,
+          resetPasswordTokenExpiry: null,
+        },
+      });
+
+      return { message: 'Password successfully reset' };
+    } catch (error) {
+      console.error('resetPassword error:', error);
+      throw new InternalServerErrorException('Could not reset password');
+    }
   }
 }

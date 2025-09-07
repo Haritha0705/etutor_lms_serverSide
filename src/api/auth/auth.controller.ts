@@ -15,6 +15,8 @@ import { RefreshTokenDto } from '../../config/jwt/dto/RefreshTokenDto';
 import { GoogleAuthGuard } from '../../guard/google-auth/google-auth.guard';
 import { SendOtpDto } from './dto/send-otp.dto';
 import { VerifyOtpDto } from './dto/verify-otp.dto';
+import { RequestResetPasswordDto } from './dto/request-reset-password.dto';
+import { ResetPasswordDto } from './dto/Reset-password.dto';
 
 @Public()
 @Controller('auth')
@@ -47,8 +49,8 @@ export class AuthController {
 
   @Get('google/callback')
   @UseGuards(GoogleAuthGuard)
-  async googleCallback(@Req() req:any, @Res() res:any) {
-    const user = (req as any).user;
+  async googleCallback(@Req() req: any, @Res() res: any) {
+    const user = req.user;
     const response = await this.authService.loginWithGoogle(user);
     return res.json(response);
   }
@@ -61,5 +63,19 @@ export class AuthController {
   @Post('verify-otp')
   verifyOtp(@Body() verifyOtpDto: VerifyOtpDto) {
     return this.authService.verifyOtp(verifyOtpDto);
+  }
+
+  @Post('request-reset')
+  requestReset(@Body() dto: RequestResetPasswordDto) {
+    return this.authService.generateResetToken(dto.email);
+  }
+
+  @Post('reset-password')
+  resetPassword(@Body() dto: ResetPasswordDto) {
+    return this.authService.resetPassword(
+      dto.email,
+      dto.token,
+      dto.newPassword,
+    );
   }
 }

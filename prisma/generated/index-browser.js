@@ -131,6 +131,8 @@ exports.Prisma.UserScalarFieldEnum = {
   lastName: 'lastName',
   avatarUrl: 'avatarUrl',
   isVerified: 'isVerified',
+  resetPasswordToken: 'resetPasswordToken',
+  resetPasswordTokenExpiry: 'resetPasswordTokenExpiry',
   enrolledAt: 'enrolledAt',
   updatedAt: 'updatedAt'
 };

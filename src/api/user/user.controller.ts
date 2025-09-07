@@ -6,15 +6,14 @@ import {
   Param,
   Patch,
   Post,
-  UseInterceptors,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Roles } from '../../decorator/roles/roles.decorator';
 import { Role } from '../../enum/role.enum';
-import { NoCache } from '../../decorator/no-cache/no-cache.decorator';
-import { Public } from '../../decorator/public/public.decorator';
+// import { NoCache } from '../../decorator/no-cache/no-cache.decorator';
+// import { Public } from '../../decorator/public/public.decorator';
 
 @Roles(Role.INSTRUCTOR)
 @Controller('user')

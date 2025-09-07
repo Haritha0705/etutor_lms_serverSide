@@ -15,18 +15,20 @@ enum Role {
 }
 
 model User {
-  id         Int      @id @default(autoincrement())
-  email      String   @unique
-  username   String?  @unique
-  password   String?
-  role       Role
-  googleId   String?  @unique
-  firstName  String?
-  lastName   String?
-  avatarUrl  String?
-  isVerified Boolean  @default(false)
-  enrolledAt DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id                       Int       @id @default(autoincrement())
+  email                    String    @unique
+  username                 String?   @unique
+  password                 String?
+  role                     Role
+  googleId                 String?   @unique
+  firstName                String?
+  lastName                 String?
+  avatarUrl                String?
+  isVerified               Boolean   @default(false)
+  resetPasswordToken       String?
+  resetPasswordTokenExpiry DateTime?
+  enrolledAt               DateTime  @default(now())
+  updatedAt                DateTime  @updatedAt
 
   refreshToken RefreshToken[]
 
