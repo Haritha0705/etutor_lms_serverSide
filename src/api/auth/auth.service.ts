@@ -31,18 +31,15 @@ export class AuthService {
     try {
       // Check required fields
       const { username, email, password, role } = userData;
-      if (!username || !email || !password || !role) {
+      if (!username || !email || !password || !role)
         throw new BadRequestException('All fields are required.');
-      }
 
       // Check if user already exists
       const existingUser = await this.DB.user.findFirst({
         where: { OR: [{ email }, { username }] },
       });
 
-      if (existingUser) {
-        throw new ConflictException(`${role} already exists.`);
-      }
+      if (existingUser) throw new ConflictException(`${role} already exists.`);
 
       // Stronger password hashing with dynamic salt rounds
       const saltRounds = 12;
@@ -96,8 +93,6 @@ export class AuthService {
       ) {
         throw error;
       }
-
-      // Fallback for unexpected errors
       throw new InternalServerErrorException(
         'Failed to register user. Please try again later.',
       );
@@ -110,9 +105,8 @@ export class AuthService {
 
     try {
       //Validate fields
-      if (!email || !password || !role) {
+      if (!email || !password || !role)
         throw new BadRequestException('All fields are required.');
-      }
 
       let payloadToLogin: CreateJwt;
 
@@ -130,22 +124,17 @@ export class AuthService {
             message: `${role} has been logged in.`,
             token: tokens,
           };
-        } else {
-          throw new UnauthorizedException('Invalid admin credentials.');
-        }
+        } else throw new UnauthorizedException('Invalid admin credentials.');
       }
 
       //Handle regular user login
       const user = await this.DB.user.findUnique({ where: { email } });
-      if (!user?.password) {
-        throw new ConflictException('User not found.');
-      }
+      if (!user?.password) throw new ConflictException('User not found.');
 
       //Compare password
       const isPasswordValid = await bcrypt.compare(password, user.password);
-      if (!isPasswordValid) {
+      if (!isPasswordValid)
         throw new UnauthorizedException('Invalid credentials.');
-      }
 
       //Generate JWT
       payloadToLogin = {
@@ -171,7 +160,6 @@ export class AuthService {
         token: tokens,
       };
     } catch (error: unknown) {
-      // Structured logging
       console.log('Login failed', { error, userData });
 
       // Handle known errors
@@ -219,7 +207,7 @@ export class AuthService {
         status: 200,
         message: 'Logged out successfully.',
       };
-    } catch (error) {
+    } catch (error: unknown) {
       //Centralized error handling
       if (
         error instanceof BadRequestException ||
@@ -267,122 +255,152 @@ export class AuthService {
         message: 'Tokens refreshed successfully',
         token: tokens,
       };
-    } catch (e) {
-      console.log('Refresh token failed. Please try again later.', e);
+    } catch (error: unknown) {
+      console.log('Refresh token failed. Please try again later.', error);
+      if (
+        error instanceof BadRequestException ||
+        error instanceof UnauthorizedException
+      )
+        throw error;
+      throw new InternalServerErrorException(
+        'Refresh token failed. Please try again later.',
+      );
     }
   }
 
   async validateGoogleUser(googleUser: OAuthUserDto) {
-    const { email, firstname, lastname, avatarUrl, googleId } = googleUser;
+    try {
+      const { email, firstname, lastname, avatarUrl, googleId } = googleUser;
 
-    let user = await this.DB.user.findUnique({ where: { email } });
-    if (user) {
-      if (!user.googleId || (avatarUrl && user.avatarUrl !== avatarUrl)) {
-        user = await this.DB.user.update({
-          where: { id: user.id },
-          data: {
-            googleId: googleId ?? undefined,
-            avatarUrl: avatarUrl ?? undefined,
-          },
-        });
+      let user = await this.DB.user.findUnique({ where: { email } });
+      if (user) {
+        if (!user.googleId || (avatarUrl && user.avatarUrl !== avatarUrl)) {
+          user = await this.DB.user.update({
+            where: { id: user.id },
+            data: {
+              googleId: googleId ?? undefined,
+              avatarUrl: avatarUrl ?? undefined,
+            },
+          });
+        }
+        return user;
       }
+
+      // Create minimal Google user
+      user = await this.DB.user.create({
+        data: {
+          email,
+          username: email.split('@')[0],
+          role: Role.STUDENT,
+          password: null,
+          googleId: googleId ?? undefined,
+          firstName: firstname ?? undefined,
+          lastName: lastname ?? undefined,
+          avatarUrl: avatarUrl ?? undefined,
+        },
+      });
+
       return user;
+    } catch (error: unknown) {
+      console.log(error);
+      throw new InternalServerErrorException(error);
     }
-
-    // Create minimal Google user
-    user = await this.DB.user.create({
-      data: {
-        email,
-        username: email.split('@')[0],
-        role: Role.STUDENT,
-        password: null,
-        googleId: googleId ?? undefined,
-        firstName: firstname ?? undefined,
-        lastName: lastname ?? undefined,
-        avatarUrl: avatarUrl ?? undefined,
-      },
-    });
-
-    return user;
   }
 
   async loginWithGoogle(user: { id: number; email: string; role: Role }) {
-    const payload: CreateJwt = {
-      userId: user.id,
-      email: user.email,
-      role: user.role,
-    };
-
-    const tokens = await this.jwt.generateToken(payload);
-
-    await this.DB.refreshToken.create({
-      data: {
-        token: tokens.refreshToken,
+    try {
+      const payload: CreateJwt = {
         userId: user.id,
-        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-      },
-    });
+        email: user.email,
+        role: user.role,
+      };
 
-    const safeUser = await this.DB.user.findUnique({
-      where: { id: user.id },
-      select: {
-        id: true,
-        username: true,
-        email: true,
-        role: true,
-        avatarUrl: true,
-      },
-    });
+      const tokens = await this.jwt.generateToken(payload);
 
-    return {
-      success: true,
-      status: 200,
-      message: 'Logged in with Google.',
-      user: safeUser,
-      token: tokens,
-    };
+      await this.DB.refreshToken.create({
+        data: {
+          token: tokens.refreshToken,
+          userId: user.id,
+          expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        },
+      });
+
+      const safeUser = await this.DB.user.findUnique({
+        where: { id: user.id },
+        select: {
+          id: true,
+          username: true,
+          email: true,
+          role: true,
+          avatarUrl: true,
+        },
+      });
+
+      return {
+        success: true,
+        status: 200,
+        message: 'Logged in with Google.',
+        user: safeUser,
+        token: tokens,
+      };
+    } catch (error: unknown) {
+      console.log(error);
+      throw new InternalServerErrorException(error);
+    }
   }
 
   async sendOtp(email: string): Promise<{ message: string }> {
-    const user = await this.DB.user.findUnique({ where: { email } });
-    if (!user) return { message: 'Email not registered' };
+    try {
+      const user = await this.DB.user.findUnique({ where: { email } });
+      if (!user) throw new BadRequestException('Email not registered');
 
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    const expireAt = new Date(Date.now() + 10 * 60 * 1000);
+      const otp = Math.floor(100000 + Math.random() * 900000).toString();
+      const expireAt = new Date(Date.now() + 10 * 60 * 1000);
 
-    await this.DB.otp.create({
-      data: {
-        email,
-        code: otp,
-        expiresAt: expireAt,
-      },
-    });
+      await this.DB.otp.create({
+        data: {
+          email,
+          code: otp,
+          expiresAt: expireAt,
+        },
+      });
 
-    await this.mailerService.sendMail({
-      to: email,
-      subject: 'Your OTP Code',
-      html: `<p>Your OTP code is <b>${otp}</b>. It will expire in 10 minutes.</p>`,
-    });
+      await this.mailerService.sendMail({
+        to: email,
+        subject: 'Your OTP Code',
+        html: `<p>Your OTP code is <b>${otp}</b>. It will expire in 10 minutes.</p>`,
+      });
 
-    return { message: 'OTP sent to email' };
+      return { message: 'OTP sent to email' };
+    } catch (error: unknown) {
+      console.error('sendOtp error:', error);
+      if (error instanceof BadRequestException) throw error;
+      throw new InternalServerErrorException('Could not send OTP');
+    }
   }
 
   async verifyOtp(body: VerifyOtpDto): Promise<{ message: string }> {
-    const record = await this.DB.otp.findFirst({
-      where: { email: body.email, code: body.otp },
-    });
+    try {
+      const record = await this.DB.otp.findFirst({
+        where: { email: body.email, code: body.otp },
+      });
 
-    if (!record) return { message: 'Invalid or expired OTP' };
-    if (new Date() > record.expiresAt) return { message: 'OTP expired' };
+      if (!record) throw new BadRequestException('Invalid or expired OTP');
+      if (new Date() > record.expiresAt) return { message: 'OTP expired' };
 
-    await this.DB.otp.delete({ where: { id: record.id } });
+      await this.DB.otp.delete({ where: { id: record.id } });
 
-    await this.DB.user.update({
-      where: { email: body.email },
-      data: { isVerified: true },
-    });
+      await this.DB.user.update({
+        where: { email: body.email },
+        data: { isVerified: true },
+      });
 
-    return { message: 'Email verified successfully' };
+      return { message: 'Email verified successfully' };
+    } catch (error: unknown) {
+      console.error('generateResetToken error:', error);
+      if (error instanceof BadRequestException) throw error;
+      throw new InternalServerErrorException('Could not verify OTP');
+    }
   }
 
   async generateResetToken(email: string) {
@@ -416,8 +434,9 @@ export class AuthService {
       });
 
       return { message: 'Reset email sent if user exists' };
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('generateResetToken error:', error);
+      if (error instanceof BadRequestException) throw error;
       throw new InternalServerErrorException('Could not generate reset token');
     }
   }
@@ -429,8 +448,10 @@ export class AuthService {
       }
 
       const user = await this.DB.user.findUnique({ where: { email } });
+
       if (
         !user ||
+        !user.password ||
         user.resetPasswordToken !== token ||
         !user.resetPasswordTokenExpiry ||
         user.resetPasswordTokenExpiry < new Date()
@@ -438,20 +459,29 @@ export class AuthService {
         throw new BadRequestException('Invalid or expired token');
       }
 
-      const hashed = await bcrypt.hash(newPassword, 10);
+      const isSamePassword = await bcrypt.compare(newPassword, user.password);
+      if (isSamePassword) {
+        throw new BadRequestException(
+          'New password cannot be the same as the old password',
+        );
+      }
+
+      const saltRounds = 12;
+      const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
 
       await this.DB.user.update({
         where: { email },
         data: {
-          password: hashed,
+          password: hashedPassword,
           resetPasswordToken: null,
           resetPasswordTokenExpiry: null,
         },
       });
 
       return { message: 'Password successfully reset' };
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('resetPassword error:', error);
+      if (error instanceof BadRequestException) throw error;
       throw new InternalServerErrorException('Could not reset password');
     }
   }
