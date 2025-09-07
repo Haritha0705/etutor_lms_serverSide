@@ -23,12 +23,12 @@ export class JwtAuthService {
         role: payload.role,
       };
       const accessToken = await this.jwt.signAsync(tokenPayload, {
-        secret: process.env.ACCESS_SECRET,
-        expiresIn: '15m',
+        secret: process.env.ACCESS_JWT_SECRET,
+        expiresIn: process.env.ACCESS_JWT_EXPIRE_IN,
       });
       const refreshToken = await this.jwt.signAsync(tokenPayload, {
-        secret: process.env.REFRESH_SECRET,
-        expiresIn: '7d',
+        secret: process.env.REFRESH_JWT_SECRET,
+        expiresIn: process.env.REFRESH_JWT_EXPIRE_IN,
       });
       return { accessToken, refreshToken };
     } catch (err) {

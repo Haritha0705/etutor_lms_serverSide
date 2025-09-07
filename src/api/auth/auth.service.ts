@@ -13,6 +13,7 @@ import { JwtAuthService } from '../../config/jwt/jwt.service';
 import { CreateJwt } from '../../config/jwt/dto/create-jwt.dto';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { Role } from '../../enum/role.enum';
+import { OAuthUserDto } from './dto/oauth-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -132,7 +133,7 @@ export class AuthService {
 
       //Handle regular user login
       const user = await this.DB.user.findUnique({ where: { email } });
-      if (!user) {
+      if (!user?.password) {
         throw new ConflictException('User not found.');
       }
 
@@ -265,5 +266,77 @@ export class AuthService {
     } catch (e) {
       console.log('Refresh token failed. Please try again later.', e);
     }
+  }
+
+  async validateGoogleUser(googleUser: OAuthUserDto) {
+    const { email, firstname, lastname, avatarUrl, googleId } = googleUser;
+
+    let user = await this.DB.user.findUnique({ where: { email } });
+    if (user) {
+      // optional: update avatar or googleId if new
+      if (!user.googleId || (avatarUrl && user.avatarUrl !== avatarUrl)) {
+        user = await this.DB.user.update({
+          where: { id: user.id },
+          data: {
+            googleId: googleId ?? undefined,
+            avatarUrl: avatarUrl ?? undefined,
+          },
+        });
+      }
+      return user;
+    }
+
+    // Create minimal Google user
+    user = await this.DB.user.create({
+      data: {
+        email,
+        username: email.split('@')[0],
+        role: Role.STUDENT,
+        password: null,
+        googleId: googleId ?? undefined,
+        firstName: firstname ?? undefined,
+        lastName: lastname ?? undefined,
+        avatarUrl: avatarUrl ?? undefined,
+      },
+    });
+
+    return user;
+  }
+
+  async loginWithGoogle(user: { id: number; email: string; role: Role }) {
+    const payload: CreateJwt = {
+      userId: user.id,
+      email: user.email,
+      role: user.role,
+    };
+
+    const tokens = await this.jwt.generateToken(payload);
+
+    await this.DB.refreshToken.create({
+      data: {
+        token: tokens.refreshToken,
+        userId: user.id,
+        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      },
+    });
+
+    const safeUser = await this.DB.user.findUnique({
+      where: { id: user.id },
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        role: true,
+        avatarUrl: true,
+      },
+    });
+
+    return {
+      success: true,
+      status: 200,
+      message: 'Logged in with Google.',
+      user: safeUser,
+      token: tokens,
+    };
   }
 }

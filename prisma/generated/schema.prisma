@@ -15,14 +15,19 @@ enum Role {
 }
 
 model User {
-  id           Int            @id @default(autoincrement())
-  email        String         @unique
-  username     String         @unique
-  password     String
-  role         Role
+  id         Int      @id @default(autoincrement())
+  email      String   @unique
+  username   String?  @unique
+  password   String?
+  role       Role
+  googleId   String?  @unique
+  firstName  String?
+  lastName   String?
+  avatarUrl  String?
+  enrolledAt DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
   refreshToken RefreshToken[]
-  enrolledAt   DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
 
   studentProfile    StudentProfile?    @relation("StudentUserProfile")
   instructorProfile InstructorProfile? @relation("InstructorUserProfile")
