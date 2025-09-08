@@ -299,11 +299,15 @@ export class AuthService {
     }
   }
 
-  async validateGoogleUser(googleUser: OAuthUserDto) {
+  async validateGoogleUser(
+    googleUser: OAuthUserDto,
+    role: Role.STUDENT | Role.INSTRUCTOR,
+  ) {
     try {
       const { email, firstname, lastname, avatarUrl, googleId } = googleUser;
 
       let user = await this.DB.user.findUnique({ where: { email } });
+
       if (user) {
         if (!user.googleId || (avatarUrl && user.avatarUrl !== avatarUrl)) {
           user = await this.DB.user.update({
@@ -317,21 +321,80 @@ export class AuthService {
         return user;
       }
 
-      // Create minimal Google user
-      user = await this.DB.user.create({
-        data: {
-          email,
-          username: email.split('@')[0],
-          role: Role.STUDENT,
-          password: null,
-          googleId: googleId ?? undefined,
-          firstName: firstname ?? undefined,
-          lastName: lastname ?? undefined,
-          avatarUrl: avatarUrl ?? undefined,
-        },
+      // Create Google user + profile in a transaction
+      const result = await this.DB.$transaction(async (prisma) => {
+        // 1. Create Google user
+        const newUser = await prisma.user.create({
+          data: {
+            email,
+            username: email.split('@')[0],
+            role: role, // pass enum directly
+            password: null,
+            googleId,
+            firstName: firstname,
+            lastName: lastname,
+            avatarUrl,
+          },
+          select: {
+            id: true,
+            email: true,
+            username: true,
+            role: true,
+            avatarUrl: true,
+          },
+        });
+
+        // 2. Create profile based on role
+        if (newUser.role === Role.STUDENT) {
+          await prisma.studentProfile.create({
+            data: {
+              studentId: newUser.id,
+              full_name:
+                firstname && lastname
+                  ? `${firstname} ${lastname}`
+                  : newUser.username,
+              profilePic: avatarUrl ?? null,
+              bio: null,
+              phone: null,
+              address: null,
+            },
+          });
+        } else if (newUser.role === Role.INSTRUCTOR) {
+          await prisma.instructorProfile.create({
+            data: {
+              instructorId: newUser.id,
+              full_name:
+                firstname && lastname
+                  ? `${firstname} ${lastname}`
+                  : newUser.username,
+              profilePic: avatarUrl ?? null,
+              expertise: null,
+              bio: null,
+            },
+          });
+        }
+
+        // 3. Generate JWT
+        const payload: CreateJwt = {
+          userId: newUser.id,
+          email: newUser.email,
+          role,
+        };
+        const tokens = await this.jwt.generateToken(payload);
+
+        // 4. Save refresh token inside transaction
+        await prisma.refreshToken.create({
+          data: {
+            token: tokens.refreshToken,
+            userId: newUser.id,
+            expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+          },
+        });
+
+        return { newUser, tokens };
       });
 
-      return user;
+      return result;
     } catch (error: unknown) {
       console.log(error);
       throw new InternalServerErrorException(error);
@@ -372,7 +435,8 @@ export class AuthService {
         status: 200,
         message: 'Logged in with Google.',
         user: safeUser,
-        token: tokens,
+        accessToken: tokens.accessToken,
+        refreshToken: tokens.refreshToken,
       };
     } catch (error: unknown) {
       console.log(error);

@@ -80,4 +80,18 @@ export class AuthController {
       dto.newPassword,
     );
   }
+
+  @Post('google/test')
+  async testGoogleSignup(@Body() body: any) {
+    return this.authService.validateGoogleUser(
+      {
+        email: body.email,
+        firstname: body.firstname,
+        lastname: body.lastname,
+        avatarUrl: body.avatarUrl,
+        googleId: body.googleId,
+      },
+      body.role, // STUDENT or INSTRUCTOR
+    );
+  }
 }

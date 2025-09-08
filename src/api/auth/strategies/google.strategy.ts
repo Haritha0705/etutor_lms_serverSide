@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { Strategy, VerifyCallback } from 'passport-google-oauth20';
 import { AuthService } from '../auth.service';
 import { OAuthUserDto } from '../dto/oauth-user.dto';
+import { Role } from '../../../enum/role.enum';
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
@@ -27,13 +28,19 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       const email = profile.emails?.[0]?.value;
       if (!email) return done(new Error('Google account has no email'), false);
 
-      const user = await this.authService.validateGoogleUser({
-        email,
-        firstname: profile.name?.givenName ?? '',
-        lastname: profile.name?.familyName ?? '',
-        avatarUrl: profile.photos?.[0]?.value ?? '',
-        googleId: profile.id,
-      } as OAuthUserDto);
+      // Get role from frontend body
+      const role = req.body.role as Role.STUDENT | Role.INSTRUCTOR;
+
+      const user = await this.authService.validateGoogleUser(
+        {
+          email,
+          firstname: profile.name?.givenName ?? '',
+          lastname: profile.name?.familyName ?? '',
+          avatarUrl: profile.photos?.[0]?.value ?? '',
+          googleId: profile.id,
+        } as OAuthUserDto,
+        role,
+      );
 
       return done(null, user);
     } catch (err) {
