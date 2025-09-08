@@ -40,7 +40,7 @@ export class JwtAuthService {
   async verifyAccessToken(accessToken: string, roles?: Role[]) {
     try {
       const payload = await this.jwt.verifyAsync<CreateJwt>(accessToken, {
-        secret: process.env.ACCESS_SECRET,
+        secret: process.env.ACCESS_JWT_SECRET,
       });
 
       if (roles && !roles.includes(payload.role)) {
@@ -61,7 +61,7 @@ export class JwtAuthService {
   async verifyRefreshToken(refreshToken: string, roles?: Role[]) {
     try {
       const payload = await this.jwt.verifyAsync<CreateJwt>(refreshToken, {
-        secret: process.env.REFRESH_SECRET,
+        secret: process.env.REFRESH_JWT_SECRET,
       });
 
       if (roles && !roles.includes(payload.role)) {

@@ -8,24 +8,31 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  admin
+  student
+  instructor
+}
+
 model User {
-  id                       Int                @id @default(autoincrement())
-  email                    String             @unique
-  username                 String?            @unique
+  id                       Int            @id @default(autoincrement())
+  email                    String         @unique
+  username                 String?        @unique
   password                 String?
   role                     Role
-  enrolledAt               DateTime           @default(now())
-  updatedAt                DateTime           @updatedAt
+  enrolledAt               DateTime       @default(now())
+  updatedAt                DateTime       @updatedAt
   firstName                String?
   lastName                 String?
   avatarUrl                String?
-  googleId                 String?            @unique
-  isVerified               Boolean            @default(false)
+  googleId                 String?        @unique
+  isVerified               Boolean        @default(false)
   resetPasswordToken       String?
   resetPasswordTokenExpiry DateTime?
-  instructorProfile        InstructorProfile? @relation("InstructorUserProfile")
   refreshToken             RefreshToken[]
-  studentProfile           StudentProfile?    @relation("StudentUserProfile")
+
+  studentProfile    StudentProfile?    @relation("StudentUserProfile")
+  instructorProfile InstructorProfile? @relation("InstructorUserProfile")
 }
 
 model RefreshToken {
@@ -66,10 +73,4 @@ model InstructorProfile {
   profilePic   String?
   updatedAt    DateTime @updatedAt
   instructor   User     @relation("InstructorUserProfile", fields: [instructorId], references: [id])
-}
-
-enum Role {
-  admin
-  student
-  instructor
 }

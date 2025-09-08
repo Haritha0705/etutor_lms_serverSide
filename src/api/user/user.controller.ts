@@ -1,48 +1,33 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-} from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { Roles } from '../../decorator/roles/roles.decorator';
 import { Role } from '../../enum/role.enum';
-// import { NoCache } from '../../decorator/no-cache/no-cache.decorator';
-// import { Public } from '../../decorator/public/public.decorator';
 
-@Roles(Role.INSTRUCTOR)
+// import { NoCache } from '../../decorator/no-cache/no-cache.decorator';
+
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  @Roles(Role.ADMIN)
+  @Get('all')
+  getAllUsers() {
+    return this.userService.getAllUsers();
   }
 
-  // @NoCache()
-  @Get('getAllUsers')
-  findAll() {
-    return this.userService.findAll();
-  }
-
+  @Roles(Role.STUDENT, Role.INSTRUCTOR)
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+  getUserProfile(@Param('id') id: string) {
+    return this.userService.getUserProfile(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  //   return this.userService.update(+id, updateUserDto);
+  // }
+  //
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.userService.remove(+id);
+  // }
 }
