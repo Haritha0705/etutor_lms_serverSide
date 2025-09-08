@@ -26,66 +26,97 @@ export class AuthService {
     private readonly mailerService: MailerService,
   ) {}
 
-  //API - User Register
+  // API - User Register
   async signup(userData: SignupAuthDto) {
+    const { username, email, password, role } = userData;
+
+    if (!username || !email || !password || !role) {
+      throw new BadRequestException('All fields are required.');
+    }
+
+    // Check if user already exists
+    const existingUser = await this.DB.user.findFirst({
+      where: { OR: [{ email }, { username }] },
+    });
+
+    if (existingUser) {
+      throw new ConflictException('User already exists.');
+    }
+
+    // Stronger password hashing
+    const hashedPassword = await bcrypt.hash(password, 12);
+
     try {
-      // Check required fields
-      const { username, email, password, role } = userData;
-      if (!username || !email || !password || !role)
-        throw new BadRequestException('All fields are required.');
+      const result = await this.DB.$transaction(async (prisma) => {
+        // 1. Create user
+        const newUser = await prisma.user.create({
+          data: {
+            username,
+            email,
+            password: hashedPassword,
+            role,
+          },
+          select: {
+            id: true,
+            username: true,
+            email: true,
+            role: true,
+          },
+        });
 
-      // Check if user already exists
-      const existingUser = await this.DB.user.findFirst({
-        where: { OR: [{ email }, { username }] },
-      });
+        // 2. Create corresponding profile
+        if (newUser.role === 'student') {
+          await prisma.studentProfile.create({
+            data: {
+              studentId: newUser.id,
+              full_name: null,
+              bio: null,
+              profilePic: null,
+              phone: null,
+              address: null,
+            },
+          });
+        } else if (newUser.role === 'instructor') {
+          await prisma.instructorProfile.create({
+            data: {
+              instructorId: newUser.id,
+              full_name: null,
+              profilePic: null,
+              bio: null,
+              expertise: null,
+            },
+          });
+        }
 
-      if (existingUser) throw new ConflictException(`${role} already exists.`);
-
-      // Stronger password hashing with dynamic salt rounds
-      const saltRounds = 12;
-      const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-      // Create user in DB
-      const newUser = await this.DB.user.create({
-        data: {
-          username,
-          email,
-          password: hashedPassword,
-          role,
-        },
-        select: {
-          id: true,
-          username: true,
-          email: true,
-          role: true,
-        },
-      });
-
-      const payloadToSign: CreateJwt = {
-        userId: newUser.id,
-        email: newUser.email,
-        role: newUser.role as Role,
-      };
-
-      const tokens = await this.jwt.generateToken(payloadToSign);
-
-      // Save refresh token in DB
-      await this.DB.refreshToken.create({
-        data: {
-          token: tokens.refreshToken,
+        // 3. Generate JWT tokens
+        const payloadToSign: CreateJwt = {
           userId: newUser.id,
-          expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-        },
+          email: newUser.email,
+          role: newUser.role as Role,
+        };
+
+        const tokens = await this.jwt.generateToken(payloadToSign);
+
+        // 4. Save refresh token
+        await prisma.refreshToken.create({
+          data: {
+            token: tokens.refreshToken,
+            userId: newUser.id,
+            expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+          },
+        });
+
+        return { newUser, tokens };
       });
 
       return {
         success: true,
         status: 201,
-        user: newUser,
+        user: result.newUser,
         message: 'Check your email to verify your account.',
-        token: tokens,
+        token: result.tokens,
       };
-    } catch (error: unknown) {
+    } catch (error) {
       console.error('User registration error:', error);
       if (
         error instanceof BadRequestException ||

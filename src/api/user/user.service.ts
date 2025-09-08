@@ -7,6 +7,8 @@ import {
 import { PrismaService } from '../../config/prisma/prisma.service';
 import { StudentProfileDto } from './dto/student-profile.dto';
 import { InstructorProfileDto } from './dto/instructor-profile.dto';
+import { UpdateStudentProfileDto } from './dto/update-student-profile.dto';
+import { UpdateInstructorProfileDto } from './dto/update-instructor-profile.dto';
 
 @Injectable()
 export class UserService {
@@ -30,10 +32,9 @@ export class UserService {
     }
   }
 
-  async getUserProfile(id: number): Promise<{
-    user: { id: number; email: string; role: string };
-    profile: StudentProfileDto | InstructorProfileDto | null;
-  }> {
+  async getUserProfile(
+    id: number,
+  ): Promise<StudentProfileDto | InstructorProfileDto | null> {
     try {
       const user = await this.DB.user.findUnique({
         where: { id },
@@ -55,14 +56,7 @@ export class UserService {
         profile = user.instructorProfile ?? null;
       }
 
-      return {
-        user: {
-          id: user.id,
-          email: user.email,
-          role: user.role,
-        },
-        profile,
-      };
+      return profile;
     } catch (error) {
       this.logger.error(`getUserProfile failed for userId=${id}`, error.stack);
       if (error instanceof NotFoundException) throw error;
@@ -70,11 +64,61 @@ export class UserService {
     }
   }
 
-  //
-  // update(id: number, updateUserDto: UpdateUserDto) {
-  //   return `This action updates a #${id} user`;
-  // }
-  //
+  async updateUserProfile(
+    id: number,
+    updateUserDto: UpdateStudentProfileDto | UpdateInstructorProfileDto,
+  ): Promise<StudentProfileDto | InstructorProfileDto | null> {
+    try {
+      const user = await this.DB.user.findUnique({
+        where: { id },
+        include: {
+          studentProfile: true,
+          instructorProfile: true,
+        },
+      });
+
+      if (!user) {
+        throw new NotFoundException(`User with ID ${id} not found`);
+      }
+
+      let updatedProfile: StudentProfileDto | InstructorProfileDto | null =
+        null;
+
+      if (user.role === 'student') {
+        if (!user.studentProfile) {
+          throw new NotFoundException(
+            `Student profile for user ID ${id} not found`,
+          );
+        }
+
+        updatedProfile = await this.DB.studentProfile.update({
+          where: { id: user.studentProfile.id },
+          data: updateUserDto as UpdateStudentProfileDto,
+        });
+      } else if (user.role === 'instructor') {
+        if (!user.instructorProfile) {
+          throw new NotFoundException(
+            `Instructor profile for user ID ${id} not found`,
+          );
+        }
+
+        updatedProfile = await this.DB.instructorProfile.update({
+          where: { id: user.instructorProfile.id },
+          data: updateUserDto as UpdateInstructorProfileDto,
+        });
+      }
+
+      return updatedProfile;
+    } catch (error) {
+      this.logger.error(
+        `updateUserProfile failed for userId=${id}`,
+        error.stack,
+      );
+      if (error instanceof NotFoundException) throw error;
+      throw new InternalServerErrorException('Failed to update user profile');
+    }
+  }
+
   // remove(id: number) {
   //   return `This action removes a #${id} user`;
   // }
