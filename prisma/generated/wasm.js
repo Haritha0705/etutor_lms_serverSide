@@ -174,6 +174,16 @@ exports.Prisma.InstructorProfileScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.CourseScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  category: 'category',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  instructorId: 'instructorId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -199,7 +209,8 @@ exports.Prisma.ModelName = {
   RefreshToken: 'RefreshToken',
   Otp: 'Otp',
   StudentProfile: 'StudentProfile',
-  InstructorProfile: 'InstructorProfile'
+  InstructorProfile: 'InstructorProfile',
+  Course: 'Course'
 };
 
 /**

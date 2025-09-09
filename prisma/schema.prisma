@@ -72,5 +72,19 @@ model InstructorProfile {
   expertise    String?
   profilePic   String?
   updatedAt    DateTime @updatedAt
-  instructor   User     @relation("InstructorUserProfile", fields: [instructorId], references: [id])
+  instructor   User     @relation("InstructorUserProfile", fields: [instructorId], references: [id], onDelete: Cascade)
+
+  courses Course[]
+}
+
+model Course {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  category    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  instructorId Int
+  instructor   InstructorProfile @relation(fields: [instructorId], references: [id], onDelete: Cascade)
 }
