@@ -12,12 +12,26 @@ import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import { Roles } from '../../decorator/roles/roles.decorator';
 import { Role } from '../../enum/role.enum';
+import { EnrollmentsService } from './enrollments.service';
+import { ReviewService } from './review.service';
+import { LessonsService } from './lessons.service';
+import { CourseEnrollmentDto } from './dto/create-enrollment.dto';
+import { CreateReviewDto } from './dto/create-review.dto';
+import { UpdateReviewDto } from './dto/update-review.dto';
+import { CreateLessonDto } from './dto/create-lesson.dto';
+import { UpdateLessonDto } from './dto/update-lesson.dto';
 
 @Roles(Role.INSTRUCTOR)
 @Controller('courses')
 export class CoursesController {
-  constructor(private readonly coursesService: CoursesService) {}
+  constructor(
+    private readonly coursesService: CoursesService,
+    private readonly lessonsService: LessonsService,
+    private readonly enrollmentsService: EnrollmentsService,
+    private readonly reviewService: ReviewService,
+  ) {}
 
+  // --- Course endpoints ---
   @Post()
   createCourse(@Body() createCourseDto: CreateCourseDto) {
     return this.coursesService.createCourse(createCourseDto);
@@ -44,5 +58,71 @@ export class CoursesController {
   @Delete(':id')
   deleteCourse(@Param('id') id: string) {
     return this.coursesService.deleteCourse(+id);
+  }
+
+  // --- Lesson endpoints ---
+  @Post('lessons')
+  createLesson(@Body() createLessonDto: CreateLessonDto) {
+    return this.lessonsService.createLesson(createLessonDto);
+  }
+
+  @Get('lessons/course/:id')
+  findAllLesson(@Param('id') id: string) {
+    return this.lessonsService.findAllLessons(+id);
+  }
+
+  @Get('lessons/:id')
+  findOneLesson(@Param('id') id: string) {
+    return this.lessonsService.findOneLesson(+id);
+  }
+
+  @Patch('lessons/:id')
+  updateLesson(
+    @Param('id') id: string,
+    @Body() updateLessonDto: UpdateLessonDto,
+  ) {
+    return this.lessonsService.updateLesson(+id, updateLessonDto);
+  }
+
+  @Delete('lessons/:id')
+  deleteLesson(@Param('id') id: string) {
+    return this.lessonsService.deleteLesson(+id);
+  }
+
+  // --- Enrollment endpoints ---
+  @Post('enroll')
+  enroll(@Body() dto: CourseEnrollmentDto) {
+    return this.enrollmentsService.enroll(dto);
+  }
+
+  @Delete('unenroll')
+  unenroll(@Body() dto: CourseEnrollmentDto) {
+    return this.enrollmentsService.unenroll(dto);
+  }
+
+  // --- Review endpoints ---
+  @Post('review')
+  create(@Body() createReviewDto: CreateReviewDto) {
+    return this.reviewService.create(createReviewDto);
+  }
+
+  @Get('review')
+  findAll() {
+    return this.reviewService.findAll();
+  }
+
+  @Get('review/:id')
+  findOne(@Param('id') id: string) {
+    return this.reviewService.findOne(+id);
+  }
+
+  @Patch('review/:id')
+  update(@Param('id') id: string, @Body() updateReviewDto: UpdateReviewDto) {
+    return this.reviewService.update(+id, updateReviewDto);
+  }
+
+  @Delete('review/:id')
+  remove(@Param('id') id: string) {
+    return this.reviewService.remove(+id);
   }
 }
