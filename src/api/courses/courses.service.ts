@@ -80,11 +80,18 @@ export class CoursesService {
   /** Update a course */
   async updateCourse(id: number, updateCourseDto: UpdateCourseDto) {
     try {
+      const { instructorId, ...courseData } = updateCourseDto;
+
+      const existingCourse = await this.DB.course.findUnique({ where: { id } });
+      if (!existingCourse) {
+        throw new NotFoundException(`Course with ID ${id} not found`);
+      }
+
       let instructorConnect: { connect: { id: number } } | undefined =
         undefined;
-      if (updateCourseDto.instructorId) {
+      if (instructorId) {
         const instructorExists = await this.DB.instructorProfile.findUnique({
-          where: { id: updateCourseDto.instructorId },
+          where: { id: instructorId },
         });
 
         if (!instructorExists) {
@@ -93,18 +100,9 @@ export class CoursesService {
           );
         }
 
-        instructorConnect = { connect: { id: updateCourseDto.instructorId } };
+        instructorConnect = { connect: { id: instructorId } };
       }
 
-      const { instructorId, ...courseData } = updateCourseDto;
-
-      const existingCourse = await this.DB.course.findUnique({ where: { id } });
-      if (!existingCourse) {
-        this.logger.warn(`Course not found for update: ${id}`);
-        throw new NotFoundException(`Course with ID ${id} not found`);
-      }
-
-      // 3️⃣ Update the course safely
       const updatedCourse = await this.DB.course.update({
         where: { id },
         data: {
@@ -113,7 +111,6 @@ export class CoursesService {
         },
       });
 
-      this.logger.log(`Course updated successfully: ${id}`);
       return {
         success: true,
         message: 'Course updated successfully',
@@ -138,7 +135,6 @@ export class CoursesService {
 
       await this.DB.course.delete({ where: { id } });
 
-      this.logger.log(`Course deleted successfully: ${id}`);
       return {
         success: true,
         message: `Course #${id} deleted successfully`,

@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  HttpCode,
   Param,
   Patch,
   Post,
@@ -19,12 +18,12 @@ import { Role } from '../../enum/role.enum';
 export class CoursesController {
   constructor(private readonly coursesService: CoursesService) {}
 
-  @Post('create')
+  @Post()
   createCourse(@Body() createCourseDto: CreateCourseDto) {
     return this.coursesService.createCourse(createCourseDto);
   }
 
-  @Get('all-courses')
+  @Get()
   findAllCourses() {
     return this.coursesService.findAllCourses();
   }

@@ -78,13 +78,22 @@ model InstructorProfile {
 }
 
 model Course {
-  id          Int      @id @default(autoincrement())
-  title       String
-  description String
-  category    String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
+  id           Int      @id @default(autoincrement())
   instructorId Int
-  instructor   InstructorProfile @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  title        String
+  description  String
+  category     String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  lessons    Lesson[]
+  instructor InstructorProfile @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+}
+
+model Lesson {
+  id       Int    @id @default(autoincrement())
+  title    String
+  content  String
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId Int
 }

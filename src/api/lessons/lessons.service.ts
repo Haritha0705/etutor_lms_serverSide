@@ -1,26 +1,150 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateLessonDto } from './dto/create-lesson.dto';
 import { UpdateLessonDto } from './dto/update-lesson.dto';
+import { PrismaService } from '../../config/prisma/prisma.service';
 
 @Injectable()
 export class LessonsService {
-  create(createLessonDto: CreateLessonDto) {
-    return 'This action adds a new lesson';
+  private readonly logger = new Logger(LessonsService.name);
+  constructor(private readonly DB: PrismaService) {}
+
+  /** Create a new lesson */
+  async createLesson(createLessonDto: CreateLessonDto) {
+    const { courseId, title, content } = createLessonDto;
+
+    try {
+      const course = await this.DB.course.findUnique({
+        where: { id: courseId },
+      });
+      if (!course) {
+        throw new NotFoundException(`Course with ID ${courseId} not found`);
+      }
+
+      const lesson = await this.DB.lesson.create({
+        data: {
+          title,
+          content,
+          course: { connect: { id: courseId } },
+        },
+      });
+
+      return {
+        success: true,
+        message: 'Lesson created successfully',
+        lesson,
+      };
+    } catch (error) {
+      this.logger.error(`Failed to create lesson`, error.stack);
+      if (error instanceof NotFoundException) throw error;
+      throw new InternalServerErrorException('Failed to create lesson');
+    }
   }
 
-  findAll() {
-    return `This action returns all lessons`;
+  /** Get all lessons for a course */
+  async findAllLessons(courseId: number) {
+    try {
+      const course = await this.DB.course.findUnique({
+        where: { id: courseId },
+      });
+      if (!course) {
+        this.logger.warn(`Course with ID ${courseId} not found`);
+        throw new NotFoundException(`Course with ID ${courseId} not found`);
+      }
+
+      const lessons = await this.DB.lesson.findMany({ where: { courseId } });
+
+      return { success: true, data: lessons };
+    } catch (error) {
+      this.logger.error(
+        `Failed to fetch lessons for course ${courseId}`,
+        error.stack,
+      );
+      throw new InternalServerErrorException('Failed to fetch lessons');
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} lesson`;
+  /** Get a single lesson by ID */
+  async findOneLesson(id: number) {
+    try {
+      const lesson = await this.DB.lesson.findUnique({ where: { id } });
+      if (!lesson) {
+        this.logger.warn(`Lesson with ID ${id} not found`);
+        throw new NotFoundException(`Lesson with ID ${id} not found`);
+      }
+
+      return { success: true, data: lesson };
+    } catch (error) {
+      this.logger.error(`Failed to fetch lesson with ID ${id}`, error.stack);
+      if (error instanceof NotFoundException) throw error;
+      throw new InternalServerErrorException('Failed to fetch lesson');
+    }
   }
 
-  update(id: number, updateLessonDto: UpdateLessonDto) {
-    return `This action updates a #${id} lesson`;
+  /** Update a lesson */
+  async updateLesson(id: number, updateLessonDto: UpdateLessonDto) {
+    try {
+      const { courseId, ...lessonData } = updateLessonDto;
+
+      const existingLesson = await this.DB.lesson.findUnique({ where: { id } });
+      if (!existingLesson) {
+        throw new NotFoundException(`Lesson with ID ${id} not found`);
+      }
+
+      let courseConnect: { connect: { id: number } } | undefined = undefined;
+      if (courseId) {
+        const courseExists = await this.DB.course.findUnique({
+          where: { id: courseId },
+        });
+
+        if (!courseExists) {
+          throw new NotFoundException(`Course with ID ${courseId} not found`);
+        }
+
+        courseConnect = { connect: { id: courseId } };
+      }
+
+      const updatedLesson = await this.DB.lesson.update({
+        where: { id },
+        data: {
+          ...lessonData,
+          ...(courseConnect ? { course: courseConnect } : {}),
+        },
+      });
+
+      return {
+        success: true,
+        message: 'Lesson updated successfully',
+        updatedLesson,
+      };
+    } catch (error) {
+      if (error instanceof NotFoundException) throw error;
+      throw new InternalServerErrorException('Failed to update lesson');
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} lesson`;
+  /** Delete a lesson */
+  async deleteLesson(id: number) {
+    try {
+      const existingLesson = await this.DB.lesson.findUnique({ where: { id } });
+      if (!existingLesson) {
+        throw new NotFoundException(`Lesson with ID ${id} not found`);
+      }
+
+      await this.DB.lesson.delete({ where: { id } });
+
+      return {
+        success: true,
+        message: `Lesson #${id} deleted successfully`,
+      };
+    } catch (error) {
+      this.logger.error(`Failed to delete lesson with ID ${id}`, error.stack);
+      if (error instanceof NotFoundException) throw error;
+      throw new InternalServerErrorException('Failed to delete lesson');
+    }
   }
 }

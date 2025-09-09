@@ -176,12 +176,19 @@ exports.Prisma.InstructorProfileScalarFieldEnum = {
 
 exports.Prisma.CourseScalarFieldEnum = {
   id: 'id',
+  instructorId: 'instructorId',
   title: 'title',
   description: 'description',
   category: 'category',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  instructorId: 'instructorId'
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.LessonScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  courseId: 'courseId'
 };
 
 exports.Prisma.SortOrder = {
@@ -210,7 +217,8 @@ exports.Prisma.ModelName = {
   Otp: 'Otp',
   StudentProfile: 'StudentProfile',
   InstructorProfile: 'InstructorProfile',
-  Course: 'Course'
+  Course: 'Course',
+  Lesson: 'Lesson'
 };
 
 /**
