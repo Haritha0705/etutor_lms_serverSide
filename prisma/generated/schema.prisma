@@ -15,39 +15,42 @@ enum Role {
 }
 
 model User {
-  id                       Int            @id @default(autoincrement())
-  email                    String         @unique
-  username                 String?        @unique
-  password                 String?
+  id                       Int       @id @default(autoincrement())
+  email                    String    @unique @db.VarChar(255)
+  username                 String?   @unique @db.VarChar(100)
+  password                 String?   @db.VarChar(255)
   role                     Role
-  enrolledAt               DateTime       @default(now())
-  updatedAt                DateTime       @updatedAt
-  firstName                String?
-  lastName                 String?
-  avatarUrl                String?
-  googleId                 String?        @unique
-  isVerified               Boolean        @default(false)
-  resetPasswordToken       String?
+  enrolledAt               DateTime  @default(now())
+  updatedAt                DateTime  @updatedAt
+  firstName                String?   @db.VarChar(100)
+  lastName                 String?   @db.VarChar(100)
+  avatarUrl                String?   @db.VarChar(500)
+  googleId                 String?   @unique
+  isVerified               Boolean   @default(false)
+  resetPasswordToken       String?   @db.VarChar(255)
   resetPasswordTokenExpiry DateTime?
-  refreshToken             RefreshToken[]
 
+  refreshToken      RefreshToken[]
   studentProfile    StudentProfile?    @relation("StudentUserProfile")
   instructorProfile InstructorProfile? @relation("InstructorUserProfile")
 }
 
 model RefreshToken {
   id        Int      @id @default(autoincrement())
-  token     String   @unique
+  token     String   @unique @db.VarChar(500)
   userId    Int
   expiresAt DateTime
   createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model Otp {
   id        Int      @id @default(autoincrement())
-  email     String
-  code      String
+  email     String   @db.VarChar(255)
+  code      String   @db.VarChar(6)
   expiresAt DateTime
   createdAt DateTime @default(now())
 }
@@ -55,24 +58,27 @@ model Otp {
 model StudentProfile {
   id         Int      @id @default(autoincrement())
   studentId  Int      @unique
-  profilePic String?
-  full_name  String?
-  bio        String?
-  phone      String?
-  address    String?
+  profilePic String?  @db.VarChar(500)
+  full_name  String?  @db.VarChar(200)
+  bio        String?  @db.Text
+  phone      String?  @db.VarChar(20)
+  address    String?  @db.VarChar(300)
   updatedAt  DateTime @updatedAt
-  student    User     @relation("StudentUserProfile", fields: [studentId], references: [id], onDelete: Cascade)
+
+  enrollments CourseEnrollment[]
+  student     User               @relation("StudentUserProfile", fields: [studentId], references: [id], onDelete: Cascade)
 }
 
 model InstructorProfile {
   id           Int      @id @default(autoincrement())
   instructorId Int      @unique
-  full_name    String?
-  bio          String?
-  expertise    String?
-  profilePic   String?
+  full_name    String?  @db.VarChar(200)
+  bio          String?  @db.Text
+  expertise    String?  @db.VarChar(200)
+  profilePic   String?  @db.VarChar(500)
   updatedAt    DateTime @updatedAt
-  instructor   User     @relation("InstructorUserProfile", fields: [instructorId], references: [id], onDelete: Cascade)
+
+  instructor User @relation("InstructorUserProfile", fields: [instructorId], references: [id], onDelete: Cascade)
 
   courses Course[]
 }
@@ -80,20 +86,43 @@ model InstructorProfile {
 model Course {
   id           Int      @id @default(autoincrement())
   instructorId Int
-  title        String
-  description  String
-  category     String
+  title        String   @db.VarChar(255)
+  description  String   @db.Text
+  category     String   @db.VarChar(100)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  lessons    Lesson[]
-  instructor InstructorProfile @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  lessons     Lesson[]
+  enrollments CourseEnrollment[]
+  instructor  InstructorProfile  @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+
+  @@index([instructorId])
 }
 
 model Lesson {
-  id       Int    @id @default(autoincrement())
-  title    String
-  content  String
-  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  courseId Int
+  id        Int      @id @default(autoincrement())
+  courseId  Int
+  title     String   @db.VarChar(255)
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@index([courseId])
+}
+
+model CourseEnrollment {
+  id         Int      @id @default(autoincrement())
+  studentId  Int
+  courseId   Int
+  enrolledAt DateTime @default(now())
+
+  student StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  course  Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, courseId])
+  @@index([studentId])
+  @@index([courseId])
+  @@map("course_enrollments")
 }

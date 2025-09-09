@@ -14,7 +14,7 @@ import { Roles } from '../../decorator/roles/roles.decorator';
 import { Role } from '../../enum/role.enum';
 
 @Roles(Role.INSTRUCTOR)
-@Controller('course')
+@Controller('courses')
 export class CoursesController {
   constructor(private readonly coursesService: CoursesService) {}
 

@@ -11,26 +11,26 @@ import { LessonsService } from './lessons.service';
 import { CreateLessonDto } from './dto/create-lesson.dto';
 import { UpdateLessonDto } from './dto/update-lesson.dto';
 
-@Controller('lessons')
+@Controller('courses')
 export class LessonsController {
   constructor(private readonly lessonsService: LessonsService) {}
 
-  @Post()
+  @Post('lessons')
   createLesson(@Body() createLessonDto: CreateLessonDto) {
     return this.lessonsService.createLesson(createLessonDto);
   }
 
-  @Get('course/:id')
+  @Get('lessons/course/:id')
   findAllLesson(@Param('id') id: string) {
     return this.lessonsService.findAllLessons(+id);
   }
 
-  @Get(':id')
+  @Get('lessons/:id')
   findOneLesson(@Param('id') id: string) {
     return this.lessonsService.findOneLesson(+id);
   }
 
-  @Patch(':id')
+  @Patch('lessons/:id')
   updateLesson(
     @Param('id') id: string,
     @Body() updateLessonDto: UpdateLessonDto,
@@ -38,7 +38,7 @@ export class LessonsController {
     return this.lessonsService.updateLesson(+id, updateLessonDto);
   }
 
-  @Delete(':id')
+  @Delete('lessons/:id')
   deleteLesson(@Param('id') id: string) {
     return this.lessonsService.deleteLesson(+id);
   }
