@@ -91,7 +91,7 @@ export class AuthController {
         avatarUrl: body.avatarUrl,
         googleId: body.googleId,
       },
-      body.role, // STUDENT or INSTRUCTOR
+      body.role,
     );
   }
 }

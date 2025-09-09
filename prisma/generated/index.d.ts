@@ -1294,15 +1294,15 @@ export namespace Prisma {
     username: string | null
     password: string | null
     role: $Enums.Role | null
-    googleId: string | null
+    enrolledAt: Date | null
+    updatedAt: Date | null
     firstName: string | null
     lastName: string | null
     avatarUrl: string | null
+    googleId: string | null
     isVerified: boolean | null
     resetPasswordToken: string | null
     resetPasswordTokenExpiry: Date | null
-    enrolledAt: Date | null
-    updatedAt: Date | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1311,15 +1311,15 @@ export namespace Prisma {
     username: string | null
     password: string | null
     role: $Enums.Role | null
-    googleId: string | null
+    enrolledAt: Date | null
+    updatedAt: Date | null
     firstName: string | null
     lastName: string | null
     avatarUrl: string | null
+    googleId: string | null
     isVerified: boolean | null
     resetPasswordToken: string | null
     resetPasswordTokenExpiry: Date | null
-    enrolledAt: Date | null
-    updatedAt: Date | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1328,15 +1328,15 @@ export namespace Prisma {
     username: number
     password: number
     role: number
-    googleId: number
+    enrolledAt: number
+    updatedAt: number
     firstName: number
     lastName: number
     avatarUrl: number
+    googleId: number
     isVerified: number
     resetPasswordToken: number
     resetPasswordTokenExpiry: number
-    enrolledAt: number
-    updatedAt: number
     _all: number
   }
 
@@ -1355,15 +1355,15 @@ export namespace Prisma {
     username?: true
     password?: true
     role?: true
-    googleId?: true
+    enrolledAt?: true
+    updatedAt?: true
     firstName?: true
     lastName?: true
     avatarUrl?: true
+    googleId?: true
     isVerified?: true
     resetPasswordToken?: true
     resetPasswordTokenExpiry?: true
-    enrolledAt?: true
-    updatedAt?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1372,15 +1372,15 @@ export namespace Prisma {
     username?: true
     password?: true
     role?: true
-    googleId?: true
+    enrolledAt?: true
+    updatedAt?: true
     firstName?: true
     lastName?: true
     avatarUrl?: true
+    googleId?: true
     isVerified?: true
     resetPasswordToken?: true
     resetPasswordTokenExpiry?: true
-    enrolledAt?: true
-    updatedAt?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1389,15 +1389,15 @@ export namespace Prisma {
     username?: true
     password?: true
     role?: true
-    googleId?: true
+    enrolledAt?: true
+    updatedAt?: true
     firstName?: true
     lastName?: true
     avatarUrl?: true
+    googleId?: true
     isVerified?: true
     resetPasswordToken?: true
     resetPasswordTokenExpiry?: true
-    enrolledAt?: true
-    updatedAt?: true
     _all?: true
   }
 
@@ -1493,15 +1493,15 @@ export namespace Prisma {
     username: string | null
     password: string | null
     role: $Enums.Role
-    googleId: string | null
+    enrolledAt: Date
+    updatedAt: Date
     firstName: string | null
     lastName: string | null
     avatarUrl: string | null
+    googleId: string | null
     isVerified: boolean
     resetPasswordToken: string | null
     resetPasswordTokenExpiry: Date | null
-    enrolledAt: Date
-    updatedAt: Date
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -1529,15 +1529,15 @@ export namespace Prisma {
     username?: boolean
     password?: boolean
     role?: boolean
-    googleId?: boolean
+    enrolledAt?: boolean
+    updatedAt?: boolean
     firstName?: boolean
     lastName?: boolean
     avatarUrl?: boolean
+    googleId?: boolean
     isVerified?: boolean
     resetPasswordToken?: boolean
     resetPasswordTokenExpiry?: boolean
-    enrolledAt?: boolean
-    updatedAt?: boolean
     refreshToken?: boolean | User$refreshTokenArgs<ExtArgs>
     studentProfile?: boolean | User$studentProfileArgs<ExtArgs>
     instructorProfile?: boolean | User$instructorProfileArgs<ExtArgs>
@@ -1550,15 +1550,15 @@ export namespace Prisma {
     username?: boolean
     password?: boolean
     role?: boolean
-    googleId?: boolean
+    enrolledAt?: boolean
+    updatedAt?: boolean
     firstName?: boolean
     lastName?: boolean
     avatarUrl?: boolean
+    googleId?: boolean
     isVerified?: boolean
     resetPasswordToken?: boolean
     resetPasswordTokenExpiry?: boolean
-    enrolledAt?: boolean
-    updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1567,15 +1567,15 @@ export namespace Prisma {
     username?: boolean
     password?: boolean
     role?: boolean
-    googleId?: boolean
+    enrolledAt?: boolean
+    updatedAt?: boolean
     firstName?: boolean
     lastName?: boolean
     avatarUrl?: boolean
+    googleId?: boolean
     isVerified?: boolean
     resetPasswordToken?: boolean
     resetPasswordTokenExpiry?: boolean
-    enrolledAt?: boolean
-    updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1584,18 +1584,18 @@ export namespace Prisma {
     username?: boolean
     password?: boolean
     role?: boolean
-    googleId?: boolean
+    enrolledAt?: boolean
+    updatedAt?: boolean
     firstName?: boolean
     lastName?: boolean
     avatarUrl?: boolean
+    googleId?: boolean
     isVerified?: boolean
     resetPasswordToken?: boolean
     resetPasswordTokenExpiry?: boolean
-    enrolledAt?: boolean
-    updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "password" | "role" | "googleId" | "firstName" | "lastName" | "avatarUrl" | "isVerified" | "resetPasswordToken" | "resetPasswordTokenExpiry" | "enrolledAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "password" | "role" | "enrolledAt" | "updatedAt" | "firstName" | "lastName" | "avatarUrl" | "googleId" | "isVerified" | "resetPasswordToken" | "resetPasswordTokenExpiry", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     refreshToken?: boolean | User$refreshTokenArgs<ExtArgs>
     studentProfile?: boolean | User$studentProfileArgs<ExtArgs>
@@ -1618,15 +1618,15 @@ export namespace Prisma {
       username: string | null
       password: string | null
       role: $Enums.Role
-      googleId: string | null
+      enrolledAt: Date
+      updatedAt: Date
       firstName: string | null
       lastName: string | null
       avatarUrl: string | null
+      googleId: string | null
       isVerified: boolean
       resetPasswordToken: string | null
       resetPasswordTokenExpiry: Date | null
-      enrolledAt: Date
-      updatedAt: Date
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2058,15 +2058,15 @@ export namespace Prisma {
     readonly username: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'Role'>
-    readonly googleId: FieldRef<"User", 'String'>
+    readonly enrolledAt: FieldRef<"User", 'DateTime'>
+    readonly updatedAt: FieldRef<"User", 'DateTime'>
     readonly firstName: FieldRef<"User", 'String'>
     readonly lastName: FieldRef<"User", 'String'>
     readonly avatarUrl: FieldRef<"User", 'String'>
+    readonly googleId: FieldRef<"User", 'String'>
     readonly isVerified: FieldRef<"User", 'Boolean'>
     readonly resetPasswordToken: FieldRef<"User", 'String'>
     readonly resetPasswordTokenExpiry: FieldRef<"User", 'DateTime'>
-    readonly enrolledAt: FieldRef<"User", 'DateTime'>
-    readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
     
 
@@ -6937,15 +6937,15 @@ export namespace Prisma {
     username: 'username',
     password: 'password',
     role: 'role',
-    googleId: 'googleId',
+    enrolledAt: 'enrolledAt',
+    updatedAt: 'updatedAt',
     firstName: 'firstName',
     lastName: 'lastName',
     avatarUrl: 'avatarUrl',
+    googleId: 'googleId',
     isVerified: 'isVerified',
     resetPasswordToken: 'resetPasswordToken',
-    resetPasswordTokenExpiry: 'resetPasswordTokenExpiry',
-    enrolledAt: 'enrolledAt',
-    updatedAt: 'updatedAt'
+    resetPasswordTokenExpiry: 'resetPasswordTokenExpiry'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -7072,13 +7072,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -7089,6 +7082,13 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -7118,15 +7118,15 @@ export namespace Prisma {
     username?: StringNullableFilter<"User"> | string | null
     password?: StringNullableFilter<"User"> | string | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
-    googleId?: StringNullableFilter<"User"> | string | null
+    enrolledAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
     firstName?: StringNullableFilter<"User"> | string | null
     lastName?: StringNullableFilter<"User"> | string | null
     avatarUrl?: StringNullableFilter<"User"> | string | null
+    googleId?: StringNullableFilter<"User"> | string | null
     isVerified?: BoolFilter<"User"> | boolean
     resetPasswordToken?: StringNullableFilter<"User"> | string | null
     resetPasswordTokenExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
-    enrolledAt?: DateTimeFilter<"User"> | Date | string
-    updatedAt?: DateTimeFilter<"User"> | Date | string
     refreshToken?: RefreshTokenListRelationFilter
     studentProfile?: XOR<StudentProfileNullableScalarRelationFilter, StudentProfileWhereInput> | null
     instructorProfile?: XOR<InstructorProfileNullableScalarRelationFilter, InstructorProfileWhereInput> | null
@@ -7138,15 +7138,15 @@ export namespace Prisma {
     username?: SortOrderInput | SortOrder
     password?: SortOrderInput | SortOrder
     role?: SortOrder
-    googleId?: SortOrderInput | SortOrder
+    enrolledAt?: SortOrder
+    updatedAt?: SortOrder
     firstName?: SortOrderInput | SortOrder
     lastName?: SortOrderInput | SortOrder
     avatarUrl?: SortOrderInput | SortOrder
+    googleId?: SortOrderInput | SortOrder
     isVerified?: SortOrder
     resetPasswordToken?: SortOrderInput | SortOrder
     resetPasswordTokenExpiry?: SortOrderInput | SortOrder
-    enrolledAt?: SortOrder
-    updatedAt?: SortOrder
     refreshToken?: RefreshTokenOrderByRelationAggregateInput
     studentProfile?: StudentProfileOrderByWithRelationInput
     instructorProfile?: InstructorProfileOrderByWithRelationInput
@@ -7162,14 +7162,14 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     password?: StringNullableFilter<"User"> | string | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
+    enrolledAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
     firstName?: StringNullableFilter<"User"> | string | null
     lastName?: StringNullableFilter<"User"> | string | null
     avatarUrl?: StringNullableFilter<"User"> | string | null
     isVerified?: BoolFilter<"User"> | boolean
     resetPasswordToken?: StringNullableFilter<"User"> | string | null
     resetPasswordTokenExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
-    enrolledAt?: DateTimeFilter<"User"> | Date | string
-    updatedAt?: DateTimeFilter<"User"> | Date | string
     refreshToken?: RefreshTokenListRelationFilter
     studentProfile?: XOR<StudentProfileNullableScalarRelationFilter, StudentProfileWhereInput> | null
     instructorProfile?: XOR<InstructorProfileNullableScalarRelationFilter, InstructorProfileWhereInput> | null
@@ -7181,15 +7181,15 @@ export namespace Prisma {
     username?: SortOrderInput | SortOrder
     password?: SortOrderInput | SortOrder
     role?: SortOrder
-    googleId?: SortOrderInput | SortOrder
+    enrolledAt?: SortOrder
+    updatedAt?: SortOrder
     firstName?: SortOrderInput | SortOrder
     lastName?: SortOrderInput | SortOrder
     avatarUrl?: SortOrderInput | SortOrder
+    googleId?: SortOrderInput | SortOrder
     isVerified?: SortOrder
     resetPasswordToken?: SortOrderInput | SortOrder
     resetPasswordTokenExpiry?: SortOrderInput | SortOrder
-    enrolledAt?: SortOrder
-    updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -7206,15 +7206,15 @@ export namespace Prisma {
     username?: StringNullableWithAggregatesFilter<"User"> | string | null
     password?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
-    googleId?: StringNullableWithAggregatesFilter<"User"> | string | null
+    enrolledAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     firstName?: StringNullableWithAggregatesFilter<"User"> | string | null
     lastName?: StringNullableWithAggregatesFilter<"User"> | string | null
     avatarUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
+    googleId?: StringNullableWithAggregatesFilter<"User"> | string | null
     isVerified?: BoolWithAggregatesFilter<"User"> | boolean
     resetPasswordToken?: StringNullableWithAggregatesFilter<"User"> | string | null
     resetPasswordTokenExpiry?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
-    enrolledAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
 
   export type RefreshTokenWhereInput = {
@@ -7472,15 +7472,15 @@ export namespace Prisma {
     username?: string | null
     password?: string | null
     role: $Enums.Role
-    googleId?: string | null
+    enrolledAt?: Date | string
+    updatedAt?: Date | string
     firstName?: string | null
     lastName?: string | null
     avatarUrl?: string | null
+    googleId?: string | null
     isVerified?: boolean
     resetPasswordToken?: string | null
     resetPasswordTokenExpiry?: Date | string | null
-    enrolledAt?: Date | string
-    updatedAt?: Date | string
     refreshToken?: RefreshTokenCreateNestedManyWithoutUserInput
     studentProfile?: StudentProfileCreateNestedOneWithoutStudentInput
     instructorProfile?: InstructorProfileCreateNestedOneWithoutInstructorInput
@@ -7492,15 +7492,15 @@ export namespace Prisma {
     username?: string | null
     password?: string | null
     role: $Enums.Role
-    googleId?: string | null
+    enrolledAt?: Date | string
+    updatedAt?: Date | string
     firstName?: string | null
     lastName?: string | null
     avatarUrl?: string | null
+    googleId?: string | null
     isVerified?: boolean
     resetPasswordToken?: string | null
     resetPasswordTokenExpiry?: Date | string | null
-    enrolledAt?: Date | string
-    updatedAt?: Date | string
     refreshToken?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
     studentProfile?: StudentProfileUncheckedCreateNestedOneWithoutStudentInput
     instructorProfile?: InstructorProfileUncheckedCreateNestedOneWithoutInstructorInput
@@ -7511,15 +7511,15 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     resetPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     refreshToken?: RefreshTokenUpdateManyWithoutUserNestedInput
     studentProfile?: StudentProfileUpdateOneWithoutStudentNestedInput
     instructorProfile?: InstructorProfileUpdateOneWithoutInstructorNestedInput
@@ -7531,15 +7531,15 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     resetPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     refreshToken?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
     studentProfile?: StudentProfileUncheckedUpdateOneWithoutStudentNestedInput
     instructorProfile?: InstructorProfileUncheckedUpdateOneWithoutInstructorNestedInput
@@ -7551,15 +7551,15 @@ export namespace Prisma {
     username?: string | null
     password?: string | null
     role: $Enums.Role
-    googleId?: string | null
+    enrolledAt?: Date | string
+    updatedAt?: Date | string
     firstName?: string | null
     lastName?: string | null
     avatarUrl?: string | null
+    googleId?: string | null
     isVerified?: boolean
     resetPasswordToken?: string | null
     resetPasswordTokenExpiry?: Date | string | null
-    enrolledAt?: Date | string
-    updatedAt?: Date | string
   }
 
   export type UserUpdateManyMutationInput = {
@@ -7567,15 +7567,15 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     resetPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -7584,15 +7584,15 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     resetPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type RefreshTokenCreateInput = {
@@ -7887,6 +7887,17 @@ export namespace Prisma {
     not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
   export type BoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
@@ -7901,17 +7912,6 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type RefreshTokenListRelationFilter = {
@@ -7945,15 +7945,15 @@ export namespace Prisma {
     username?: SortOrder
     password?: SortOrder
     role?: SortOrder
-    googleId?: SortOrder
+    enrolledAt?: SortOrder
+    updatedAt?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
     avatarUrl?: SortOrder
+    googleId?: SortOrder
     isVerified?: SortOrder
     resetPasswordToken?: SortOrder
     resetPasswordTokenExpiry?: SortOrder
-    enrolledAt?: SortOrder
-    updatedAt?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
@@ -7966,15 +7966,15 @@ export namespace Prisma {
     username?: SortOrder
     password?: SortOrder
     role?: SortOrder
-    googleId?: SortOrder
+    enrolledAt?: SortOrder
+    updatedAt?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
     avatarUrl?: SortOrder
+    googleId?: SortOrder
     isVerified?: SortOrder
     resetPasswordToken?: SortOrder
     resetPasswordTokenExpiry?: SortOrder
-    enrolledAt?: SortOrder
-    updatedAt?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -7983,15 +7983,15 @@ export namespace Prisma {
     username?: SortOrder
     password?: SortOrder
     role?: SortOrder
-    googleId?: SortOrder
+    enrolledAt?: SortOrder
+    updatedAt?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
     avatarUrl?: SortOrder
+    googleId?: SortOrder
     isVerified?: SortOrder
     resetPasswordToken?: SortOrder
     resetPasswordTokenExpiry?: SortOrder
-    enrolledAt?: SortOrder
-    updatedAt?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
@@ -8060,6 +8060,20 @@ export namespace Prisma {
     _max?: NestedEnumRoleFilter<$PrismaModel>
   }
 
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
   export type BoolWithAggregatesFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
@@ -8080,20 +8094,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type UserScalarRelationFilter = {
@@ -8300,16 +8300,16 @@ export namespace Prisma {
     set?: $Enums.Role
   }
 
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
-  }
-
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
   }
 
   export type RefreshTokenUpdateManyWithoutUserNestedInput = {
@@ -8476,6 +8476,17 @@ export namespace Prisma {
     not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
   export type NestedBoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
@@ -8490,17 +8501,6 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -8585,6 +8585,20 @@ export namespace Prisma {
     _max?: NestedEnumRoleFilter<$PrismaModel>
   }
 
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
   export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
@@ -8605,20 +8619,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type RefreshTokenCreateWithoutUserInput = {
@@ -8780,15 +8780,15 @@ export namespace Prisma {
     username?: string | null
     password?: string | null
     role: $Enums.Role
-    googleId?: string | null
+    enrolledAt?: Date | string
+    updatedAt?: Date | string
     firstName?: string | null
     lastName?: string | null
     avatarUrl?: string | null
+    googleId?: string | null
     isVerified?: boolean
     resetPasswordToken?: string | null
     resetPasswordTokenExpiry?: Date | string | null
-    enrolledAt?: Date | string
-    updatedAt?: Date | string
     studentProfile?: StudentProfileCreateNestedOneWithoutStudentInput
     instructorProfile?: InstructorProfileCreateNestedOneWithoutInstructorInput
   }
@@ -8799,15 +8799,15 @@ export namespace Prisma {
     username?: string | null
     password?: string | null
     role: $Enums.Role
-    googleId?: string | null
+    enrolledAt?: Date | string
+    updatedAt?: Date | string
     firstName?: string | null
     lastName?: string | null
     avatarUrl?: string | null
+    googleId?: string | null
     isVerified?: boolean
     resetPasswordToken?: string | null
     resetPasswordTokenExpiry?: Date | string | null
-    enrolledAt?: Date | string
-    updatedAt?: Date | string
     studentProfile?: StudentProfileUncheckedCreateNestedOneWithoutStudentInput
     instructorProfile?: InstructorProfileUncheckedCreateNestedOneWithoutInstructorInput
   }
@@ -8833,15 +8833,15 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     resetPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     studentProfile?: StudentProfileUpdateOneWithoutStudentNestedInput
     instructorProfile?: InstructorProfileUpdateOneWithoutInstructorNestedInput
   }
@@ -8852,15 +8852,15 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     resetPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     studentProfile?: StudentProfileUncheckedUpdateOneWithoutStudentNestedInput
     instructorProfile?: InstructorProfileUncheckedUpdateOneWithoutInstructorNestedInput
   }
@@ -8870,15 +8870,15 @@ export namespace Prisma {
     username?: string | null
     password?: string | null
     role: $Enums.Role
-    googleId?: string | null
+    enrolledAt?: Date | string
+    updatedAt?: Date | string
     firstName?: string | null
     lastName?: string | null
     avatarUrl?: string | null
+    googleId?: string | null
     isVerified?: boolean
     resetPasswordToken?: string | null
     resetPasswordTokenExpiry?: Date | string | null
-    enrolledAt?: Date | string
-    updatedAt?: Date | string
     refreshToken?: RefreshTokenCreateNestedManyWithoutUserInput
     instructorProfile?: InstructorProfileCreateNestedOneWithoutInstructorInput
   }
@@ -8889,15 +8889,15 @@ export namespace Prisma {
     username?: string | null
     password?: string | null
     role: $Enums.Role
-    googleId?: string | null
+    enrolledAt?: Date | string
+    updatedAt?: Date | string
     firstName?: string | null
     lastName?: string | null
     avatarUrl?: string | null
+    googleId?: string | null
     isVerified?: boolean
     resetPasswordToken?: string | null
     resetPasswordTokenExpiry?: Date | string | null
-    enrolledAt?: Date | string
-    updatedAt?: Date | string
     refreshToken?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
     instructorProfile?: InstructorProfileUncheckedCreateNestedOneWithoutInstructorInput
   }
@@ -8923,15 +8923,15 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     resetPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     refreshToken?: RefreshTokenUpdateManyWithoutUserNestedInput
     instructorProfile?: InstructorProfileUpdateOneWithoutInstructorNestedInput
   }
@@ -8942,15 +8942,15 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     resetPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     refreshToken?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
     instructorProfile?: InstructorProfileUncheckedUpdateOneWithoutInstructorNestedInput
   }
@@ -8960,15 +8960,15 @@ export namespace Prisma {
     username?: string | null
     password?: string | null
     role: $Enums.Role
-    googleId?: string | null
+    enrolledAt?: Date | string
+    updatedAt?: Date | string
     firstName?: string | null
     lastName?: string | null
     avatarUrl?: string | null
+    googleId?: string | null
     isVerified?: boolean
     resetPasswordToken?: string | null
     resetPasswordTokenExpiry?: Date | string | null
-    enrolledAt?: Date | string
-    updatedAt?: Date | string
     refreshToken?: RefreshTokenCreateNestedManyWithoutUserInput
     studentProfile?: StudentProfileCreateNestedOneWithoutStudentInput
   }
@@ -8979,15 +8979,15 @@ export namespace Prisma {
     username?: string | null
     password?: string | null
     role: $Enums.Role
-    googleId?: string | null
+    enrolledAt?: Date | string
+    updatedAt?: Date | string
     firstName?: string | null
     lastName?: string | null
     avatarUrl?: string | null
+    googleId?: string | null
     isVerified?: boolean
     resetPasswordToken?: string | null
     resetPasswordTokenExpiry?: Date | string | null
-    enrolledAt?: Date | string
-    updatedAt?: Date | string
     refreshToken?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
     studentProfile?: StudentProfileUncheckedCreateNestedOneWithoutStudentInput
   }
@@ -9013,15 +9013,15 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     resetPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     refreshToken?: RefreshTokenUpdateManyWithoutUserNestedInput
     studentProfile?: StudentProfileUpdateOneWithoutStudentNestedInput
   }
@@ -9032,15 +9032,15 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     resetPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     refreshToken?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
     studentProfile?: StudentProfileUncheckedUpdateOneWithoutStudentNestedInput
   }

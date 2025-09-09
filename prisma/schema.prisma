@@ -41,7 +41,7 @@ model RefreshToken {
   userId    Int
   expiresAt DateTime
   createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Otp {
@@ -61,7 +61,7 @@ model StudentProfile {
   phone      String?
   address    String?
   updatedAt  DateTime @updatedAt
-  student    User     @relation("StudentUserProfile", fields: [studentId], references: [id])
+  student    User     @relation("StudentUserProfile", fields: [studentId], references: [id], onDelete: Cascade)
 }
 
 model InstructorProfile {

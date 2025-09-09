@@ -126,15 +126,15 @@ exports.Prisma.UserScalarFieldEnum = {
   username: 'username',
   password: 'password',
   role: 'role',
-  googleId: 'googleId',
+  enrolledAt: 'enrolledAt',
+  updatedAt: 'updatedAt',
   firstName: 'firstName',
   lastName: 'lastName',
   avatarUrl: 'avatarUrl',
+  googleId: 'googleId',
   isVerified: 'isVerified',
   resetPasswordToken: 'resetPasswordToken',
-  resetPasswordTokenExpiry: 'resetPasswordTokenExpiry',
-  enrolledAt: 'enrolledAt',
-  updatedAt: 'updatedAt'
+  resetPasswordTokenExpiry: 'resetPasswordTokenExpiry'
 };
 
 exports.Prisma.RefreshTokenScalarFieldEnum = {

@@ -119,7 +119,28 @@ export class UserService {
     }
   }
 
-  // remove(id: number) {
-  //   return `This action removes a #${id} user`;
-  // }
+  async deleteUserProfile(id: number) {
+    try {
+      const user = await this.DB.user.findUnique({ where: { id } });
+
+      if (!user) {
+        throw new NotFoundException(`User with ID ${id} not found`);
+      }
+
+      await this.DB.user.delete({ where: { id } });
+
+      return {
+        success: true,
+        message: `User with ID #${id} and related profile deleted successfully.`,
+        userId: id,
+      };
+    } catch (error) {
+      this.logger.error(
+        `deleteUserProfile failed for userId=${id}`,
+        error.stack,
+      );
+      if (error instanceof NotFoundException) throw error;
+      throw new InternalServerErrorException('Failed to delete user');
+    }
+  }
 }
