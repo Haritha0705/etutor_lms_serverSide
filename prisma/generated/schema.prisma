@@ -66,6 +66,7 @@ model StudentProfile {
   updatedAt  DateTime @updatedAt
 
   enrollments CourseEnrollment[]
+  reviews     Review[]
   student     User               @relation("StudentUserProfile", fields: [studentId], references: [id], onDelete: Cascade)
 }
 
@@ -94,6 +95,7 @@ model Course {
 
   lessons     Lesson[]
   enrollments CourseEnrollment[]
+  reviews     Review[]
   instructor  InstructorProfile  @relation(fields: [instructorId], references: [id], onDelete: Cascade)
 
   @@index([instructorId])
@@ -105,7 +107,7 @@ model Lesson {
   title     String   @db.VarChar(255)
   content   String   @db.Text
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
@@ -125,4 +127,21 @@ model CourseEnrollment {
   @@index([studentId])
   @@index([courseId])
   @@map("course_enrollments")
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  studentId Int
+  courseId  Int
+  rating    Int      @db.Integer
+  comment   String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  student StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  course  Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, courseId])
+  @@index([studentId])
+  @@index([courseId])
 }

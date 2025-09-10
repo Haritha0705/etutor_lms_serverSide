@@ -200,6 +200,16 @@ exports.Prisma.CourseEnrollmentScalarFieldEnum = {
   enrolledAt: 'enrolledAt'
 };
 
+exports.Prisma.ReviewScalarFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  courseId: 'courseId',
+  rating: 'rating',
+  comment: 'comment',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -228,7 +238,8 @@ exports.Prisma.ModelName = {
   InstructorProfile: 'InstructorProfile',
   Course: 'Course',
   Lesson: 'Lesson',
-  CourseEnrollment: 'CourseEnrollment'
+  CourseEnrollment: 'CourseEnrollment',
+  Review: 'Review'
 };
 
 /**

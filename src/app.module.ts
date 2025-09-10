@@ -6,6 +6,7 @@ import { PaymentsModule } from './api/payments/payments.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ApiCacheInterceptor } from './interceptor/api-cache/api-cache.interceptor';
 import { CacheModule } from '@nestjs/cache-manager';
+import { MessagesModule } from './api/messages/messages.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { CacheModule } from '@nestjs/cache-manager';
     PaymentsModule,
     UserModule,
     CoursesModule,
+    MessagesModule,
   ],
   providers: [
     {

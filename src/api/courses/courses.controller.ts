@@ -13,13 +13,13 @@ import { UpdateCourseDto } from './dto/update-course.dto';
 import { Roles } from '../../decorator/roles/roles.decorator';
 import { Role } from '../../enum/role.enum';
 import { EnrollmentsService } from './enrollments.service';
-import { ReviewService } from './review.service';
 import { LessonsService } from './lessons.service';
 import { CourseEnrollmentDto } from './dto/create-enrollment.dto';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
 import { CreateLessonDto } from './dto/create-lesson.dto';
 import { UpdateLessonDto } from './dto/update-lesson.dto';
+import { ReviewService } from './review.service';
 
 @Roles(Role.INSTRUCTOR)
 @Controller('courses')
@@ -102,27 +102,25 @@ export class CoursesController {
 
   // --- Review endpoints ---
   @Post('review')
-  create(@Body() createReviewDto: CreateReviewDto) {
-    return this.reviewService.create(createReviewDto);
-  }
-
-  @Get('review')
-  findAll() {
-    return this.reviewService.findAll();
+  createReview(@Body() createReviewDto: CreateReviewDto) {
+    return this.reviewService.createReview(createReviewDto);
   }
 
   @Get('review/:id')
-  findOne(@Param('id') id: string) {
-    return this.reviewService.findOne(+id);
+  ListReviewsForCourse(@Param('id') id: string) {
+    return this.reviewService.listReviewsForCourse(+id);
   }
 
   @Patch('review/:id')
-  update(@Param('id') id: string, @Body() updateReviewDto: UpdateReviewDto) {
-    return this.reviewService.update(+id, updateReviewDto);
+  updateReview(
+    @Param('id') id: string,
+    @Body() updateReviewDto: UpdateReviewDto,
+  ) {
+    return this.reviewService.updateReview(+id, updateReviewDto);
   }
 
   @Delete('review/:id')
-  remove(@Param('id') id: string) {
-    return this.reviewService.remove(+id);
+  deleteReview(@Param('id') id: string) {
+    return this.reviewService.deleteReview(+id);
   }
 }

@@ -52,11 +52,13 @@ export class LessonsService {
         where: { id: courseId },
       });
       if (!course) {
-        this.logger.warn(`Course with ID ${courseId} not found`);
         throw new NotFoundException(`Course with ID ${courseId} not found`);
       }
 
-      const lessons = await this.DB.lesson.findMany({ where: { courseId } });
+      const lessons = await this.DB.lesson.findMany({
+        where: { courseId },
+        orderBy: { createdAt: 'desc' },
+      });
 
       return { success: true, data: lessons };
     } catch (error) {
