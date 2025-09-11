@@ -20,6 +20,9 @@ import { UpdateReviewDto } from './dto/update-review.dto';
 import { CreateLessonDto } from './dto/create-lesson.dto';
 import { UpdateLessonDto } from './dto/update-lesson.dto';
 import { ReviewService } from './review.service';
+import { CreateQuizDto } from './dto/create-quiz.dto';
+import { QuizzesService } from './quizzes.service';
+import { UpdateQuizDto } from './dto/update-quiz.dto';
 
 @Roles(Role.INSTRUCTOR)
 @Controller('courses')
@@ -29,6 +32,7 @@ export class CoursesController {
     private readonly lessonsService: LessonsService,
     private readonly enrollmentsService: EnrollmentsService,
     private readonly reviewService: ReviewService,
+    private readonly quizzesService: QuizzesService,
   ) {}
 
   // --- Course endpoints ---
@@ -122,5 +126,31 @@ export class CoursesController {
   @Delete('review/:id')
   deleteReview(@Param('id') id: string) {
     return this.reviewService.deleteReview(+id);
+  }
+
+  // --- Quizzes endpoints ---
+  @Post('quizzes')
+  createQuiz(@Body() createQuizDto: CreateQuizDto) {
+    return this.quizzesService.createQuiz(createQuizDto);
+  }
+
+  @Get('quizzes/course/:courseId')
+  findAllQuiz(@Param('courseId') courseId: string) {
+    return this.quizzesService.findAllQuiz(+courseId);
+  }
+
+  @Get('quizzes/:id')
+  findOneQuiz(@Param('id') id: string) {
+    return this.quizzesService.findOneQuiz(+id);
+  }
+
+  @Patch('quizzes/:id')
+  updateQuiz(@Param('id') id: string, @Body() updateQuizDto: UpdateQuizDto) {
+    return this.quizzesService.updateQuiz(+id, updateQuizDto);
+  }
+
+  @Delete('quizzes/:id')
+  deleteQuiz(@Param('id') id: string) {
+    return this.quizzesService.deleteQuiz(+id);
   }
 }
