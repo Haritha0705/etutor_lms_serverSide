@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   Logger,
@@ -7,6 +8,7 @@ import {
 import { PrismaService } from '../../config/prisma/prisma.service';
 import { CreateQuizDto } from './dto/create-quiz.dto';
 import { UpdateQuizDto } from './dto/update-quiz.dto';
+import { CreateQuizSubmissionDto } from './dto/create-quiz-submission.dto';
 
 @Injectable()
 export class QuizzesService {
@@ -16,7 +18,7 @@ export class QuizzesService {
 
   /** Create a new Quiz */
   async createQuiz(createQuizDto: CreateQuizDto) {
-    const { assignmentId, question, answers } = createQuizDto;
+    const { assignmentId, question, answers, correctAnswer } = createQuizDto;
 
     try {
       const assignment = await this.DB.assignment.findUnique({
@@ -29,6 +31,7 @@ export class QuizzesService {
         data: {
           question,
           answers,
+          correctAnswer,
           assignment: { connect: { id: assignmentId } },
         },
       });
@@ -141,5 +144,72 @@ export class QuizzesService {
       if (error instanceof NotFoundException) throw error;
       throw new InternalServerErrorException('Failed to delete quiz');
     }
+  }
+
+  /** Submit a new quiz answer */
+  async quizSubmission(createQuizSubmissionDto: CreateQuizSubmissionDto) {
+    const { studentId, quizId, answer } = createQuizSubmissionDto;
+
+    try {
+      const quiz = await this.DB.quiz.findUnique({ where: { id: quizId } });
+      if (!quiz)
+        throw new NotFoundException(`Quiz with ID ${quizId} not found`);
+
+      const student = await this.DB.studentProfile.findUnique({
+        where: { id: studentId },
+      });
+      if (!student)
+        throw new NotFoundException(`Student with ID ${studentId} not found`);
+
+      const score = quiz.correctAnswer === answer ? 1 : 0;
+
+      const submission = await this.DB.studentQuizSubmission.create({
+        data: { studentId, quizId, answer, score },
+        include: { quiz: true, student: true },
+      });
+      return {
+        success: true,
+        message: `Quiz #${quizId} is ${score === 1 ? 'Correct' : 'Wrong'}`,
+        submission,
+      };
+    } catch (err) {
+      this.logger.error(`Failed to create quiz submission`, err.stack);
+      if (
+        err instanceof NotFoundException ||
+        err instanceof BadRequestException
+      )
+        throw err;
+      throw new InternalServerErrorException(
+        'Failed to create quiz submission',
+      );
+    }
+  }
+
+  /** All submissions by a student */
+  async findAllQuizSubmissionsByStudent(studentId: number) {
+    return this.DB.studentQuizSubmission.findMany({
+      where: { studentId },
+      include: { quiz: true },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  /** All submissions for a quiz */
+  async findQuizSubmissionsAllByQuiz(quizId: number) {
+    return this.DB.studentQuizSubmission.findMany({
+      where: { quizId },
+      include: { student: true },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  /** Single submission */
+  async findOneQuizSubmission(id: number) {
+    const submission = await this.DB.studentQuizSubmission.findUnique({
+      where: { id },
+      include: { student: true, quiz: true },
+    });
+    if (!submission) throw new NotFoundException(`Submission ${id} not found`);
+    return submission;
   }
 }

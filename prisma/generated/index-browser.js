@@ -126,15 +126,15 @@ exports.Prisma.UserScalarFieldEnum = {
   username: 'username',
   password: 'password',
   role: 'role',
-  enrolledAt: 'enrolledAt',
-  updatedAt: 'updatedAt',
   firstName: 'firstName',
   lastName: 'lastName',
   avatarUrl: 'avatarUrl',
   googleId: 'googleId',
   isVerified: 'isVerified',
   resetPasswordToken: 'resetPasswordToken',
-  resetPasswordTokenExpiry: 'resetPasswordTokenExpiry'
+  resetPasswordTokenExpiry: 'resetPasswordTokenExpiry',
+  enrolledAt: 'enrolledAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.RefreshTokenScalarFieldEnum = {
@@ -234,8 +234,18 @@ exports.Prisma.QuizScalarFieldEnum = {
   assignmentId: 'assignmentId',
   question: 'question',
   answers: 'answers',
+  correctAnswer: 'correctAnswer',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.StudentQuizSubmissionScalarFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  quizId: 'quizId',
+  answer: 'answer',
+  score: 'score',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -270,7 +280,8 @@ exports.Prisma.ModelName = {
   Review: 'Review',
   Message: 'Message',
   Assignment: 'Assignment',
-  Quiz: 'Quiz'
+  Quiz: 'Quiz',
+  StudentQuizSubmission: 'StudentQuizSubmission'
 };
 
 /**

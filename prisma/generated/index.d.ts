@@ -73,6 +73,11 @@ export type Assignment = $Result.DefaultSelection<Prisma.$AssignmentPayload>
  * 
  */
 export type Quiz = $Result.DefaultSelection<Prisma.$QuizPayload>
+/**
+ * Model StudentQuizSubmission
+ * 
+ */
+export type StudentQuizSubmission = $Result.DefaultSelection<Prisma.$StudentQuizSubmissionPayload>
 
 /**
  * Enums
@@ -329,6 +334,16 @@ export class PrismaClient<
     * ```
     */
   get quiz(): Prisma.QuizDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.studentQuizSubmission`: Exposes CRUD operations for the **StudentQuizSubmission** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more StudentQuizSubmissions
+    * const studentQuizSubmissions = await prisma.studentQuizSubmission.findMany()
+    * ```
+    */
+  get studentQuizSubmission(): Prisma.StudentQuizSubmissionDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -780,7 +795,8 @@ export namespace Prisma {
     Review: 'Review',
     Message: 'Message',
     Assignment: 'Assignment',
-    Quiz: 'Quiz'
+    Quiz: 'Quiz',
+    StudentQuizSubmission: 'StudentQuizSubmission'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -799,7 +815,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "refreshToken" | "otp" | "studentProfile" | "instructorProfile" | "course" | "lesson" | "courseEnrollment" | "review" | "message" | "assignment" | "quiz"
+      modelProps: "user" | "refreshToken" | "otp" | "studentProfile" | "instructorProfile" | "course" | "lesson" | "courseEnrollment" | "review" | "message" | "assignment" | "quiz" | "studentQuizSubmission"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1691,6 +1707,80 @@ export namespace Prisma {
           }
         }
       }
+      StudentQuizSubmission: {
+        payload: Prisma.$StudentQuizSubmissionPayload<ExtArgs>
+        fields: Prisma.StudentQuizSubmissionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.StudentQuizSubmissionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentQuizSubmissionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.StudentQuizSubmissionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentQuizSubmissionPayload>
+          }
+          findFirst: {
+            args: Prisma.StudentQuizSubmissionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentQuizSubmissionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.StudentQuizSubmissionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentQuizSubmissionPayload>
+          }
+          findMany: {
+            args: Prisma.StudentQuizSubmissionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentQuizSubmissionPayload>[]
+          }
+          create: {
+            args: Prisma.StudentQuizSubmissionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentQuizSubmissionPayload>
+          }
+          createMany: {
+            args: Prisma.StudentQuizSubmissionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.StudentQuizSubmissionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentQuizSubmissionPayload>[]
+          }
+          delete: {
+            args: Prisma.StudentQuizSubmissionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentQuizSubmissionPayload>
+          }
+          update: {
+            args: Prisma.StudentQuizSubmissionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentQuizSubmissionPayload>
+          }
+          deleteMany: {
+            args: Prisma.StudentQuizSubmissionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.StudentQuizSubmissionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.StudentQuizSubmissionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentQuizSubmissionPayload>[]
+          }
+          upsert: {
+            args: Prisma.StudentQuizSubmissionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudentQuizSubmissionPayload>
+          }
+          aggregate: {
+            args: Prisma.StudentQuizSubmissionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateStudentQuizSubmission>
+          }
+          groupBy: {
+            args: Prisma.StudentQuizSubmissionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<StudentQuizSubmissionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.StudentQuizSubmissionCountArgs<ExtArgs>
+            result: $Utils.Optional<StudentQuizSubmissionCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1795,6 +1885,7 @@ export namespace Prisma {
     message?: MessageOmit
     assignment?: AssignmentOmit
     quiz?: QuizOmit
+    studentQuizSubmission?: StudentQuizSubmissionOmit
   }
 
   /* Types for Logging */
@@ -1926,11 +2017,13 @@ export namespace Prisma {
   export type StudentProfileCountOutputType = {
     enrollments: number
     reviews: number
+    quizSubmissions: number
   }
 
   export type StudentProfileCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     enrollments?: boolean | StudentProfileCountOutputTypeCountEnrollmentsArgs
     reviews?: boolean | StudentProfileCountOutputTypeCountReviewsArgs
+    quizSubmissions?: boolean | StudentProfileCountOutputTypeCountQuizSubmissionsArgs
   }
 
   // Custom InputTypes
@@ -1956,6 +2049,13 @@ export namespace Prisma {
    */
   export type StudentProfileCountOutputTypeCountReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ReviewWhereInput
+  }
+
+  /**
+   * StudentProfileCountOutputType without action
+   */
+  export type StudentProfileCountOutputTypeCountQuizSubmissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StudentQuizSubmissionWhereInput
   }
 
 
@@ -2089,6 +2189,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type QuizCountOutputType
+   */
+
+  export type QuizCountOutputType = {
+    submissions: number
+  }
+
+  export type QuizCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    submissions?: boolean | QuizCountOutputTypeCountSubmissionsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * QuizCountOutputType without action
+   */
+  export type QuizCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuizCountOutputType
+     */
+    select?: QuizCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * QuizCountOutputType without action
+   */
+  export type QuizCountOutputTypeCountSubmissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StudentQuizSubmissionWhereInput
+  }
+
+
+  /**
    * Models
    */
 
@@ -2118,8 +2249,6 @@ export namespace Prisma {
     username: string | null
     password: string | null
     role: $Enums.Role | null
-    enrolledAt: Date | null
-    updatedAt: Date | null
     firstName: string | null
     lastName: string | null
     avatarUrl: string | null
@@ -2127,6 +2256,8 @@ export namespace Prisma {
     isVerified: boolean | null
     resetPasswordToken: string | null
     resetPasswordTokenExpiry: Date | null
+    enrolledAt: Date | null
+    updatedAt: Date | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -2135,8 +2266,6 @@ export namespace Prisma {
     username: string | null
     password: string | null
     role: $Enums.Role | null
-    enrolledAt: Date | null
-    updatedAt: Date | null
     firstName: string | null
     lastName: string | null
     avatarUrl: string | null
@@ -2144,6 +2273,8 @@ export namespace Prisma {
     isVerified: boolean | null
     resetPasswordToken: string | null
     resetPasswordTokenExpiry: Date | null
+    enrolledAt: Date | null
+    updatedAt: Date | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -2152,8 +2283,6 @@ export namespace Prisma {
     username: number
     password: number
     role: number
-    enrolledAt: number
-    updatedAt: number
     firstName: number
     lastName: number
     avatarUrl: number
@@ -2161,6 +2290,8 @@ export namespace Prisma {
     isVerified: number
     resetPasswordToken: number
     resetPasswordTokenExpiry: number
+    enrolledAt: number
+    updatedAt: number
     _all: number
   }
 
@@ -2179,8 +2310,6 @@ export namespace Prisma {
     username?: true
     password?: true
     role?: true
-    enrolledAt?: true
-    updatedAt?: true
     firstName?: true
     lastName?: true
     avatarUrl?: true
@@ -2188,6 +2317,8 @@ export namespace Prisma {
     isVerified?: true
     resetPasswordToken?: true
     resetPasswordTokenExpiry?: true
+    enrolledAt?: true
+    updatedAt?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -2196,8 +2327,6 @@ export namespace Prisma {
     username?: true
     password?: true
     role?: true
-    enrolledAt?: true
-    updatedAt?: true
     firstName?: true
     lastName?: true
     avatarUrl?: true
@@ -2205,6 +2334,8 @@ export namespace Prisma {
     isVerified?: true
     resetPasswordToken?: true
     resetPasswordTokenExpiry?: true
+    enrolledAt?: true
+    updatedAt?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -2213,8 +2344,6 @@ export namespace Prisma {
     username?: true
     password?: true
     role?: true
-    enrolledAt?: true
-    updatedAt?: true
     firstName?: true
     lastName?: true
     avatarUrl?: true
@@ -2222,6 +2351,8 @@ export namespace Prisma {
     isVerified?: true
     resetPasswordToken?: true
     resetPasswordTokenExpiry?: true
+    enrolledAt?: true
+    updatedAt?: true
     _all?: true
   }
 
@@ -2317,8 +2448,6 @@ export namespace Prisma {
     username: string | null
     password: string | null
     role: $Enums.Role
-    enrolledAt: Date
-    updatedAt: Date
     firstName: string | null
     lastName: string | null
     avatarUrl: string | null
@@ -2326,6 +2455,8 @@ export namespace Prisma {
     isVerified: boolean
     resetPasswordToken: string | null
     resetPasswordTokenExpiry: Date | null
+    enrolledAt: Date
+    updatedAt: Date
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -2353,8 +2484,6 @@ export namespace Prisma {
     username?: boolean
     password?: boolean
     role?: boolean
-    enrolledAt?: boolean
-    updatedAt?: boolean
     firstName?: boolean
     lastName?: boolean
     avatarUrl?: boolean
@@ -2362,11 +2491,13 @@ export namespace Prisma {
     isVerified?: boolean
     resetPasswordToken?: boolean
     resetPasswordTokenExpiry?: boolean
-    studentProfile?: boolean | User$studentProfileArgs<ExtArgs>
-    instructorProfile?: boolean | User$instructorProfileArgs<ExtArgs>
+    enrolledAt?: boolean
+    updatedAt?: boolean
     refreshToken?: boolean | User$refreshTokenArgs<ExtArgs>
     sentMessages?: boolean | User$sentMessagesArgs<ExtArgs>
     receivedMessages?: boolean | User$receivedMessagesArgs<ExtArgs>
+    studentProfile?: boolean | User$studentProfileArgs<ExtArgs>
+    instructorProfile?: boolean | User$instructorProfileArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2376,8 +2507,6 @@ export namespace Prisma {
     username?: boolean
     password?: boolean
     role?: boolean
-    enrolledAt?: boolean
-    updatedAt?: boolean
     firstName?: boolean
     lastName?: boolean
     avatarUrl?: boolean
@@ -2385,6 +2514,8 @@ export namespace Prisma {
     isVerified?: boolean
     resetPasswordToken?: boolean
     resetPasswordTokenExpiry?: boolean
+    enrolledAt?: boolean
+    updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2393,8 +2524,6 @@ export namespace Prisma {
     username?: boolean
     password?: boolean
     role?: boolean
-    enrolledAt?: boolean
-    updatedAt?: boolean
     firstName?: boolean
     lastName?: boolean
     avatarUrl?: boolean
@@ -2402,6 +2531,8 @@ export namespace Prisma {
     isVerified?: boolean
     resetPasswordToken?: boolean
     resetPasswordTokenExpiry?: boolean
+    enrolledAt?: boolean
+    updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -2410,8 +2541,6 @@ export namespace Prisma {
     username?: boolean
     password?: boolean
     role?: boolean
-    enrolledAt?: boolean
-    updatedAt?: boolean
     firstName?: boolean
     lastName?: boolean
     avatarUrl?: boolean
@@ -2419,15 +2548,17 @@ export namespace Prisma {
     isVerified?: boolean
     resetPasswordToken?: boolean
     resetPasswordTokenExpiry?: boolean
+    enrolledAt?: boolean
+    updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "password" | "role" | "enrolledAt" | "updatedAt" | "firstName" | "lastName" | "avatarUrl" | "googleId" | "isVerified" | "resetPasswordToken" | "resetPasswordTokenExpiry", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "password" | "role" | "firstName" | "lastName" | "avatarUrl" | "googleId" | "isVerified" | "resetPasswordToken" | "resetPasswordTokenExpiry" | "enrolledAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    studentProfile?: boolean | User$studentProfileArgs<ExtArgs>
-    instructorProfile?: boolean | User$instructorProfileArgs<ExtArgs>
     refreshToken?: boolean | User$refreshTokenArgs<ExtArgs>
     sentMessages?: boolean | User$sentMessagesArgs<ExtArgs>
     receivedMessages?: boolean | User$receivedMessagesArgs<ExtArgs>
+    studentProfile?: boolean | User$studentProfileArgs<ExtArgs>
+    instructorProfile?: boolean | User$instructorProfileArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2436,11 +2567,11 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      studentProfile: Prisma.$StudentProfilePayload<ExtArgs> | null
-      instructorProfile: Prisma.$InstructorProfilePayload<ExtArgs> | null
       refreshToken: Prisma.$RefreshTokenPayload<ExtArgs>[]
       sentMessages: Prisma.$MessagePayload<ExtArgs>[]
       receivedMessages: Prisma.$MessagePayload<ExtArgs>[]
+      studentProfile: Prisma.$StudentProfilePayload<ExtArgs> | null
+      instructorProfile: Prisma.$InstructorProfilePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -2448,8 +2579,6 @@ export namespace Prisma {
       username: string | null
       password: string | null
       role: $Enums.Role
-      enrolledAt: Date
-      updatedAt: Date
       firstName: string | null
       lastName: string | null
       avatarUrl: string | null
@@ -2457,6 +2586,8 @@ export namespace Prisma {
       isVerified: boolean
       resetPasswordToken: string | null
       resetPasswordTokenExpiry: Date | null
+      enrolledAt: Date
+      updatedAt: Date
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2851,11 +2982,11 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    studentProfile<T extends User$studentProfileArgs<ExtArgs> = {}>(args?: Subset<T, User$studentProfileArgs<ExtArgs>>): Prisma__StudentProfileClient<$Result.GetResult<Prisma.$StudentProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    instructorProfile<T extends User$instructorProfileArgs<ExtArgs> = {}>(args?: Subset<T, User$instructorProfileArgs<ExtArgs>>): Prisma__InstructorProfileClient<$Result.GetResult<Prisma.$InstructorProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     refreshToken<T extends User$refreshTokenArgs<ExtArgs> = {}>(args?: Subset<T, User$refreshTokenArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sentMessages<T extends User$sentMessagesArgs<ExtArgs> = {}>(args?: Subset<T, User$sentMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     receivedMessages<T extends User$receivedMessagesArgs<ExtArgs> = {}>(args?: Subset<T, User$receivedMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    studentProfile<T extends User$studentProfileArgs<ExtArgs> = {}>(args?: Subset<T, User$studentProfileArgs<ExtArgs>>): Prisma__StudentProfileClient<$Result.GetResult<Prisma.$StudentProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    instructorProfile<T extends User$instructorProfileArgs<ExtArgs> = {}>(args?: Subset<T, User$instructorProfileArgs<ExtArgs>>): Prisma__InstructorProfileClient<$Result.GetResult<Prisma.$InstructorProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2890,8 +3021,6 @@ export namespace Prisma {
     readonly username: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'Role'>
-    readonly enrolledAt: FieldRef<"User", 'DateTime'>
-    readonly updatedAt: FieldRef<"User", 'DateTime'>
     readonly firstName: FieldRef<"User", 'String'>
     readonly lastName: FieldRef<"User", 'String'>
     readonly avatarUrl: FieldRef<"User", 'String'>
@@ -2899,6 +3028,8 @@ export namespace Prisma {
     readonly isVerified: FieldRef<"User", 'Boolean'>
     readonly resetPasswordToken: FieldRef<"User", 'String'>
     readonly resetPasswordTokenExpiry: FieldRef<"User", 'DateTime'>
+    readonly enrolledAt: FieldRef<"User", 'DateTime'>
+    readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
     
 
@@ -3287,44 +3418,6 @@ export namespace Prisma {
   }
 
   /**
-   * User.studentProfile
-   */
-  export type User$studentProfileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the StudentProfile
-     */
-    select?: StudentProfileSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the StudentProfile
-     */
-    omit?: StudentProfileOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: StudentProfileInclude<ExtArgs> | null
-    where?: StudentProfileWhereInput
-  }
-
-  /**
-   * User.instructorProfile
-   */
-  export type User$instructorProfileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the InstructorProfile
-     */
-    select?: InstructorProfileSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the InstructorProfile
-     */
-    omit?: InstructorProfileOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: InstructorProfileInclude<ExtArgs> | null
-    where?: InstructorProfileWhereInput
-  }
-
-  /**
    * User.refreshToken
    */
   export type User$refreshTokenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3394,6 +3487,44 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: MessageScalarFieldEnum | MessageScalarFieldEnum[]
+  }
+
+  /**
+   * User.studentProfile
+   */
+  export type User$studentProfileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentProfile
+     */
+    select?: StudentProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentProfile
+     */
+    omit?: StudentProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentProfileInclude<ExtArgs> | null
+    where?: StudentProfileWhereInput
+  }
+
+  /**
+   * User.instructorProfile
+   */
+  export type User$instructorProfileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InstructorProfile
+     */
+    select?: InstructorProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InstructorProfile
+     */
+    omit?: InstructorProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InstructorProfileInclude<ExtArgs> | null
+    where?: InstructorProfileWhereInput
   }
 
   /**
@@ -5768,6 +5899,7 @@ export namespace Prisma {
     updatedAt?: boolean
     enrollments?: boolean | StudentProfile$enrollmentsArgs<ExtArgs>
     reviews?: boolean | StudentProfile$reviewsArgs<ExtArgs>
+    quizSubmissions?: boolean | StudentProfile$quizSubmissionsArgs<ExtArgs>
     student?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | StudentProfileCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["studentProfile"]>
@@ -5811,6 +5943,7 @@ export namespace Prisma {
   export type StudentProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     enrollments?: boolean | StudentProfile$enrollmentsArgs<ExtArgs>
     reviews?: boolean | StudentProfile$reviewsArgs<ExtArgs>
+    quizSubmissions?: boolean | StudentProfile$quizSubmissionsArgs<ExtArgs>
     student?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | StudentProfileCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -5826,6 +5959,7 @@ export namespace Prisma {
     objects: {
       enrollments: Prisma.$CourseEnrollmentPayload<ExtArgs>[]
       reviews: Prisma.$ReviewPayload<ExtArgs>[]
+      quizSubmissions: Prisma.$StudentQuizSubmissionPayload<ExtArgs>[]
       student: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -6233,6 +6367,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     enrollments<T extends StudentProfile$enrollmentsArgs<ExtArgs> = {}>(args?: Subset<T, StudentProfile$enrollmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CourseEnrollmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reviews<T extends StudentProfile$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, StudentProfile$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    quizSubmissions<T extends StudentProfile$quizSubmissionsArgs<ExtArgs> = {}>(args?: Subset<T, StudentProfile$quizSubmissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentQuizSubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     student<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -6712,6 +6847,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
+  }
+
+  /**
+   * StudentProfile.quizSubmissions
+   */
+  export type StudentProfile$quizSubmissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentQuizSubmission
+     */
+    select?: StudentQuizSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentQuizSubmission
+     */
+    omit?: StudentQuizSubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentQuizSubmissionInclude<ExtArgs> | null
+    where?: StudentQuizSubmissionWhereInput
+    orderBy?: StudentQuizSubmissionOrderByWithRelationInput | StudentQuizSubmissionOrderByWithRelationInput[]
+    cursor?: StudentQuizSubmissionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StudentQuizSubmissionScalarFieldEnum | StudentQuizSubmissionScalarFieldEnum[]
   }
 
   /**
@@ -14791,17 +14950,20 @@ export namespace Prisma {
   export type QuizAvgAggregateOutputType = {
     id: number | null
     assignmentId: number | null
+    correctAnswer: number | null
   }
 
   export type QuizSumAggregateOutputType = {
     id: number | null
     assignmentId: number | null
+    correctAnswer: number | null
   }
 
   export type QuizMinAggregateOutputType = {
     id: number | null
     assignmentId: number | null
     question: string | null
+    correctAnswer: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -14810,6 +14972,7 @@ export namespace Prisma {
     id: number | null
     assignmentId: number | null
     question: string | null
+    correctAnswer: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -14819,6 +14982,7 @@ export namespace Prisma {
     assignmentId: number
     question: number
     answers: number
+    correctAnswer: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -14828,17 +14992,20 @@ export namespace Prisma {
   export type QuizAvgAggregateInputType = {
     id?: true
     assignmentId?: true
+    correctAnswer?: true
   }
 
   export type QuizSumAggregateInputType = {
     id?: true
     assignmentId?: true
+    correctAnswer?: true
   }
 
   export type QuizMinAggregateInputType = {
     id?: true
     assignmentId?: true
     question?: true
+    correctAnswer?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -14847,6 +15014,7 @@ export namespace Prisma {
     id?: true
     assignmentId?: true
     question?: true
+    correctAnswer?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -14856,6 +15024,7 @@ export namespace Prisma {
     assignmentId?: true
     question?: true
     answers?: true
+    correctAnswer?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -14952,6 +15121,7 @@ export namespace Prisma {
     assignmentId: number
     question: string
     answers: string[]
+    correctAnswer: number
     createdAt: Date
     updatedAt: Date
     _count: QuizCountAggregateOutputType | null
@@ -14980,9 +15150,12 @@ export namespace Prisma {
     assignmentId?: boolean
     question?: boolean
     answers?: boolean
+    correctAnswer?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    submissions?: boolean | Quiz$submissionsArgs<ExtArgs>
     assignment?: boolean | AssignmentDefaultArgs<ExtArgs>
+    _count?: boolean | QuizCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quiz"]>
 
   export type QuizSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -14990,6 +15163,7 @@ export namespace Prisma {
     assignmentId?: boolean
     question?: boolean
     answers?: boolean
+    correctAnswer?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     assignment?: boolean | AssignmentDefaultArgs<ExtArgs>
@@ -15000,6 +15174,7 @@ export namespace Prisma {
     assignmentId?: boolean
     question?: boolean
     answers?: boolean
+    correctAnswer?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     assignment?: boolean | AssignmentDefaultArgs<ExtArgs>
@@ -15010,13 +15185,16 @@ export namespace Prisma {
     assignmentId?: boolean
     question?: boolean
     answers?: boolean
+    correctAnswer?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type QuizOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "assignmentId" | "question" | "answers" | "createdAt" | "updatedAt", ExtArgs["result"]["quiz"]>
+  export type QuizOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "assignmentId" | "question" | "answers" | "correctAnswer" | "createdAt" | "updatedAt", ExtArgs["result"]["quiz"]>
   export type QuizInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    submissions?: boolean | Quiz$submissionsArgs<ExtArgs>
     assignment?: boolean | AssignmentDefaultArgs<ExtArgs>
+    _count?: boolean | QuizCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type QuizIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     assignment?: boolean | AssignmentDefaultArgs<ExtArgs>
@@ -15028,6 +15206,7 @@ export namespace Prisma {
   export type $QuizPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Quiz"
     objects: {
+      submissions: Prisma.$StudentQuizSubmissionPayload<ExtArgs>[]
       assignment: Prisma.$AssignmentPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -15035,6 +15214,7 @@ export namespace Prisma {
       assignmentId: number
       question: string
       answers: string[]
+      correctAnswer: number
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["quiz"]>
@@ -15431,6 +15611,7 @@ export namespace Prisma {
    */
   export interface Prisma__QuizClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    submissions<T extends Quiz$submissionsArgs<ExtArgs> = {}>(args?: Subset<T, Quiz$submissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentQuizSubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     assignment<T extends AssignmentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AssignmentDefaultArgs<ExtArgs>>): Prisma__AssignmentClient<$Result.GetResult<Prisma.$AssignmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -15465,6 +15646,7 @@ export namespace Prisma {
     readonly assignmentId: FieldRef<"Quiz", 'Int'>
     readonly question: FieldRef<"Quiz", 'String'>
     readonly answers: FieldRef<"Quiz", 'String[]'>
+    readonly correctAnswer: FieldRef<"Quiz", 'Int'>
     readonly createdAt: FieldRef<"Quiz", 'DateTime'>
     readonly updatedAt: FieldRef<"Quiz", 'DateTime'>
   }
@@ -15863,6 +16045,30 @@ export namespace Prisma {
   }
 
   /**
+   * Quiz.submissions
+   */
+  export type Quiz$submissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentQuizSubmission
+     */
+    select?: StudentQuizSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentQuizSubmission
+     */
+    omit?: StudentQuizSubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentQuizSubmissionInclude<ExtArgs> | null
+    where?: StudentQuizSubmissionWhereInput
+    orderBy?: StudentQuizSubmissionOrderByWithRelationInput | StudentQuizSubmissionOrderByWithRelationInput[]
+    cursor?: StudentQuizSubmissionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StudentQuizSubmissionScalarFieldEnum | StudentQuizSubmissionScalarFieldEnum[]
+  }
+
+  /**
    * Quiz without action
    */
   export type QuizDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -15878,6 +16084,1135 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: QuizInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model StudentQuizSubmission
+   */
+
+  export type AggregateStudentQuizSubmission = {
+    _count: StudentQuizSubmissionCountAggregateOutputType | null
+    _avg: StudentQuizSubmissionAvgAggregateOutputType | null
+    _sum: StudentQuizSubmissionSumAggregateOutputType | null
+    _min: StudentQuizSubmissionMinAggregateOutputType | null
+    _max: StudentQuizSubmissionMaxAggregateOutputType | null
+  }
+
+  export type StudentQuizSubmissionAvgAggregateOutputType = {
+    id: number | null
+    studentId: number | null
+    quizId: number | null
+    answer: number | null
+    score: number | null
+  }
+
+  export type StudentQuizSubmissionSumAggregateOutputType = {
+    id: number | null
+    studentId: number | null
+    quizId: number | null
+    answer: number | null
+    score: number | null
+  }
+
+  export type StudentQuizSubmissionMinAggregateOutputType = {
+    id: number | null
+    studentId: number | null
+    quizId: number | null
+    answer: number | null
+    score: number | null
+    createdAt: Date | null
+  }
+
+  export type StudentQuizSubmissionMaxAggregateOutputType = {
+    id: number | null
+    studentId: number | null
+    quizId: number | null
+    answer: number | null
+    score: number | null
+    createdAt: Date | null
+  }
+
+  export type StudentQuizSubmissionCountAggregateOutputType = {
+    id: number
+    studentId: number
+    quizId: number
+    answer: number
+    score: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type StudentQuizSubmissionAvgAggregateInputType = {
+    id?: true
+    studentId?: true
+    quizId?: true
+    answer?: true
+    score?: true
+  }
+
+  export type StudentQuizSubmissionSumAggregateInputType = {
+    id?: true
+    studentId?: true
+    quizId?: true
+    answer?: true
+    score?: true
+  }
+
+  export type StudentQuizSubmissionMinAggregateInputType = {
+    id?: true
+    studentId?: true
+    quizId?: true
+    answer?: true
+    score?: true
+    createdAt?: true
+  }
+
+  export type StudentQuizSubmissionMaxAggregateInputType = {
+    id?: true
+    studentId?: true
+    quizId?: true
+    answer?: true
+    score?: true
+    createdAt?: true
+  }
+
+  export type StudentQuizSubmissionCountAggregateInputType = {
+    id?: true
+    studentId?: true
+    quizId?: true
+    answer?: true
+    score?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type StudentQuizSubmissionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which StudentQuizSubmission to aggregate.
+     */
+    where?: StudentQuizSubmissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StudentQuizSubmissions to fetch.
+     */
+    orderBy?: StudentQuizSubmissionOrderByWithRelationInput | StudentQuizSubmissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: StudentQuizSubmissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StudentQuizSubmissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StudentQuizSubmissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned StudentQuizSubmissions
+    **/
+    _count?: true | StudentQuizSubmissionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: StudentQuizSubmissionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: StudentQuizSubmissionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: StudentQuizSubmissionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: StudentQuizSubmissionMaxAggregateInputType
+  }
+
+  export type GetStudentQuizSubmissionAggregateType<T extends StudentQuizSubmissionAggregateArgs> = {
+        [P in keyof T & keyof AggregateStudentQuizSubmission]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateStudentQuizSubmission[P]>
+      : GetScalarType<T[P], AggregateStudentQuizSubmission[P]>
+  }
+
+
+
+
+  export type StudentQuizSubmissionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StudentQuizSubmissionWhereInput
+    orderBy?: StudentQuizSubmissionOrderByWithAggregationInput | StudentQuizSubmissionOrderByWithAggregationInput[]
+    by: StudentQuizSubmissionScalarFieldEnum[] | StudentQuizSubmissionScalarFieldEnum
+    having?: StudentQuizSubmissionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: StudentQuizSubmissionCountAggregateInputType | true
+    _avg?: StudentQuizSubmissionAvgAggregateInputType
+    _sum?: StudentQuizSubmissionSumAggregateInputType
+    _min?: StudentQuizSubmissionMinAggregateInputType
+    _max?: StudentQuizSubmissionMaxAggregateInputType
+  }
+
+  export type StudentQuizSubmissionGroupByOutputType = {
+    id: number
+    studentId: number
+    quizId: number
+    answer: number
+    score: number
+    createdAt: Date
+    _count: StudentQuizSubmissionCountAggregateOutputType | null
+    _avg: StudentQuizSubmissionAvgAggregateOutputType | null
+    _sum: StudentQuizSubmissionSumAggregateOutputType | null
+    _min: StudentQuizSubmissionMinAggregateOutputType | null
+    _max: StudentQuizSubmissionMaxAggregateOutputType | null
+  }
+
+  type GetStudentQuizSubmissionGroupByPayload<T extends StudentQuizSubmissionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<StudentQuizSubmissionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof StudentQuizSubmissionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], StudentQuizSubmissionGroupByOutputType[P]>
+            : GetScalarType<T[P], StudentQuizSubmissionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type StudentQuizSubmissionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    studentId?: boolean
+    quizId?: boolean
+    answer?: boolean
+    score?: boolean
+    createdAt?: boolean
+    student?: boolean | StudentProfileDefaultArgs<ExtArgs>
+    quiz?: boolean | QuizDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["studentQuizSubmission"]>
+
+  export type StudentQuizSubmissionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    studentId?: boolean
+    quizId?: boolean
+    answer?: boolean
+    score?: boolean
+    createdAt?: boolean
+    student?: boolean | StudentProfileDefaultArgs<ExtArgs>
+    quiz?: boolean | QuizDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["studentQuizSubmission"]>
+
+  export type StudentQuizSubmissionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    studentId?: boolean
+    quizId?: boolean
+    answer?: boolean
+    score?: boolean
+    createdAt?: boolean
+    student?: boolean | StudentProfileDefaultArgs<ExtArgs>
+    quiz?: boolean | QuizDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["studentQuizSubmission"]>
+
+  export type StudentQuizSubmissionSelectScalar = {
+    id?: boolean
+    studentId?: boolean
+    quizId?: boolean
+    answer?: boolean
+    score?: boolean
+    createdAt?: boolean
+  }
+
+  export type StudentQuizSubmissionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "quizId" | "answer" | "score" | "createdAt", ExtArgs["result"]["studentQuizSubmission"]>
+  export type StudentQuizSubmissionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    student?: boolean | StudentProfileDefaultArgs<ExtArgs>
+    quiz?: boolean | QuizDefaultArgs<ExtArgs>
+  }
+  export type StudentQuizSubmissionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    student?: boolean | StudentProfileDefaultArgs<ExtArgs>
+    quiz?: boolean | QuizDefaultArgs<ExtArgs>
+  }
+  export type StudentQuizSubmissionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    student?: boolean | StudentProfileDefaultArgs<ExtArgs>
+    quiz?: boolean | QuizDefaultArgs<ExtArgs>
+  }
+
+  export type $StudentQuizSubmissionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "StudentQuizSubmission"
+    objects: {
+      student: Prisma.$StudentProfilePayload<ExtArgs>
+      quiz: Prisma.$QuizPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      studentId: number
+      quizId: number
+      answer: number
+      score: number
+      createdAt: Date
+    }, ExtArgs["result"]["studentQuizSubmission"]>
+    composites: {}
+  }
+
+  type StudentQuizSubmissionGetPayload<S extends boolean | null | undefined | StudentQuizSubmissionDefaultArgs> = $Result.GetResult<Prisma.$StudentQuizSubmissionPayload, S>
+
+  type StudentQuizSubmissionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<StudentQuizSubmissionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: StudentQuizSubmissionCountAggregateInputType | true
+    }
+
+  export interface StudentQuizSubmissionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['StudentQuizSubmission'], meta: { name: 'StudentQuizSubmission' } }
+    /**
+     * Find zero or one StudentQuizSubmission that matches the filter.
+     * @param {StudentQuizSubmissionFindUniqueArgs} args - Arguments to find a StudentQuizSubmission
+     * @example
+     * // Get one StudentQuizSubmission
+     * const studentQuizSubmission = await prisma.studentQuizSubmission.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends StudentQuizSubmissionFindUniqueArgs>(args: SelectSubset<T, StudentQuizSubmissionFindUniqueArgs<ExtArgs>>): Prisma__StudentQuizSubmissionClient<$Result.GetResult<Prisma.$StudentQuizSubmissionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one StudentQuizSubmission that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {StudentQuizSubmissionFindUniqueOrThrowArgs} args - Arguments to find a StudentQuizSubmission
+     * @example
+     * // Get one StudentQuizSubmission
+     * const studentQuizSubmission = await prisma.studentQuizSubmission.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends StudentQuizSubmissionFindUniqueOrThrowArgs>(args: SelectSubset<T, StudentQuizSubmissionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__StudentQuizSubmissionClient<$Result.GetResult<Prisma.$StudentQuizSubmissionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first StudentQuizSubmission that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentQuizSubmissionFindFirstArgs} args - Arguments to find a StudentQuizSubmission
+     * @example
+     * // Get one StudentQuizSubmission
+     * const studentQuizSubmission = await prisma.studentQuizSubmission.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends StudentQuizSubmissionFindFirstArgs>(args?: SelectSubset<T, StudentQuizSubmissionFindFirstArgs<ExtArgs>>): Prisma__StudentQuizSubmissionClient<$Result.GetResult<Prisma.$StudentQuizSubmissionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first StudentQuizSubmission that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentQuizSubmissionFindFirstOrThrowArgs} args - Arguments to find a StudentQuizSubmission
+     * @example
+     * // Get one StudentQuizSubmission
+     * const studentQuizSubmission = await prisma.studentQuizSubmission.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends StudentQuizSubmissionFindFirstOrThrowArgs>(args?: SelectSubset<T, StudentQuizSubmissionFindFirstOrThrowArgs<ExtArgs>>): Prisma__StudentQuizSubmissionClient<$Result.GetResult<Prisma.$StudentQuizSubmissionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more StudentQuizSubmissions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentQuizSubmissionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all StudentQuizSubmissions
+     * const studentQuizSubmissions = await prisma.studentQuizSubmission.findMany()
+     * 
+     * // Get first 10 StudentQuizSubmissions
+     * const studentQuizSubmissions = await prisma.studentQuizSubmission.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const studentQuizSubmissionWithIdOnly = await prisma.studentQuizSubmission.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends StudentQuizSubmissionFindManyArgs>(args?: SelectSubset<T, StudentQuizSubmissionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentQuizSubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a StudentQuizSubmission.
+     * @param {StudentQuizSubmissionCreateArgs} args - Arguments to create a StudentQuizSubmission.
+     * @example
+     * // Create one StudentQuizSubmission
+     * const StudentQuizSubmission = await prisma.studentQuizSubmission.create({
+     *   data: {
+     *     // ... data to create a StudentQuizSubmission
+     *   }
+     * })
+     * 
+     */
+    create<T extends StudentQuizSubmissionCreateArgs>(args: SelectSubset<T, StudentQuizSubmissionCreateArgs<ExtArgs>>): Prisma__StudentQuizSubmissionClient<$Result.GetResult<Prisma.$StudentQuizSubmissionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many StudentQuizSubmissions.
+     * @param {StudentQuizSubmissionCreateManyArgs} args - Arguments to create many StudentQuizSubmissions.
+     * @example
+     * // Create many StudentQuizSubmissions
+     * const studentQuizSubmission = await prisma.studentQuizSubmission.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends StudentQuizSubmissionCreateManyArgs>(args?: SelectSubset<T, StudentQuizSubmissionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many StudentQuizSubmissions and returns the data saved in the database.
+     * @param {StudentQuizSubmissionCreateManyAndReturnArgs} args - Arguments to create many StudentQuizSubmissions.
+     * @example
+     * // Create many StudentQuizSubmissions
+     * const studentQuizSubmission = await prisma.studentQuizSubmission.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many StudentQuizSubmissions and only return the `id`
+     * const studentQuizSubmissionWithIdOnly = await prisma.studentQuizSubmission.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends StudentQuizSubmissionCreateManyAndReturnArgs>(args?: SelectSubset<T, StudentQuizSubmissionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentQuizSubmissionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a StudentQuizSubmission.
+     * @param {StudentQuizSubmissionDeleteArgs} args - Arguments to delete one StudentQuizSubmission.
+     * @example
+     * // Delete one StudentQuizSubmission
+     * const StudentQuizSubmission = await prisma.studentQuizSubmission.delete({
+     *   where: {
+     *     // ... filter to delete one StudentQuizSubmission
+     *   }
+     * })
+     * 
+     */
+    delete<T extends StudentQuizSubmissionDeleteArgs>(args: SelectSubset<T, StudentQuizSubmissionDeleteArgs<ExtArgs>>): Prisma__StudentQuizSubmissionClient<$Result.GetResult<Prisma.$StudentQuizSubmissionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one StudentQuizSubmission.
+     * @param {StudentQuizSubmissionUpdateArgs} args - Arguments to update one StudentQuizSubmission.
+     * @example
+     * // Update one StudentQuizSubmission
+     * const studentQuizSubmission = await prisma.studentQuizSubmission.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends StudentQuizSubmissionUpdateArgs>(args: SelectSubset<T, StudentQuizSubmissionUpdateArgs<ExtArgs>>): Prisma__StudentQuizSubmissionClient<$Result.GetResult<Prisma.$StudentQuizSubmissionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more StudentQuizSubmissions.
+     * @param {StudentQuizSubmissionDeleteManyArgs} args - Arguments to filter StudentQuizSubmissions to delete.
+     * @example
+     * // Delete a few StudentQuizSubmissions
+     * const { count } = await prisma.studentQuizSubmission.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends StudentQuizSubmissionDeleteManyArgs>(args?: SelectSubset<T, StudentQuizSubmissionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more StudentQuizSubmissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentQuizSubmissionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many StudentQuizSubmissions
+     * const studentQuizSubmission = await prisma.studentQuizSubmission.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends StudentQuizSubmissionUpdateManyArgs>(args: SelectSubset<T, StudentQuizSubmissionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more StudentQuizSubmissions and returns the data updated in the database.
+     * @param {StudentQuizSubmissionUpdateManyAndReturnArgs} args - Arguments to update many StudentQuizSubmissions.
+     * @example
+     * // Update many StudentQuizSubmissions
+     * const studentQuizSubmission = await prisma.studentQuizSubmission.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more StudentQuizSubmissions and only return the `id`
+     * const studentQuizSubmissionWithIdOnly = await prisma.studentQuizSubmission.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends StudentQuizSubmissionUpdateManyAndReturnArgs>(args: SelectSubset<T, StudentQuizSubmissionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentQuizSubmissionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one StudentQuizSubmission.
+     * @param {StudentQuizSubmissionUpsertArgs} args - Arguments to update or create a StudentQuizSubmission.
+     * @example
+     * // Update or create a StudentQuizSubmission
+     * const studentQuizSubmission = await prisma.studentQuizSubmission.upsert({
+     *   create: {
+     *     // ... data to create a StudentQuizSubmission
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the StudentQuizSubmission we want to update
+     *   }
+     * })
+     */
+    upsert<T extends StudentQuizSubmissionUpsertArgs>(args: SelectSubset<T, StudentQuizSubmissionUpsertArgs<ExtArgs>>): Prisma__StudentQuizSubmissionClient<$Result.GetResult<Prisma.$StudentQuizSubmissionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of StudentQuizSubmissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentQuizSubmissionCountArgs} args - Arguments to filter StudentQuizSubmissions to count.
+     * @example
+     * // Count the number of StudentQuizSubmissions
+     * const count = await prisma.studentQuizSubmission.count({
+     *   where: {
+     *     // ... the filter for the StudentQuizSubmissions we want to count
+     *   }
+     * })
+    **/
+    count<T extends StudentQuizSubmissionCountArgs>(
+      args?: Subset<T, StudentQuizSubmissionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], StudentQuizSubmissionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a StudentQuizSubmission.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentQuizSubmissionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends StudentQuizSubmissionAggregateArgs>(args: Subset<T, StudentQuizSubmissionAggregateArgs>): Prisma.PrismaPromise<GetStudentQuizSubmissionAggregateType<T>>
+
+    /**
+     * Group by StudentQuizSubmission.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentQuizSubmissionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends StudentQuizSubmissionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: StudentQuizSubmissionGroupByArgs['orderBy'] }
+        : { orderBy?: StudentQuizSubmissionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, StudentQuizSubmissionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetStudentQuizSubmissionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the StudentQuizSubmission model
+   */
+  readonly fields: StudentQuizSubmissionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for StudentQuizSubmission.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__StudentQuizSubmissionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    student<T extends StudentProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StudentProfileDefaultArgs<ExtArgs>>): Prisma__StudentProfileClient<$Result.GetResult<Prisma.$StudentProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    quiz<T extends QuizDefaultArgs<ExtArgs> = {}>(args?: Subset<T, QuizDefaultArgs<ExtArgs>>): Prisma__QuizClient<$Result.GetResult<Prisma.$QuizPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the StudentQuizSubmission model
+   */
+  interface StudentQuizSubmissionFieldRefs {
+    readonly id: FieldRef<"StudentQuizSubmission", 'Int'>
+    readonly studentId: FieldRef<"StudentQuizSubmission", 'Int'>
+    readonly quizId: FieldRef<"StudentQuizSubmission", 'Int'>
+    readonly answer: FieldRef<"StudentQuizSubmission", 'Int'>
+    readonly score: FieldRef<"StudentQuizSubmission", 'Int'>
+    readonly createdAt: FieldRef<"StudentQuizSubmission", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * StudentQuizSubmission findUnique
+   */
+  export type StudentQuizSubmissionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentQuizSubmission
+     */
+    select?: StudentQuizSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentQuizSubmission
+     */
+    omit?: StudentQuizSubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentQuizSubmissionInclude<ExtArgs> | null
+    /**
+     * Filter, which StudentQuizSubmission to fetch.
+     */
+    where: StudentQuizSubmissionWhereUniqueInput
+  }
+
+  /**
+   * StudentQuizSubmission findUniqueOrThrow
+   */
+  export type StudentQuizSubmissionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentQuizSubmission
+     */
+    select?: StudentQuizSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentQuizSubmission
+     */
+    omit?: StudentQuizSubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentQuizSubmissionInclude<ExtArgs> | null
+    /**
+     * Filter, which StudentQuizSubmission to fetch.
+     */
+    where: StudentQuizSubmissionWhereUniqueInput
+  }
+
+  /**
+   * StudentQuizSubmission findFirst
+   */
+  export type StudentQuizSubmissionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentQuizSubmission
+     */
+    select?: StudentQuizSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentQuizSubmission
+     */
+    omit?: StudentQuizSubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentQuizSubmissionInclude<ExtArgs> | null
+    /**
+     * Filter, which StudentQuizSubmission to fetch.
+     */
+    where?: StudentQuizSubmissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StudentQuizSubmissions to fetch.
+     */
+    orderBy?: StudentQuizSubmissionOrderByWithRelationInput | StudentQuizSubmissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for StudentQuizSubmissions.
+     */
+    cursor?: StudentQuizSubmissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StudentQuizSubmissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StudentQuizSubmissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StudentQuizSubmissions.
+     */
+    distinct?: StudentQuizSubmissionScalarFieldEnum | StudentQuizSubmissionScalarFieldEnum[]
+  }
+
+  /**
+   * StudentQuizSubmission findFirstOrThrow
+   */
+  export type StudentQuizSubmissionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentQuizSubmission
+     */
+    select?: StudentQuizSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentQuizSubmission
+     */
+    omit?: StudentQuizSubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentQuizSubmissionInclude<ExtArgs> | null
+    /**
+     * Filter, which StudentQuizSubmission to fetch.
+     */
+    where?: StudentQuizSubmissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StudentQuizSubmissions to fetch.
+     */
+    orderBy?: StudentQuizSubmissionOrderByWithRelationInput | StudentQuizSubmissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for StudentQuizSubmissions.
+     */
+    cursor?: StudentQuizSubmissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StudentQuizSubmissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StudentQuizSubmissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StudentQuizSubmissions.
+     */
+    distinct?: StudentQuizSubmissionScalarFieldEnum | StudentQuizSubmissionScalarFieldEnum[]
+  }
+
+  /**
+   * StudentQuizSubmission findMany
+   */
+  export type StudentQuizSubmissionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentQuizSubmission
+     */
+    select?: StudentQuizSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentQuizSubmission
+     */
+    omit?: StudentQuizSubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentQuizSubmissionInclude<ExtArgs> | null
+    /**
+     * Filter, which StudentQuizSubmissions to fetch.
+     */
+    where?: StudentQuizSubmissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StudentQuizSubmissions to fetch.
+     */
+    orderBy?: StudentQuizSubmissionOrderByWithRelationInput | StudentQuizSubmissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing StudentQuizSubmissions.
+     */
+    cursor?: StudentQuizSubmissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StudentQuizSubmissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StudentQuizSubmissions.
+     */
+    skip?: number
+    distinct?: StudentQuizSubmissionScalarFieldEnum | StudentQuizSubmissionScalarFieldEnum[]
+  }
+
+  /**
+   * StudentQuizSubmission create
+   */
+  export type StudentQuizSubmissionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentQuizSubmission
+     */
+    select?: StudentQuizSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentQuizSubmission
+     */
+    omit?: StudentQuizSubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentQuizSubmissionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a StudentQuizSubmission.
+     */
+    data: XOR<StudentQuizSubmissionCreateInput, StudentQuizSubmissionUncheckedCreateInput>
+  }
+
+  /**
+   * StudentQuizSubmission createMany
+   */
+  export type StudentQuizSubmissionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many StudentQuizSubmissions.
+     */
+    data: StudentQuizSubmissionCreateManyInput | StudentQuizSubmissionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * StudentQuizSubmission createManyAndReturn
+   */
+  export type StudentQuizSubmissionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentQuizSubmission
+     */
+    select?: StudentQuizSubmissionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentQuizSubmission
+     */
+    omit?: StudentQuizSubmissionOmit<ExtArgs> | null
+    /**
+     * The data used to create many StudentQuizSubmissions.
+     */
+    data: StudentQuizSubmissionCreateManyInput | StudentQuizSubmissionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentQuizSubmissionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * StudentQuizSubmission update
+   */
+  export type StudentQuizSubmissionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentQuizSubmission
+     */
+    select?: StudentQuizSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentQuizSubmission
+     */
+    omit?: StudentQuizSubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentQuizSubmissionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a StudentQuizSubmission.
+     */
+    data: XOR<StudentQuizSubmissionUpdateInput, StudentQuizSubmissionUncheckedUpdateInput>
+    /**
+     * Choose, which StudentQuizSubmission to update.
+     */
+    where: StudentQuizSubmissionWhereUniqueInput
+  }
+
+  /**
+   * StudentQuizSubmission updateMany
+   */
+  export type StudentQuizSubmissionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update StudentQuizSubmissions.
+     */
+    data: XOR<StudentQuizSubmissionUpdateManyMutationInput, StudentQuizSubmissionUncheckedUpdateManyInput>
+    /**
+     * Filter which StudentQuizSubmissions to update
+     */
+    where?: StudentQuizSubmissionWhereInput
+    /**
+     * Limit how many StudentQuizSubmissions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * StudentQuizSubmission updateManyAndReturn
+   */
+  export type StudentQuizSubmissionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentQuizSubmission
+     */
+    select?: StudentQuizSubmissionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentQuizSubmission
+     */
+    omit?: StudentQuizSubmissionOmit<ExtArgs> | null
+    /**
+     * The data used to update StudentQuizSubmissions.
+     */
+    data: XOR<StudentQuizSubmissionUpdateManyMutationInput, StudentQuizSubmissionUncheckedUpdateManyInput>
+    /**
+     * Filter which StudentQuizSubmissions to update
+     */
+    where?: StudentQuizSubmissionWhereInput
+    /**
+     * Limit how many StudentQuizSubmissions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentQuizSubmissionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * StudentQuizSubmission upsert
+   */
+  export type StudentQuizSubmissionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentQuizSubmission
+     */
+    select?: StudentQuizSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentQuizSubmission
+     */
+    omit?: StudentQuizSubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentQuizSubmissionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the StudentQuizSubmission to update in case it exists.
+     */
+    where: StudentQuizSubmissionWhereUniqueInput
+    /**
+     * In case the StudentQuizSubmission found by the `where` argument doesn't exist, create a new StudentQuizSubmission with this data.
+     */
+    create: XOR<StudentQuizSubmissionCreateInput, StudentQuizSubmissionUncheckedCreateInput>
+    /**
+     * In case the StudentQuizSubmission was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<StudentQuizSubmissionUpdateInput, StudentQuizSubmissionUncheckedUpdateInput>
+  }
+
+  /**
+   * StudentQuizSubmission delete
+   */
+  export type StudentQuizSubmissionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentQuizSubmission
+     */
+    select?: StudentQuizSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentQuizSubmission
+     */
+    omit?: StudentQuizSubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentQuizSubmissionInclude<ExtArgs> | null
+    /**
+     * Filter which StudentQuizSubmission to delete.
+     */
+    where: StudentQuizSubmissionWhereUniqueInput
+  }
+
+  /**
+   * StudentQuizSubmission deleteMany
+   */
+  export type StudentQuizSubmissionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which StudentQuizSubmissions to delete
+     */
+    where?: StudentQuizSubmissionWhereInput
+    /**
+     * Limit how many StudentQuizSubmissions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * StudentQuizSubmission without action
+   */
+  export type StudentQuizSubmissionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentQuizSubmission
+     */
+    select?: StudentQuizSubmissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudentQuizSubmission
+     */
+    omit?: StudentQuizSubmissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentQuizSubmissionInclude<ExtArgs> | null
   }
 
 
@@ -15901,15 +17236,15 @@ export namespace Prisma {
     username: 'username',
     password: 'password',
     role: 'role',
-    enrolledAt: 'enrolledAt',
-    updatedAt: 'updatedAt',
     firstName: 'firstName',
     lastName: 'lastName',
     avatarUrl: 'avatarUrl',
     googleId: 'googleId',
     isVerified: 'isVerified',
     resetPasswordToken: 'resetPasswordToken',
-    resetPasswordTokenExpiry: 'resetPasswordTokenExpiry'
+    resetPasswordTokenExpiry: 'resetPasswordTokenExpiry',
+    enrolledAt: 'enrolledAt',
+    updatedAt: 'updatedAt'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -16042,11 +17377,24 @@ export namespace Prisma {
     assignmentId: 'assignmentId',
     question: 'question',
     answers: 'answers',
+    correctAnswer: 'correctAnswer',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
   export type QuizScalarFieldEnum = (typeof QuizScalarFieldEnum)[keyof typeof QuizScalarFieldEnum]
+
+
+  export const StudentQuizSubmissionScalarFieldEnum: {
+    id: 'id',
+    studentId: 'studentId',
+    quizId: 'quizId',
+    answer: 'answer',
+    score: 'score',
+    createdAt: 'createdAt'
+  };
+
+  export type StudentQuizSubmissionScalarFieldEnum = (typeof StudentQuizSubmissionScalarFieldEnum)[keyof typeof StudentQuizSubmissionScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -16121,6 +17469,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -16131,13 +17486,6 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -16167,8 +17515,6 @@ export namespace Prisma {
     username?: StringNullableFilter<"User"> | string | null
     password?: StringNullableFilter<"User"> | string | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
-    enrolledAt?: DateTimeFilter<"User"> | Date | string
-    updatedAt?: DateTimeFilter<"User"> | Date | string
     firstName?: StringNullableFilter<"User"> | string | null
     lastName?: StringNullableFilter<"User"> | string | null
     avatarUrl?: StringNullableFilter<"User"> | string | null
@@ -16176,11 +17522,13 @@ export namespace Prisma {
     isVerified?: BoolFilter<"User"> | boolean
     resetPasswordToken?: StringNullableFilter<"User"> | string | null
     resetPasswordTokenExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
-    studentProfile?: XOR<StudentProfileNullableScalarRelationFilter, StudentProfileWhereInput> | null
-    instructorProfile?: XOR<InstructorProfileNullableScalarRelationFilter, InstructorProfileWhereInput> | null
+    enrolledAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
     refreshToken?: RefreshTokenListRelationFilter
     sentMessages?: MessageListRelationFilter
     receivedMessages?: MessageListRelationFilter
+    studentProfile?: XOR<StudentProfileNullableScalarRelationFilter, StudentProfileWhereInput> | null
+    instructorProfile?: XOR<InstructorProfileNullableScalarRelationFilter, InstructorProfileWhereInput> | null
   }
 
   export type UserOrderByWithRelationInput = {
@@ -16189,8 +17537,6 @@ export namespace Prisma {
     username?: SortOrderInput | SortOrder
     password?: SortOrderInput | SortOrder
     role?: SortOrder
-    enrolledAt?: SortOrder
-    updatedAt?: SortOrder
     firstName?: SortOrderInput | SortOrder
     lastName?: SortOrderInput | SortOrder
     avatarUrl?: SortOrderInput | SortOrder
@@ -16198,11 +17544,13 @@ export namespace Prisma {
     isVerified?: SortOrder
     resetPasswordToken?: SortOrderInput | SortOrder
     resetPasswordTokenExpiry?: SortOrderInput | SortOrder
-    studentProfile?: StudentProfileOrderByWithRelationInput
-    instructorProfile?: InstructorProfileOrderByWithRelationInput
+    enrolledAt?: SortOrder
+    updatedAt?: SortOrder
     refreshToken?: RefreshTokenOrderByRelationAggregateInput
     sentMessages?: MessageOrderByRelationAggregateInput
     receivedMessages?: MessageOrderByRelationAggregateInput
+    studentProfile?: StudentProfileOrderByWithRelationInput
+    instructorProfile?: InstructorProfileOrderByWithRelationInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -16215,19 +17563,19 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     password?: StringNullableFilter<"User"> | string | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
-    enrolledAt?: DateTimeFilter<"User"> | Date | string
-    updatedAt?: DateTimeFilter<"User"> | Date | string
     firstName?: StringNullableFilter<"User"> | string | null
     lastName?: StringNullableFilter<"User"> | string | null
     avatarUrl?: StringNullableFilter<"User"> | string | null
     isVerified?: BoolFilter<"User"> | boolean
     resetPasswordToken?: StringNullableFilter<"User"> | string | null
     resetPasswordTokenExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
-    studentProfile?: XOR<StudentProfileNullableScalarRelationFilter, StudentProfileWhereInput> | null
-    instructorProfile?: XOR<InstructorProfileNullableScalarRelationFilter, InstructorProfileWhereInput> | null
+    enrolledAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
     refreshToken?: RefreshTokenListRelationFilter
     sentMessages?: MessageListRelationFilter
     receivedMessages?: MessageListRelationFilter
+    studentProfile?: XOR<StudentProfileNullableScalarRelationFilter, StudentProfileWhereInput> | null
+    instructorProfile?: XOR<InstructorProfileNullableScalarRelationFilter, InstructorProfileWhereInput> | null
   }, "id" | "email" | "username" | "googleId">
 
   export type UserOrderByWithAggregationInput = {
@@ -16236,8 +17584,6 @@ export namespace Prisma {
     username?: SortOrderInput | SortOrder
     password?: SortOrderInput | SortOrder
     role?: SortOrder
-    enrolledAt?: SortOrder
-    updatedAt?: SortOrder
     firstName?: SortOrderInput | SortOrder
     lastName?: SortOrderInput | SortOrder
     avatarUrl?: SortOrderInput | SortOrder
@@ -16245,6 +17591,8 @@ export namespace Prisma {
     isVerified?: SortOrder
     resetPasswordToken?: SortOrderInput | SortOrder
     resetPasswordTokenExpiry?: SortOrderInput | SortOrder
+    enrolledAt?: SortOrder
+    updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -16261,8 +17609,6 @@ export namespace Prisma {
     username?: StringNullableWithAggregatesFilter<"User"> | string | null
     password?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
-    enrolledAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     firstName?: StringNullableWithAggregatesFilter<"User"> | string | null
     lastName?: StringNullableWithAggregatesFilter<"User"> | string | null
     avatarUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
@@ -16270,6 +17616,8 @@ export namespace Prisma {
     isVerified?: BoolWithAggregatesFilter<"User"> | boolean
     resetPasswordToken?: StringNullableWithAggregatesFilter<"User"> | string | null
     resetPasswordTokenExpiry?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+    enrolledAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
 
   export type RefreshTokenWhereInput = {
@@ -16397,6 +17745,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"StudentProfile"> | Date | string
     enrollments?: CourseEnrollmentListRelationFilter
     reviews?: ReviewListRelationFilter
+    quizSubmissions?: StudentQuizSubmissionListRelationFilter
     student?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -16411,6 +17760,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     enrollments?: CourseEnrollmentOrderByRelationAggregateInput
     reviews?: ReviewOrderByRelationAggregateInput
+    quizSubmissions?: StudentQuizSubmissionOrderByRelationAggregateInput
     student?: UserOrderByWithRelationInput
   }
 
@@ -16428,6 +17778,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"StudentProfile"> | Date | string
     enrollments?: CourseEnrollmentListRelationFilter
     reviews?: ReviewListRelationFilter
+    quizSubmissions?: StudentQuizSubmissionListRelationFilter
     student?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "studentId">
 
@@ -16948,8 +18299,10 @@ export namespace Prisma {
     assignmentId?: IntFilter<"Quiz"> | number
     question?: StringFilter<"Quiz"> | string
     answers?: StringNullableListFilter<"Quiz">
+    correctAnswer?: IntFilter<"Quiz"> | number
     createdAt?: DateTimeFilter<"Quiz"> | Date | string
     updatedAt?: DateTimeFilter<"Quiz"> | Date | string
+    submissions?: StudentQuizSubmissionListRelationFilter
     assignment?: XOR<AssignmentScalarRelationFilter, AssignmentWhereInput>
   }
 
@@ -16958,8 +18311,10 @@ export namespace Prisma {
     assignmentId?: SortOrder
     question?: SortOrder
     answers?: SortOrder
+    correctAnswer?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    submissions?: StudentQuizSubmissionOrderByRelationAggregateInput
     assignment?: AssignmentOrderByWithRelationInput
   }
 
@@ -16971,8 +18326,10 @@ export namespace Prisma {
     assignmentId?: IntFilter<"Quiz"> | number
     question?: StringFilter<"Quiz"> | string
     answers?: StringNullableListFilter<"Quiz">
+    correctAnswer?: IntFilter<"Quiz"> | number
     createdAt?: DateTimeFilter<"Quiz"> | Date | string
     updatedAt?: DateTimeFilter<"Quiz"> | Date | string
+    submissions?: StudentQuizSubmissionListRelationFilter
     assignment?: XOR<AssignmentScalarRelationFilter, AssignmentWhereInput>
   }, "id">
 
@@ -16981,6 +18338,7 @@ export namespace Prisma {
     assignmentId?: SortOrder
     question?: SortOrder
     answers?: SortOrder
+    correctAnswer?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: QuizCountOrderByAggregateInput
@@ -16998,8 +18356,74 @@ export namespace Prisma {
     assignmentId?: IntWithAggregatesFilter<"Quiz"> | number
     question?: StringWithAggregatesFilter<"Quiz"> | string
     answers?: StringNullableListFilter<"Quiz">
+    correctAnswer?: IntWithAggregatesFilter<"Quiz"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Quiz"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Quiz"> | Date | string
+  }
+
+  export type StudentQuizSubmissionWhereInput = {
+    AND?: StudentQuizSubmissionWhereInput | StudentQuizSubmissionWhereInput[]
+    OR?: StudentQuizSubmissionWhereInput[]
+    NOT?: StudentQuizSubmissionWhereInput | StudentQuizSubmissionWhereInput[]
+    id?: IntFilter<"StudentQuizSubmission"> | number
+    studentId?: IntFilter<"StudentQuizSubmission"> | number
+    quizId?: IntFilter<"StudentQuizSubmission"> | number
+    answer?: IntFilter<"StudentQuizSubmission"> | number
+    score?: IntFilter<"StudentQuizSubmission"> | number
+    createdAt?: DateTimeFilter<"StudentQuizSubmission"> | Date | string
+    student?: XOR<StudentProfileScalarRelationFilter, StudentProfileWhereInput>
+    quiz?: XOR<QuizScalarRelationFilter, QuizWhereInput>
+  }
+
+  export type StudentQuizSubmissionOrderByWithRelationInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    quizId?: SortOrder
+    answer?: SortOrder
+    score?: SortOrder
+    createdAt?: SortOrder
+    student?: StudentProfileOrderByWithRelationInput
+    quiz?: QuizOrderByWithRelationInput
+  }
+
+  export type StudentQuizSubmissionWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: StudentQuizSubmissionWhereInput | StudentQuizSubmissionWhereInput[]
+    OR?: StudentQuizSubmissionWhereInput[]
+    NOT?: StudentQuizSubmissionWhereInput | StudentQuizSubmissionWhereInput[]
+    studentId?: IntFilter<"StudentQuizSubmission"> | number
+    quizId?: IntFilter<"StudentQuizSubmission"> | number
+    answer?: IntFilter<"StudentQuizSubmission"> | number
+    score?: IntFilter<"StudentQuizSubmission"> | number
+    createdAt?: DateTimeFilter<"StudentQuizSubmission"> | Date | string
+    student?: XOR<StudentProfileScalarRelationFilter, StudentProfileWhereInput>
+    quiz?: XOR<QuizScalarRelationFilter, QuizWhereInput>
+  }, "id">
+
+  export type StudentQuizSubmissionOrderByWithAggregationInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    quizId?: SortOrder
+    answer?: SortOrder
+    score?: SortOrder
+    createdAt?: SortOrder
+    _count?: StudentQuizSubmissionCountOrderByAggregateInput
+    _avg?: StudentQuizSubmissionAvgOrderByAggregateInput
+    _max?: StudentQuizSubmissionMaxOrderByAggregateInput
+    _min?: StudentQuizSubmissionMinOrderByAggregateInput
+    _sum?: StudentQuizSubmissionSumOrderByAggregateInput
+  }
+
+  export type StudentQuizSubmissionScalarWhereWithAggregatesInput = {
+    AND?: StudentQuizSubmissionScalarWhereWithAggregatesInput | StudentQuizSubmissionScalarWhereWithAggregatesInput[]
+    OR?: StudentQuizSubmissionScalarWhereWithAggregatesInput[]
+    NOT?: StudentQuizSubmissionScalarWhereWithAggregatesInput | StudentQuizSubmissionScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"StudentQuizSubmission"> | number
+    studentId?: IntWithAggregatesFilter<"StudentQuizSubmission"> | number
+    quizId?: IntWithAggregatesFilter<"StudentQuizSubmission"> | number
+    answer?: IntWithAggregatesFilter<"StudentQuizSubmission"> | number
+    score?: IntWithAggregatesFilter<"StudentQuizSubmission"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"StudentQuizSubmission"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -17007,8 +18431,6 @@ export namespace Prisma {
     username?: string | null
     password?: string | null
     role: $Enums.Role
-    enrolledAt?: Date | string
-    updatedAt?: Date | string
     firstName?: string | null
     lastName?: string | null
     avatarUrl?: string | null
@@ -17016,11 +18438,13 @@ export namespace Prisma {
     isVerified?: boolean
     resetPasswordToken?: string | null
     resetPasswordTokenExpiry?: Date | string | null
-    studentProfile?: StudentProfileCreateNestedOneWithoutStudentInput
-    instructorProfile?: InstructorProfileCreateNestedOneWithoutInstructorInput
+    enrolledAt?: Date | string
+    updatedAt?: Date | string
     refreshToken?: RefreshTokenCreateNestedManyWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
+    studentProfile?: StudentProfileCreateNestedOneWithoutStudentInput
+    instructorProfile?: InstructorProfileCreateNestedOneWithoutInstructorInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -17029,8 +18453,6 @@ export namespace Prisma {
     username?: string | null
     password?: string | null
     role: $Enums.Role
-    enrolledAt?: Date | string
-    updatedAt?: Date | string
     firstName?: string | null
     lastName?: string | null
     avatarUrl?: string | null
@@ -17038,11 +18460,13 @@ export namespace Prisma {
     isVerified?: boolean
     resetPasswordToken?: string | null
     resetPasswordTokenExpiry?: Date | string | null
-    studentProfile?: StudentProfileUncheckedCreateNestedOneWithoutStudentInput
-    instructorProfile?: InstructorProfileUncheckedCreateNestedOneWithoutInstructorInput
+    enrolledAt?: Date | string
+    updatedAt?: Date | string
     refreshToken?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
+    studentProfile?: StudentProfileUncheckedCreateNestedOneWithoutStudentInput
+    instructorProfile?: InstructorProfileUncheckedCreateNestedOneWithoutInstructorInput
   }
 
   export type UserUpdateInput = {
@@ -17050,8 +18474,6 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17059,11 +18481,13 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     resetPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    studentProfile?: StudentProfileUpdateOneWithoutStudentNestedInput
-    instructorProfile?: InstructorProfileUpdateOneWithoutInstructorNestedInput
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     refreshToken?: RefreshTokenUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
+    studentProfile?: StudentProfileUpdateOneWithoutStudentNestedInput
+    instructorProfile?: InstructorProfileUpdateOneWithoutInstructorNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -17072,8 +18496,6 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17081,11 +18503,13 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     resetPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    studentProfile?: StudentProfileUncheckedUpdateOneWithoutStudentNestedInput
-    instructorProfile?: InstructorProfileUncheckedUpdateOneWithoutInstructorNestedInput
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     refreshToken?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
+    studentProfile?: StudentProfileUncheckedUpdateOneWithoutStudentNestedInput
+    instructorProfile?: InstructorProfileUncheckedUpdateOneWithoutInstructorNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -17094,8 +18518,6 @@ export namespace Prisma {
     username?: string | null
     password?: string | null
     role: $Enums.Role
-    enrolledAt?: Date | string
-    updatedAt?: Date | string
     firstName?: string | null
     lastName?: string | null
     avatarUrl?: string | null
@@ -17103,6 +18525,8 @@ export namespace Prisma {
     isVerified?: boolean
     resetPasswordToken?: string | null
     resetPasswordTokenExpiry?: Date | string | null
+    enrolledAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type UserUpdateManyMutationInput = {
@@ -17110,8 +18534,6 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17119,6 +18541,8 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     resetPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -17127,8 +18551,6 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17136,6 +18558,8 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     resetPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type RefreshTokenCreateInput = {
@@ -17252,6 +18676,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     enrollments?: CourseEnrollmentCreateNestedManyWithoutStudentInput
     reviews?: ReviewCreateNestedManyWithoutStudentInput
+    quizSubmissions?: StudentQuizSubmissionCreateNestedManyWithoutStudentInput
     student: UserCreateNestedOneWithoutStudentProfileInput
   }
 
@@ -17266,6 +18691,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     enrollments?: CourseEnrollmentUncheckedCreateNestedManyWithoutStudentInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutStudentInput
+    quizSubmissions?: StudentQuizSubmissionUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentProfileUpdateInput = {
@@ -17277,6 +18703,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     enrollments?: CourseEnrollmentUpdateManyWithoutStudentNestedInput
     reviews?: ReviewUpdateManyWithoutStudentNestedInput
+    quizSubmissions?: StudentQuizSubmissionUpdateManyWithoutStudentNestedInput
     student?: UserUpdateOneRequiredWithoutStudentProfileNestedInput
   }
 
@@ -17291,6 +18718,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     enrollments?: CourseEnrollmentUncheckedUpdateManyWithoutStudentNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutStudentNestedInput
+    quizSubmissions?: StudentQuizSubmissionUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentProfileCreateManyInput = {
@@ -17778,8 +19206,10 @@ export namespace Prisma {
   export type QuizCreateInput = {
     question: string
     answers?: QuizCreateanswersInput | string[]
+    correctAnswer: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    submissions?: StudentQuizSubmissionCreateNestedManyWithoutQuizInput
     assignment: AssignmentCreateNestedOneWithoutQuizzesInput
   }
 
@@ -17788,15 +19218,19 @@ export namespace Prisma {
     assignmentId: number
     question: string
     answers?: QuizCreateanswersInput | string[]
+    correctAnswer: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    submissions?: StudentQuizSubmissionUncheckedCreateNestedManyWithoutQuizInput
   }
 
   export type QuizUpdateInput = {
     question?: StringFieldUpdateOperationsInput | string
     answers?: QuizUpdateanswersInput | string[]
+    correctAnswer?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submissions?: StudentQuizSubmissionUpdateManyWithoutQuizNestedInput
     assignment?: AssignmentUpdateOneRequiredWithoutQuizzesNestedInput
   }
 
@@ -17805,8 +19239,10 @@ export namespace Prisma {
     assignmentId?: IntFieldUpdateOperationsInput | number
     question?: StringFieldUpdateOperationsInput | string
     answers?: QuizUpdateanswersInput | string[]
+    correctAnswer?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submissions?: StudentQuizSubmissionUncheckedUpdateManyWithoutQuizNestedInput
   }
 
   export type QuizCreateManyInput = {
@@ -17814,6 +19250,7 @@ export namespace Prisma {
     assignmentId: number
     question: string
     answers?: QuizCreateanswersInput | string[]
+    correctAnswer: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17821,6 +19258,7 @@ export namespace Prisma {
   export type QuizUpdateManyMutationInput = {
     question?: StringFieldUpdateOperationsInput | string
     answers?: QuizUpdateanswersInput | string[]
+    correctAnswer?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17830,8 +19268,67 @@ export namespace Prisma {
     assignmentId?: IntFieldUpdateOperationsInput | number
     question?: StringFieldUpdateOperationsInput | string
     answers?: QuizUpdateanswersInput | string[]
+    correctAnswer?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentQuizSubmissionCreateInput = {
+    answer: number
+    score: number
+    createdAt?: Date | string
+    student: StudentProfileCreateNestedOneWithoutQuizSubmissionsInput
+    quiz: QuizCreateNestedOneWithoutSubmissionsInput
+  }
+
+  export type StudentQuizSubmissionUncheckedCreateInput = {
+    id?: number
+    studentId: number
+    quizId: number
+    answer: number
+    score: number
+    createdAt?: Date | string
+  }
+
+  export type StudentQuizSubmissionUpdateInput = {
+    answer?: IntFieldUpdateOperationsInput | number
+    score?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    student?: StudentProfileUpdateOneRequiredWithoutQuizSubmissionsNestedInput
+    quiz?: QuizUpdateOneRequiredWithoutSubmissionsNestedInput
+  }
+
+  export type StudentQuizSubmissionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    quizId?: IntFieldUpdateOperationsInput | number
+    answer?: IntFieldUpdateOperationsInput | number
+    score?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentQuizSubmissionCreateManyInput = {
+    id?: number
+    studentId: number
+    quizId: number
+    answer: number
+    score: number
+    createdAt?: Date | string
+  }
+
+  export type StudentQuizSubmissionUpdateManyMutationInput = {
+    answer?: IntFieldUpdateOperationsInput | number
+    score?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentQuizSubmissionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    quizId?: IntFieldUpdateOperationsInput | number
+    answer?: IntFieldUpdateOperationsInput | number
+    score?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -17882,17 +19379,6 @@ export namespace Prisma {
     not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
   export type BoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
@@ -17909,14 +19395,15 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
-  export type StudentProfileNullableScalarRelationFilter = {
-    is?: StudentProfileWhereInput | null
-    isNot?: StudentProfileWhereInput | null
-  }
-
-  export type InstructorProfileNullableScalarRelationFilter = {
-    is?: InstructorProfileWhereInput | null
-    isNot?: InstructorProfileWhereInput | null
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type RefreshTokenListRelationFilter = {
@@ -17929,6 +19416,16 @@ export namespace Prisma {
     every?: MessageWhereInput
     some?: MessageWhereInput
     none?: MessageWhereInput
+  }
+
+  export type StudentProfileNullableScalarRelationFilter = {
+    is?: StudentProfileWhereInput | null
+    isNot?: StudentProfileWhereInput | null
+  }
+
+  export type InstructorProfileNullableScalarRelationFilter = {
+    is?: InstructorProfileWhereInput | null
+    isNot?: InstructorProfileWhereInput | null
   }
 
   export type SortOrderInput = {
@@ -17950,8 +19447,6 @@ export namespace Prisma {
     username?: SortOrder
     password?: SortOrder
     role?: SortOrder
-    enrolledAt?: SortOrder
-    updatedAt?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
     avatarUrl?: SortOrder
@@ -17959,6 +19454,8 @@ export namespace Prisma {
     isVerified?: SortOrder
     resetPasswordToken?: SortOrder
     resetPasswordTokenExpiry?: SortOrder
+    enrolledAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
@@ -17971,8 +19468,6 @@ export namespace Prisma {
     username?: SortOrder
     password?: SortOrder
     role?: SortOrder
-    enrolledAt?: SortOrder
-    updatedAt?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
     avatarUrl?: SortOrder
@@ -17980,6 +19475,8 @@ export namespace Prisma {
     isVerified?: SortOrder
     resetPasswordToken?: SortOrder
     resetPasswordTokenExpiry?: SortOrder
+    enrolledAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -17988,8 +19485,6 @@ export namespace Prisma {
     username?: SortOrder
     password?: SortOrder
     role?: SortOrder
-    enrolledAt?: SortOrder
-    updatedAt?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
     avatarUrl?: SortOrder
@@ -17997,6 +19492,8 @@ export namespace Prisma {
     isVerified?: SortOrder
     resetPasswordToken?: SortOrder
     resetPasswordTokenExpiry?: SortOrder
+    enrolledAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
@@ -18065,20 +19562,6 @@ export namespace Prisma {
     _max?: NestedEnumRoleFilter<$PrismaModel>
   }
 
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
   export type BoolWithAggregatesFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
@@ -18099,6 +19582,20 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type UserScalarRelationFilter = {
@@ -18184,11 +19681,21 @@ export namespace Prisma {
     none?: ReviewWhereInput
   }
 
+  export type StudentQuizSubmissionListRelationFilter = {
+    every?: StudentQuizSubmissionWhereInput
+    some?: StudentQuizSubmissionWhereInput
+    none?: StudentQuizSubmissionWhereInput
+  }
+
   export type CourseEnrollmentOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type ReviewOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type StudentQuizSubmissionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -18593,6 +20100,7 @@ export namespace Prisma {
     assignmentId?: SortOrder
     question?: SortOrder
     answers?: SortOrder
+    correctAnswer?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -18600,12 +20108,14 @@ export namespace Prisma {
   export type QuizAvgOrderByAggregateInput = {
     id?: SortOrder
     assignmentId?: SortOrder
+    correctAnswer?: SortOrder
   }
 
   export type QuizMaxOrderByAggregateInput = {
     id?: SortOrder
     assignmentId?: SortOrder
     question?: SortOrder
+    correctAnswer?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -18614,6 +20124,7 @@ export namespace Prisma {
     id?: SortOrder
     assignmentId?: SortOrder
     question?: SortOrder
+    correctAnswer?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -18621,18 +20132,55 @@ export namespace Prisma {
   export type QuizSumOrderByAggregateInput = {
     id?: SortOrder
     assignmentId?: SortOrder
+    correctAnswer?: SortOrder
   }
 
-  export type StudentProfileCreateNestedOneWithoutStudentInput = {
-    create?: XOR<StudentProfileCreateWithoutStudentInput, StudentProfileUncheckedCreateWithoutStudentInput>
-    connectOrCreate?: StudentProfileCreateOrConnectWithoutStudentInput
-    connect?: StudentProfileWhereUniqueInput
+  export type QuizScalarRelationFilter = {
+    is?: QuizWhereInput
+    isNot?: QuizWhereInput
   }
 
-  export type InstructorProfileCreateNestedOneWithoutInstructorInput = {
-    create?: XOR<InstructorProfileCreateWithoutInstructorInput, InstructorProfileUncheckedCreateWithoutInstructorInput>
-    connectOrCreate?: InstructorProfileCreateOrConnectWithoutInstructorInput
-    connect?: InstructorProfileWhereUniqueInput
+  export type StudentQuizSubmissionCountOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    quizId?: SortOrder
+    answer?: SortOrder
+    score?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type StudentQuizSubmissionAvgOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    quizId?: SortOrder
+    answer?: SortOrder
+    score?: SortOrder
+  }
+
+  export type StudentQuizSubmissionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    quizId?: SortOrder
+    answer?: SortOrder
+    score?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type StudentQuizSubmissionMinOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    quizId?: SortOrder
+    answer?: SortOrder
+    score?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type StudentQuizSubmissionSumOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    quizId?: SortOrder
+    answer?: SortOrder
+    score?: SortOrder
   }
 
   export type RefreshTokenCreateNestedManyWithoutUserInput = {
@@ -18656,13 +20204,13 @@ export namespace Prisma {
     connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
   }
 
-  export type StudentProfileUncheckedCreateNestedOneWithoutStudentInput = {
+  export type StudentProfileCreateNestedOneWithoutStudentInput = {
     create?: XOR<StudentProfileCreateWithoutStudentInput, StudentProfileUncheckedCreateWithoutStudentInput>
     connectOrCreate?: StudentProfileCreateOrConnectWithoutStudentInput
     connect?: StudentProfileWhereUniqueInput
   }
 
-  export type InstructorProfileUncheckedCreateNestedOneWithoutInstructorInput = {
+  export type InstructorProfileCreateNestedOneWithoutInstructorInput = {
     create?: XOR<InstructorProfileCreateWithoutInstructorInput, InstructorProfileUncheckedCreateWithoutInstructorInput>
     connectOrCreate?: InstructorProfileCreateOrConnectWithoutInstructorInput
     connect?: InstructorProfileWhereUniqueInput
@@ -18689,6 +20237,18 @@ export namespace Prisma {
     connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
   }
 
+  export type StudentProfileUncheckedCreateNestedOneWithoutStudentInput = {
+    create?: XOR<StudentProfileCreateWithoutStudentInput, StudentProfileUncheckedCreateWithoutStudentInput>
+    connectOrCreate?: StudentProfileCreateOrConnectWithoutStudentInput
+    connect?: StudentProfileWhereUniqueInput
+  }
+
+  export type InstructorProfileUncheckedCreateNestedOneWithoutInstructorInput = {
+    create?: XOR<InstructorProfileCreateWithoutInstructorInput, InstructorProfileUncheckedCreateWithoutInstructorInput>
+    connectOrCreate?: InstructorProfileCreateOrConnectWithoutInstructorInput
+    connect?: InstructorProfileWhereUniqueInput
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -18701,10 +20261,6 @@ export namespace Prisma {
     set?: $Enums.Role
   }
 
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
-  }
-
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
   }
@@ -18713,24 +20269,8 @@ export namespace Prisma {
     set?: Date | string | null
   }
 
-  export type StudentProfileUpdateOneWithoutStudentNestedInput = {
-    create?: XOR<StudentProfileCreateWithoutStudentInput, StudentProfileUncheckedCreateWithoutStudentInput>
-    connectOrCreate?: StudentProfileCreateOrConnectWithoutStudentInput
-    upsert?: StudentProfileUpsertWithoutStudentInput
-    disconnect?: StudentProfileWhereInput | boolean
-    delete?: StudentProfileWhereInput | boolean
-    connect?: StudentProfileWhereUniqueInput
-    update?: XOR<XOR<StudentProfileUpdateToOneWithWhereWithoutStudentInput, StudentProfileUpdateWithoutStudentInput>, StudentProfileUncheckedUpdateWithoutStudentInput>
-  }
-
-  export type InstructorProfileUpdateOneWithoutInstructorNestedInput = {
-    create?: XOR<InstructorProfileCreateWithoutInstructorInput, InstructorProfileUncheckedCreateWithoutInstructorInput>
-    connectOrCreate?: InstructorProfileCreateOrConnectWithoutInstructorInput
-    upsert?: InstructorProfileUpsertWithoutInstructorInput
-    disconnect?: InstructorProfileWhereInput | boolean
-    delete?: InstructorProfileWhereInput | boolean
-    connect?: InstructorProfileWhereUniqueInput
-    update?: XOR<XOR<InstructorProfileUpdateToOneWithWhereWithoutInstructorInput, InstructorProfileUpdateWithoutInstructorInput>, InstructorProfileUncheckedUpdateWithoutInstructorInput>
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
   }
 
   export type RefreshTokenUpdateManyWithoutUserNestedInput = {
@@ -18775,15 +20315,7 @@ export namespace Prisma {
     deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
   }
 
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
-  export type StudentProfileUncheckedUpdateOneWithoutStudentNestedInput = {
+  export type StudentProfileUpdateOneWithoutStudentNestedInput = {
     create?: XOR<StudentProfileCreateWithoutStudentInput, StudentProfileUncheckedCreateWithoutStudentInput>
     connectOrCreate?: StudentProfileCreateOrConnectWithoutStudentInput
     upsert?: StudentProfileUpsertWithoutStudentInput
@@ -18793,7 +20325,7 @@ export namespace Prisma {
     update?: XOR<XOR<StudentProfileUpdateToOneWithWhereWithoutStudentInput, StudentProfileUpdateWithoutStudentInput>, StudentProfileUncheckedUpdateWithoutStudentInput>
   }
 
-  export type InstructorProfileUncheckedUpdateOneWithoutInstructorNestedInput = {
+  export type InstructorProfileUpdateOneWithoutInstructorNestedInput = {
     create?: XOR<InstructorProfileCreateWithoutInstructorInput, InstructorProfileUncheckedCreateWithoutInstructorInput>
     connectOrCreate?: InstructorProfileCreateOrConnectWithoutInstructorInput
     upsert?: InstructorProfileUpsertWithoutInstructorInput
@@ -18801,6 +20333,14 @@ export namespace Prisma {
     delete?: InstructorProfileWhereInput | boolean
     connect?: InstructorProfileWhereUniqueInput
     update?: XOR<XOR<InstructorProfileUpdateToOneWithWhereWithoutInstructorInput, InstructorProfileUpdateWithoutInstructorInput>, InstructorProfileUncheckedUpdateWithoutInstructorInput>
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type RefreshTokenUncheckedUpdateManyWithoutUserNestedInput = {
@@ -18845,6 +20385,26 @@ export namespace Prisma {
     deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
   }
 
+  export type StudentProfileUncheckedUpdateOneWithoutStudentNestedInput = {
+    create?: XOR<StudentProfileCreateWithoutStudentInput, StudentProfileUncheckedCreateWithoutStudentInput>
+    connectOrCreate?: StudentProfileCreateOrConnectWithoutStudentInput
+    upsert?: StudentProfileUpsertWithoutStudentInput
+    disconnect?: StudentProfileWhereInput | boolean
+    delete?: StudentProfileWhereInput | boolean
+    connect?: StudentProfileWhereUniqueInput
+    update?: XOR<XOR<StudentProfileUpdateToOneWithWhereWithoutStudentInput, StudentProfileUpdateWithoutStudentInput>, StudentProfileUncheckedUpdateWithoutStudentInput>
+  }
+
+  export type InstructorProfileUncheckedUpdateOneWithoutInstructorNestedInput = {
+    create?: XOR<InstructorProfileCreateWithoutInstructorInput, InstructorProfileUncheckedCreateWithoutInstructorInput>
+    connectOrCreate?: InstructorProfileCreateOrConnectWithoutInstructorInput
+    upsert?: InstructorProfileUpsertWithoutInstructorInput
+    disconnect?: InstructorProfileWhereInput | boolean
+    delete?: InstructorProfileWhereInput | boolean
+    connect?: InstructorProfileWhereUniqueInput
+    update?: XOR<XOR<InstructorProfileUpdateToOneWithWhereWithoutInstructorInput, InstructorProfileUpdateWithoutInstructorInput>, InstructorProfileUncheckedUpdateWithoutInstructorInput>
+  }
+
   export type UserCreateNestedOneWithoutRefreshTokenInput = {
     create?: XOR<UserCreateWithoutRefreshTokenInput, UserUncheckedCreateWithoutRefreshTokenInput>
     connectOrCreate?: UserCreateOrConnectWithoutRefreshTokenInput
@@ -18873,6 +20433,13 @@ export namespace Prisma {
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
   }
 
+  export type StudentQuizSubmissionCreateNestedManyWithoutStudentInput = {
+    create?: XOR<StudentQuizSubmissionCreateWithoutStudentInput, StudentQuizSubmissionUncheckedCreateWithoutStudentInput> | StudentQuizSubmissionCreateWithoutStudentInput[] | StudentQuizSubmissionUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: StudentQuizSubmissionCreateOrConnectWithoutStudentInput | StudentQuizSubmissionCreateOrConnectWithoutStudentInput[]
+    createMany?: StudentQuizSubmissionCreateManyStudentInputEnvelope
+    connect?: StudentQuizSubmissionWhereUniqueInput | StudentQuizSubmissionWhereUniqueInput[]
+  }
+
   export type UserCreateNestedOneWithoutStudentProfileInput = {
     create?: XOR<UserCreateWithoutStudentProfileInput, UserUncheckedCreateWithoutStudentProfileInput>
     connectOrCreate?: UserCreateOrConnectWithoutStudentProfileInput
@@ -18891,6 +20458,13 @@ export namespace Prisma {
     connectOrCreate?: ReviewCreateOrConnectWithoutStudentInput | ReviewCreateOrConnectWithoutStudentInput[]
     createMany?: ReviewCreateManyStudentInputEnvelope
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+  }
+
+  export type StudentQuizSubmissionUncheckedCreateNestedManyWithoutStudentInput = {
+    create?: XOR<StudentQuizSubmissionCreateWithoutStudentInput, StudentQuizSubmissionUncheckedCreateWithoutStudentInput> | StudentQuizSubmissionCreateWithoutStudentInput[] | StudentQuizSubmissionUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: StudentQuizSubmissionCreateOrConnectWithoutStudentInput | StudentQuizSubmissionCreateOrConnectWithoutStudentInput[]
+    createMany?: StudentQuizSubmissionCreateManyStudentInputEnvelope
+    connect?: StudentQuizSubmissionWhereUniqueInput | StudentQuizSubmissionWhereUniqueInput[]
   }
 
   export type CourseEnrollmentUpdateManyWithoutStudentNestedInput = {
@@ -18919,6 +20493,20 @@ export namespace Prisma {
     update?: ReviewUpdateWithWhereUniqueWithoutStudentInput | ReviewUpdateWithWhereUniqueWithoutStudentInput[]
     updateMany?: ReviewUpdateManyWithWhereWithoutStudentInput | ReviewUpdateManyWithWhereWithoutStudentInput[]
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+  }
+
+  export type StudentQuizSubmissionUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<StudentQuizSubmissionCreateWithoutStudentInput, StudentQuizSubmissionUncheckedCreateWithoutStudentInput> | StudentQuizSubmissionCreateWithoutStudentInput[] | StudentQuizSubmissionUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: StudentQuizSubmissionCreateOrConnectWithoutStudentInput | StudentQuizSubmissionCreateOrConnectWithoutStudentInput[]
+    upsert?: StudentQuizSubmissionUpsertWithWhereUniqueWithoutStudentInput | StudentQuizSubmissionUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: StudentQuizSubmissionCreateManyStudentInputEnvelope
+    set?: StudentQuizSubmissionWhereUniqueInput | StudentQuizSubmissionWhereUniqueInput[]
+    disconnect?: StudentQuizSubmissionWhereUniqueInput | StudentQuizSubmissionWhereUniqueInput[]
+    delete?: StudentQuizSubmissionWhereUniqueInput | StudentQuizSubmissionWhereUniqueInput[]
+    connect?: StudentQuizSubmissionWhereUniqueInput | StudentQuizSubmissionWhereUniqueInput[]
+    update?: StudentQuizSubmissionUpdateWithWhereUniqueWithoutStudentInput | StudentQuizSubmissionUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: StudentQuizSubmissionUpdateManyWithWhereWithoutStudentInput | StudentQuizSubmissionUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: StudentQuizSubmissionScalarWhereInput | StudentQuizSubmissionScalarWhereInput[]
   }
 
   export type UserUpdateOneRequiredWithoutStudentProfileNestedInput = {
@@ -18955,6 +20543,20 @@ export namespace Prisma {
     update?: ReviewUpdateWithWhereUniqueWithoutStudentInput | ReviewUpdateWithWhereUniqueWithoutStudentInput[]
     updateMany?: ReviewUpdateManyWithWhereWithoutStudentInput | ReviewUpdateManyWithWhereWithoutStudentInput[]
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+  }
+
+  export type StudentQuizSubmissionUncheckedUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<StudentQuizSubmissionCreateWithoutStudentInput, StudentQuizSubmissionUncheckedCreateWithoutStudentInput> | StudentQuizSubmissionCreateWithoutStudentInput[] | StudentQuizSubmissionUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: StudentQuizSubmissionCreateOrConnectWithoutStudentInput | StudentQuizSubmissionCreateOrConnectWithoutStudentInput[]
+    upsert?: StudentQuizSubmissionUpsertWithWhereUniqueWithoutStudentInput | StudentQuizSubmissionUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: StudentQuizSubmissionCreateManyStudentInputEnvelope
+    set?: StudentQuizSubmissionWhereUniqueInput | StudentQuizSubmissionWhereUniqueInput[]
+    disconnect?: StudentQuizSubmissionWhereUniqueInput | StudentQuizSubmissionWhereUniqueInput[]
+    delete?: StudentQuizSubmissionWhereUniqueInput | StudentQuizSubmissionWhereUniqueInput[]
+    connect?: StudentQuizSubmissionWhereUniqueInput | StudentQuizSubmissionWhereUniqueInput[]
+    update?: StudentQuizSubmissionUpdateWithWhereUniqueWithoutStudentInput | StudentQuizSubmissionUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: StudentQuizSubmissionUpdateManyWithWhereWithoutStudentInput | StudentQuizSubmissionUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: StudentQuizSubmissionScalarWhereInput | StudentQuizSubmissionScalarWhereInput[]
   }
 
   export type CourseCreateNestedManyWithoutInstructorInput = {
@@ -19409,15 +21011,43 @@ export namespace Prisma {
     set: string[]
   }
 
+  export type StudentQuizSubmissionCreateNestedManyWithoutQuizInput = {
+    create?: XOR<StudentQuizSubmissionCreateWithoutQuizInput, StudentQuizSubmissionUncheckedCreateWithoutQuizInput> | StudentQuizSubmissionCreateWithoutQuizInput[] | StudentQuizSubmissionUncheckedCreateWithoutQuizInput[]
+    connectOrCreate?: StudentQuizSubmissionCreateOrConnectWithoutQuizInput | StudentQuizSubmissionCreateOrConnectWithoutQuizInput[]
+    createMany?: StudentQuizSubmissionCreateManyQuizInputEnvelope
+    connect?: StudentQuizSubmissionWhereUniqueInput | StudentQuizSubmissionWhereUniqueInput[]
+  }
+
   export type AssignmentCreateNestedOneWithoutQuizzesInput = {
     create?: XOR<AssignmentCreateWithoutQuizzesInput, AssignmentUncheckedCreateWithoutQuizzesInput>
     connectOrCreate?: AssignmentCreateOrConnectWithoutQuizzesInput
     connect?: AssignmentWhereUniqueInput
   }
 
+  export type StudentQuizSubmissionUncheckedCreateNestedManyWithoutQuizInput = {
+    create?: XOR<StudentQuizSubmissionCreateWithoutQuizInput, StudentQuizSubmissionUncheckedCreateWithoutQuizInput> | StudentQuizSubmissionCreateWithoutQuizInput[] | StudentQuizSubmissionUncheckedCreateWithoutQuizInput[]
+    connectOrCreate?: StudentQuizSubmissionCreateOrConnectWithoutQuizInput | StudentQuizSubmissionCreateOrConnectWithoutQuizInput[]
+    createMany?: StudentQuizSubmissionCreateManyQuizInputEnvelope
+    connect?: StudentQuizSubmissionWhereUniqueInput | StudentQuizSubmissionWhereUniqueInput[]
+  }
+
   export type QuizUpdateanswersInput = {
     set?: string[]
     push?: string | string[]
+  }
+
+  export type StudentQuizSubmissionUpdateManyWithoutQuizNestedInput = {
+    create?: XOR<StudentQuizSubmissionCreateWithoutQuizInput, StudentQuizSubmissionUncheckedCreateWithoutQuizInput> | StudentQuizSubmissionCreateWithoutQuizInput[] | StudentQuizSubmissionUncheckedCreateWithoutQuizInput[]
+    connectOrCreate?: StudentQuizSubmissionCreateOrConnectWithoutQuizInput | StudentQuizSubmissionCreateOrConnectWithoutQuizInput[]
+    upsert?: StudentQuizSubmissionUpsertWithWhereUniqueWithoutQuizInput | StudentQuizSubmissionUpsertWithWhereUniqueWithoutQuizInput[]
+    createMany?: StudentQuizSubmissionCreateManyQuizInputEnvelope
+    set?: StudentQuizSubmissionWhereUniqueInput | StudentQuizSubmissionWhereUniqueInput[]
+    disconnect?: StudentQuizSubmissionWhereUniqueInput | StudentQuizSubmissionWhereUniqueInput[]
+    delete?: StudentQuizSubmissionWhereUniqueInput | StudentQuizSubmissionWhereUniqueInput[]
+    connect?: StudentQuizSubmissionWhereUniqueInput | StudentQuizSubmissionWhereUniqueInput[]
+    update?: StudentQuizSubmissionUpdateWithWhereUniqueWithoutQuizInput | StudentQuizSubmissionUpdateWithWhereUniqueWithoutQuizInput[]
+    updateMany?: StudentQuizSubmissionUpdateManyWithWhereWithoutQuizInput | StudentQuizSubmissionUpdateManyWithWhereWithoutQuizInput[]
+    deleteMany?: StudentQuizSubmissionScalarWhereInput | StudentQuizSubmissionScalarWhereInput[]
   }
 
   export type AssignmentUpdateOneRequiredWithoutQuizzesNestedInput = {
@@ -19426,6 +21056,48 @@ export namespace Prisma {
     upsert?: AssignmentUpsertWithoutQuizzesInput
     connect?: AssignmentWhereUniqueInput
     update?: XOR<XOR<AssignmentUpdateToOneWithWhereWithoutQuizzesInput, AssignmentUpdateWithoutQuizzesInput>, AssignmentUncheckedUpdateWithoutQuizzesInput>
+  }
+
+  export type StudentQuizSubmissionUncheckedUpdateManyWithoutQuizNestedInput = {
+    create?: XOR<StudentQuizSubmissionCreateWithoutQuizInput, StudentQuizSubmissionUncheckedCreateWithoutQuizInput> | StudentQuizSubmissionCreateWithoutQuizInput[] | StudentQuizSubmissionUncheckedCreateWithoutQuizInput[]
+    connectOrCreate?: StudentQuizSubmissionCreateOrConnectWithoutQuizInput | StudentQuizSubmissionCreateOrConnectWithoutQuizInput[]
+    upsert?: StudentQuizSubmissionUpsertWithWhereUniqueWithoutQuizInput | StudentQuizSubmissionUpsertWithWhereUniqueWithoutQuizInput[]
+    createMany?: StudentQuizSubmissionCreateManyQuizInputEnvelope
+    set?: StudentQuizSubmissionWhereUniqueInput | StudentQuizSubmissionWhereUniqueInput[]
+    disconnect?: StudentQuizSubmissionWhereUniqueInput | StudentQuizSubmissionWhereUniqueInput[]
+    delete?: StudentQuizSubmissionWhereUniqueInput | StudentQuizSubmissionWhereUniqueInput[]
+    connect?: StudentQuizSubmissionWhereUniqueInput | StudentQuizSubmissionWhereUniqueInput[]
+    update?: StudentQuizSubmissionUpdateWithWhereUniqueWithoutQuizInput | StudentQuizSubmissionUpdateWithWhereUniqueWithoutQuizInput[]
+    updateMany?: StudentQuizSubmissionUpdateManyWithWhereWithoutQuizInput | StudentQuizSubmissionUpdateManyWithWhereWithoutQuizInput[]
+    deleteMany?: StudentQuizSubmissionScalarWhereInput | StudentQuizSubmissionScalarWhereInput[]
+  }
+
+  export type StudentProfileCreateNestedOneWithoutQuizSubmissionsInput = {
+    create?: XOR<StudentProfileCreateWithoutQuizSubmissionsInput, StudentProfileUncheckedCreateWithoutQuizSubmissionsInput>
+    connectOrCreate?: StudentProfileCreateOrConnectWithoutQuizSubmissionsInput
+    connect?: StudentProfileWhereUniqueInput
+  }
+
+  export type QuizCreateNestedOneWithoutSubmissionsInput = {
+    create?: XOR<QuizCreateWithoutSubmissionsInput, QuizUncheckedCreateWithoutSubmissionsInput>
+    connectOrCreate?: QuizCreateOrConnectWithoutSubmissionsInput
+    connect?: QuizWhereUniqueInput
+  }
+
+  export type StudentProfileUpdateOneRequiredWithoutQuizSubmissionsNestedInput = {
+    create?: XOR<StudentProfileCreateWithoutQuizSubmissionsInput, StudentProfileUncheckedCreateWithoutQuizSubmissionsInput>
+    connectOrCreate?: StudentProfileCreateOrConnectWithoutQuizSubmissionsInput
+    upsert?: StudentProfileUpsertWithoutQuizSubmissionsInput
+    connect?: StudentProfileWhereUniqueInput
+    update?: XOR<XOR<StudentProfileUpdateToOneWithWhereWithoutQuizSubmissionsInput, StudentProfileUpdateWithoutQuizSubmissionsInput>, StudentProfileUncheckedUpdateWithoutQuizSubmissionsInput>
+  }
+
+  export type QuizUpdateOneRequiredWithoutSubmissionsNestedInput = {
+    create?: XOR<QuizCreateWithoutSubmissionsInput, QuizUncheckedCreateWithoutSubmissionsInput>
+    connectOrCreate?: QuizCreateOrConnectWithoutSubmissionsInput
+    upsert?: QuizUpsertWithoutSubmissionsInput
+    connect?: QuizWhereUniqueInput
+    update?: XOR<XOR<QuizUpdateToOneWithWhereWithoutSubmissionsInput, QuizUpdateWithoutSubmissionsInput>, QuizUncheckedUpdateWithoutSubmissionsInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -19474,17 +21146,6 @@ export namespace Prisma {
     not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
   export type NestedBoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
@@ -19499,6 +21160,17 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -19583,20 +21255,6 @@ export namespace Prisma {
     _max?: NestedEnumRoleFilter<$PrismaModel>
   }
 
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
   export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
@@ -19619,58 +21277,18 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-  export type StudentProfileCreateWithoutStudentInput = {
-    profilePic?: string | null
-    full_name?: string | null
-    bio?: string | null
-    phone?: string | null
-    address?: string | null
-    updatedAt?: Date | string
-    enrollments?: CourseEnrollmentCreateNestedManyWithoutStudentInput
-    reviews?: ReviewCreateNestedManyWithoutStudentInput
-  }
-
-  export type StudentProfileUncheckedCreateWithoutStudentInput = {
-    id?: number
-    profilePic?: string | null
-    full_name?: string | null
-    bio?: string | null
-    phone?: string | null
-    address?: string | null
-    updatedAt?: Date | string
-    enrollments?: CourseEnrollmentUncheckedCreateNestedManyWithoutStudentInput
-    reviews?: ReviewUncheckedCreateNestedManyWithoutStudentInput
-  }
-
-  export type StudentProfileCreateOrConnectWithoutStudentInput = {
-    where: StudentProfileWhereUniqueInput
-    create: XOR<StudentProfileCreateWithoutStudentInput, StudentProfileUncheckedCreateWithoutStudentInput>
-  }
-
-  export type InstructorProfileCreateWithoutInstructorInput = {
-    full_name?: string | null
-    bio?: string | null
-    expertise?: string | null
-    profilePic?: string | null
-    updatedAt?: Date | string
-    courses?: CourseCreateNestedManyWithoutInstructorInput
-    assignment?: AssignmentCreateNestedManyWithoutInstructorInput
-  }
-
-  export type InstructorProfileUncheckedCreateWithoutInstructorInput = {
-    id?: number
-    full_name?: string | null
-    bio?: string | null
-    expertise?: string | null
-    profilePic?: string | null
-    updatedAt?: Date | string
-    courses?: CourseUncheckedCreateNestedManyWithoutInstructorInput
-    assignment?: AssignmentUncheckedCreateNestedManyWithoutInstructorInput
-  }
-
-  export type InstructorProfileCreateOrConnectWithoutInstructorInput = {
-    where: InstructorProfileWhereUniqueInput
-    create: XOR<InstructorProfileCreateWithoutInstructorInput, InstructorProfileUncheckedCreateWithoutInstructorInput>
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type RefreshTokenCreateWithoutUserInput = {
@@ -19746,70 +21364,60 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type StudentProfileUpsertWithoutStudentInput = {
-    update: XOR<StudentProfileUpdateWithoutStudentInput, StudentProfileUncheckedUpdateWithoutStudentInput>
+  export type StudentProfileCreateWithoutStudentInput = {
+    profilePic?: string | null
+    full_name?: string | null
+    bio?: string | null
+    phone?: string | null
+    address?: string | null
+    updatedAt?: Date | string
+    enrollments?: CourseEnrollmentCreateNestedManyWithoutStudentInput
+    reviews?: ReviewCreateNestedManyWithoutStudentInput
+    quizSubmissions?: StudentQuizSubmissionCreateNestedManyWithoutStudentInput
+  }
+
+  export type StudentProfileUncheckedCreateWithoutStudentInput = {
+    id?: number
+    profilePic?: string | null
+    full_name?: string | null
+    bio?: string | null
+    phone?: string | null
+    address?: string | null
+    updatedAt?: Date | string
+    enrollments?: CourseEnrollmentUncheckedCreateNestedManyWithoutStudentInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutStudentInput
+    quizSubmissions?: StudentQuizSubmissionUncheckedCreateNestedManyWithoutStudentInput
+  }
+
+  export type StudentProfileCreateOrConnectWithoutStudentInput = {
+    where: StudentProfileWhereUniqueInput
     create: XOR<StudentProfileCreateWithoutStudentInput, StudentProfileUncheckedCreateWithoutStudentInput>
-    where?: StudentProfileWhereInput
   }
 
-  export type StudentProfileUpdateToOneWithWhereWithoutStudentInput = {
-    where?: StudentProfileWhereInput
-    data: XOR<StudentProfileUpdateWithoutStudentInput, StudentProfileUncheckedUpdateWithoutStudentInput>
+  export type InstructorProfileCreateWithoutInstructorInput = {
+    full_name?: string | null
+    bio?: string | null
+    expertise?: string | null
+    profilePic?: string | null
+    updatedAt?: Date | string
+    courses?: CourseCreateNestedManyWithoutInstructorInput
+    assignment?: AssignmentCreateNestedManyWithoutInstructorInput
   }
 
-  export type StudentProfileUpdateWithoutStudentInput = {
-    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
-    full_name?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    enrollments?: CourseEnrollmentUpdateManyWithoutStudentNestedInput
-    reviews?: ReviewUpdateManyWithoutStudentNestedInput
+  export type InstructorProfileUncheckedCreateWithoutInstructorInput = {
+    id?: number
+    full_name?: string | null
+    bio?: string | null
+    expertise?: string | null
+    profilePic?: string | null
+    updatedAt?: Date | string
+    courses?: CourseUncheckedCreateNestedManyWithoutInstructorInput
+    assignment?: AssignmentUncheckedCreateNestedManyWithoutInstructorInput
   }
 
-  export type StudentProfileUncheckedUpdateWithoutStudentInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
-    full_name?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    enrollments?: CourseEnrollmentUncheckedUpdateManyWithoutStudentNestedInput
-    reviews?: ReviewUncheckedUpdateManyWithoutStudentNestedInput
-  }
-
-  export type InstructorProfileUpsertWithoutInstructorInput = {
-    update: XOR<InstructorProfileUpdateWithoutInstructorInput, InstructorProfileUncheckedUpdateWithoutInstructorInput>
+  export type InstructorProfileCreateOrConnectWithoutInstructorInput = {
+    where: InstructorProfileWhereUniqueInput
     create: XOR<InstructorProfileCreateWithoutInstructorInput, InstructorProfileUncheckedCreateWithoutInstructorInput>
-    where?: InstructorProfileWhereInput
-  }
-
-  export type InstructorProfileUpdateToOneWithWhereWithoutInstructorInput = {
-    where?: InstructorProfileWhereInput
-    data: XOR<InstructorProfileUpdateWithoutInstructorInput, InstructorProfileUncheckedUpdateWithoutInstructorInput>
-  }
-
-  export type InstructorProfileUpdateWithoutInstructorInput = {
-    full_name?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    expertise?: NullableStringFieldUpdateOperationsInput | string | null
-    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    courses?: CourseUpdateManyWithoutInstructorNestedInput
-    assignment?: AssignmentUpdateManyWithoutInstructorNestedInput
-  }
-
-  export type InstructorProfileUncheckedUpdateWithoutInstructorInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    full_name?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    expertise?: NullableStringFieldUpdateOperationsInput | string | null
-    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    courses?: CourseUncheckedUpdateManyWithoutInstructorNestedInput
-    assignment?: AssignmentUncheckedUpdateManyWithoutInstructorNestedInput
   }
 
   export type RefreshTokenUpsertWithWhereUniqueWithoutUserInput = {
@@ -19883,13 +21491,79 @@ export namespace Prisma {
     data: XOR<MessageUpdateManyMutationInput, MessageUncheckedUpdateManyWithoutReceiverInput>
   }
 
+  export type StudentProfileUpsertWithoutStudentInput = {
+    update: XOR<StudentProfileUpdateWithoutStudentInput, StudentProfileUncheckedUpdateWithoutStudentInput>
+    create: XOR<StudentProfileCreateWithoutStudentInput, StudentProfileUncheckedCreateWithoutStudentInput>
+    where?: StudentProfileWhereInput
+  }
+
+  export type StudentProfileUpdateToOneWithWhereWithoutStudentInput = {
+    where?: StudentProfileWhereInput
+    data: XOR<StudentProfileUpdateWithoutStudentInput, StudentProfileUncheckedUpdateWithoutStudentInput>
+  }
+
+  export type StudentProfileUpdateWithoutStudentInput = {
+    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
+    full_name?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    enrollments?: CourseEnrollmentUpdateManyWithoutStudentNestedInput
+    reviews?: ReviewUpdateManyWithoutStudentNestedInput
+    quizSubmissions?: StudentQuizSubmissionUpdateManyWithoutStudentNestedInput
+  }
+
+  export type StudentProfileUncheckedUpdateWithoutStudentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
+    full_name?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    enrollments?: CourseEnrollmentUncheckedUpdateManyWithoutStudentNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutStudentNestedInput
+    quizSubmissions?: StudentQuizSubmissionUncheckedUpdateManyWithoutStudentNestedInput
+  }
+
+  export type InstructorProfileUpsertWithoutInstructorInput = {
+    update: XOR<InstructorProfileUpdateWithoutInstructorInput, InstructorProfileUncheckedUpdateWithoutInstructorInput>
+    create: XOR<InstructorProfileCreateWithoutInstructorInput, InstructorProfileUncheckedCreateWithoutInstructorInput>
+    where?: InstructorProfileWhereInput
+  }
+
+  export type InstructorProfileUpdateToOneWithWhereWithoutInstructorInput = {
+    where?: InstructorProfileWhereInput
+    data: XOR<InstructorProfileUpdateWithoutInstructorInput, InstructorProfileUncheckedUpdateWithoutInstructorInput>
+  }
+
+  export type InstructorProfileUpdateWithoutInstructorInput = {
+    full_name?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    expertise?: NullableStringFieldUpdateOperationsInput | string | null
+    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    courses?: CourseUpdateManyWithoutInstructorNestedInput
+    assignment?: AssignmentUpdateManyWithoutInstructorNestedInput
+  }
+
+  export type InstructorProfileUncheckedUpdateWithoutInstructorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    full_name?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    expertise?: NullableStringFieldUpdateOperationsInput | string | null
+    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    courses?: CourseUncheckedUpdateManyWithoutInstructorNestedInput
+    assignment?: AssignmentUncheckedUpdateManyWithoutInstructorNestedInput
+  }
+
   export type UserCreateWithoutRefreshTokenInput = {
     email: string
     username?: string | null
     password?: string | null
     role: $Enums.Role
-    enrolledAt?: Date | string
-    updatedAt?: Date | string
     firstName?: string | null
     lastName?: string | null
     avatarUrl?: string | null
@@ -19897,10 +21571,12 @@ export namespace Prisma {
     isVerified?: boolean
     resetPasswordToken?: string | null
     resetPasswordTokenExpiry?: Date | string | null
-    studentProfile?: StudentProfileCreateNestedOneWithoutStudentInput
-    instructorProfile?: InstructorProfileCreateNestedOneWithoutInstructorInput
+    enrolledAt?: Date | string
+    updatedAt?: Date | string
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
+    studentProfile?: StudentProfileCreateNestedOneWithoutStudentInput
+    instructorProfile?: InstructorProfileCreateNestedOneWithoutInstructorInput
   }
 
   export type UserUncheckedCreateWithoutRefreshTokenInput = {
@@ -19909,8 +21585,6 @@ export namespace Prisma {
     username?: string | null
     password?: string | null
     role: $Enums.Role
-    enrolledAt?: Date | string
-    updatedAt?: Date | string
     firstName?: string | null
     lastName?: string | null
     avatarUrl?: string | null
@@ -19918,10 +21592,12 @@ export namespace Prisma {
     isVerified?: boolean
     resetPasswordToken?: string | null
     resetPasswordTokenExpiry?: Date | string | null
-    studentProfile?: StudentProfileUncheckedCreateNestedOneWithoutStudentInput
-    instructorProfile?: InstructorProfileUncheckedCreateNestedOneWithoutInstructorInput
+    enrolledAt?: Date | string
+    updatedAt?: Date | string
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
+    studentProfile?: StudentProfileUncheckedCreateNestedOneWithoutStudentInput
+    instructorProfile?: InstructorProfileUncheckedCreateNestedOneWithoutInstructorInput
   }
 
   export type UserCreateOrConnectWithoutRefreshTokenInput = {
@@ -19945,8 +21621,6 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19954,10 +21628,12 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     resetPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    studentProfile?: StudentProfileUpdateOneWithoutStudentNestedInput
-    instructorProfile?: InstructorProfileUpdateOneWithoutInstructorNestedInput
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
+    studentProfile?: StudentProfileUpdateOneWithoutStudentNestedInput
+    instructorProfile?: InstructorProfileUpdateOneWithoutInstructorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRefreshTokenInput = {
@@ -19966,8 +21642,6 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19975,10 +21649,12 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     resetPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    studentProfile?: StudentProfileUncheckedUpdateOneWithoutStudentNestedInput
-    instructorProfile?: InstructorProfileUncheckedUpdateOneWithoutInstructorNestedInput
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
+    studentProfile?: StudentProfileUncheckedUpdateOneWithoutStudentNestedInput
+    instructorProfile?: InstructorProfileUncheckedUpdateOneWithoutInstructorNestedInput
   }
 
   export type CourseEnrollmentCreateWithoutStudentInput = {
@@ -20029,13 +21705,36 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type StudentQuizSubmissionCreateWithoutStudentInput = {
+    answer: number
+    score: number
+    createdAt?: Date | string
+    quiz: QuizCreateNestedOneWithoutSubmissionsInput
+  }
+
+  export type StudentQuizSubmissionUncheckedCreateWithoutStudentInput = {
+    id?: number
+    quizId: number
+    answer: number
+    score: number
+    createdAt?: Date | string
+  }
+
+  export type StudentQuizSubmissionCreateOrConnectWithoutStudentInput = {
+    where: StudentQuizSubmissionWhereUniqueInput
+    create: XOR<StudentQuizSubmissionCreateWithoutStudentInput, StudentQuizSubmissionUncheckedCreateWithoutStudentInput>
+  }
+
+  export type StudentQuizSubmissionCreateManyStudentInputEnvelope = {
+    data: StudentQuizSubmissionCreateManyStudentInput | StudentQuizSubmissionCreateManyStudentInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserCreateWithoutStudentProfileInput = {
     email: string
     username?: string | null
     password?: string | null
     role: $Enums.Role
-    enrolledAt?: Date | string
-    updatedAt?: Date | string
     firstName?: string | null
     lastName?: string | null
     avatarUrl?: string | null
@@ -20043,10 +21742,12 @@ export namespace Prisma {
     isVerified?: boolean
     resetPasswordToken?: string | null
     resetPasswordTokenExpiry?: Date | string | null
-    instructorProfile?: InstructorProfileCreateNestedOneWithoutInstructorInput
+    enrolledAt?: Date | string
+    updatedAt?: Date | string
     refreshToken?: RefreshTokenCreateNestedManyWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
+    instructorProfile?: InstructorProfileCreateNestedOneWithoutInstructorInput
   }
 
   export type UserUncheckedCreateWithoutStudentProfileInput = {
@@ -20055,8 +21756,6 @@ export namespace Prisma {
     username?: string | null
     password?: string | null
     role: $Enums.Role
-    enrolledAt?: Date | string
-    updatedAt?: Date | string
     firstName?: string | null
     lastName?: string | null
     avatarUrl?: string | null
@@ -20064,10 +21763,12 @@ export namespace Prisma {
     isVerified?: boolean
     resetPasswordToken?: string | null
     resetPasswordTokenExpiry?: Date | string | null
-    instructorProfile?: InstructorProfileUncheckedCreateNestedOneWithoutInstructorInput
+    enrolledAt?: Date | string
+    updatedAt?: Date | string
     refreshToken?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
+    instructorProfile?: InstructorProfileUncheckedCreateNestedOneWithoutInstructorInput
   }
 
   export type UserCreateOrConnectWithoutStudentProfileInput = {
@@ -20130,6 +21831,34 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Review"> | Date | string
   }
 
+  export type StudentQuizSubmissionUpsertWithWhereUniqueWithoutStudentInput = {
+    where: StudentQuizSubmissionWhereUniqueInput
+    update: XOR<StudentQuizSubmissionUpdateWithoutStudentInput, StudentQuizSubmissionUncheckedUpdateWithoutStudentInput>
+    create: XOR<StudentQuizSubmissionCreateWithoutStudentInput, StudentQuizSubmissionUncheckedCreateWithoutStudentInput>
+  }
+
+  export type StudentQuizSubmissionUpdateWithWhereUniqueWithoutStudentInput = {
+    where: StudentQuizSubmissionWhereUniqueInput
+    data: XOR<StudentQuizSubmissionUpdateWithoutStudentInput, StudentQuizSubmissionUncheckedUpdateWithoutStudentInput>
+  }
+
+  export type StudentQuizSubmissionUpdateManyWithWhereWithoutStudentInput = {
+    where: StudentQuizSubmissionScalarWhereInput
+    data: XOR<StudentQuizSubmissionUpdateManyMutationInput, StudentQuizSubmissionUncheckedUpdateManyWithoutStudentInput>
+  }
+
+  export type StudentQuizSubmissionScalarWhereInput = {
+    AND?: StudentQuizSubmissionScalarWhereInput | StudentQuizSubmissionScalarWhereInput[]
+    OR?: StudentQuizSubmissionScalarWhereInput[]
+    NOT?: StudentQuizSubmissionScalarWhereInput | StudentQuizSubmissionScalarWhereInput[]
+    id?: IntFilter<"StudentQuizSubmission"> | number
+    studentId?: IntFilter<"StudentQuizSubmission"> | number
+    quizId?: IntFilter<"StudentQuizSubmission"> | number
+    answer?: IntFilter<"StudentQuizSubmission"> | number
+    score?: IntFilter<"StudentQuizSubmission"> | number
+    createdAt?: DateTimeFilter<"StudentQuizSubmission"> | Date | string
+  }
+
   export type UserUpsertWithoutStudentProfileInput = {
     update: XOR<UserUpdateWithoutStudentProfileInput, UserUncheckedUpdateWithoutStudentProfileInput>
     create: XOR<UserCreateWithoutStudentProfileInput, UserUncheckedCreateWithoutStudentProfileInput>
@@ -20146,8 +21875,6 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20155,10 +21882,12 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     resetPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    instructorProfile?: InstructorProfileUpdateOneWithoutInstructorNestedInput
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     refreshToken?: RefreshTokenUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
+    instructorProfile?: InstructorProfileUpdateOneWithoutInstructorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutStudentProfileInput = {
@@ -20167,8 +21896,6 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20176,10 +21903,12 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     resetPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    instructorProfile?: InstructorProfileUncheckedUpdateOneWithoutInstructorNestedInput
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     refreshToken?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
+    instructorProfile?: InstructorProfileUncheckedUpdateOneWithoutInstructorNestedInput
   }
 
   export type CourseCreateWithoutInstructorInput = {
@@ -20251,8 +21980,6 @@ export namespace Prisma {
     username?: string | null
     password?: string | null
     role: $Enums.Role
-    enrolledAt?: Date | string
-    updatedAt?: Date | string
     firstName?: string | null
     lastName?: string | null
     avatarUrl?: string | null
@@ -20260,10 +21987,12 @@ export namespace Prisma {
     isVerified?: boolean
     resetPasswordToken?: string | null
     resetPasswordTokenExpiry?: Date | string | null
-    studentProfile?: StudentProfileCreateNestedOneWithoutStudentInput
+    enrolledAt?: Date | string
+    updatedAt?: Date | string
     refreshToken?: RefreshTokenCreateNestedManyWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
+    studentProfile?: StudentProfileCreateNestedOneWithoutStudentInput
   }
 
   export type UserUncheckedCreateWithoutInstructorProfileInput = {
@@ -20272,8 +22001,6 @@ export namespace Prisma {
     username?: string | null
     password?: string | null
     role: $Enums.Role
-    enrolledAt?: Date | string
-    updatedAt?: Date | string
     firstName?: string | null
     lastName?: string | null
     avatarUrl?: string | null
@@ -20281,10 +22008,12 @@ export namespace Prisma {
     isVerified?: boolean
     resetPasswordToken?: string | null
     resetPasswordTokenExpiry?: Date | string | null
-    studentProfile?: StudentProfileUncheckedCreateNestedOneWithoutStudentInput
+    enrolledAt?: Date | string
+    updatedAt?: Date | string
     refreshToken?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
+    studentProfile?: StudentProfileUncheckedCreateNestedOneWithoutStudentInput
   }
 
   export type UserCreateOrConnectWithoutInstructorProfileInput = {
@@ -20366,8 +22095,6 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20375,10 +22102,12 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     resetPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    studentProfile?: StudentProfileUpdateOneWithoutStudentNestedInput
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     refreshToken?: RefreshTokenUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
+    studentProfile?: StudentProfileUpdateOneWithoutStudentNestedInput
   }
 
   export type UserUncheckedUpdateWithoutInstructorProfileInput = {
@@ -20387,8 +22116,6 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20396,10 +22123,12 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     resetPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    studentProfile?: StudentProfileUncheckedUpdateOneWithoutStudentNestedInput
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     refreshToken?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
+    studentProfile?: StudentProfileUncheckedUpdateOneWithoutStudentNestedInput
   }
 
   export type LessonCreateWithoutCourseInput = {
@@ -20712,6 +22441,7 @@ export namespace Prisma {
     address?: string | null
     updatedAt?: Date | string
     reviews?: ReviewCreateNestedManyWithoutStudentInput
+    quizSubmissions?: StudentQuizSubmissionCreateNestedManyWithoutStudentInput
     student: UserCreateNestedOneWithoutStudentProfileInput
   }
 
@@ -20725,6 +22455,7 @@ export namespace Prisma {
     address?: string | null
     updatedAt?: Date | string
     reviews?: ReviewUncheckedCreateNestedManyWithoutStudentInput
+    quizSubmissions?: StudentQuizSubmissionUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentProfileCreateOrConnectWithoutEnrollmentsInput = {
@@ -20781,6 +22512,7 @@ export namespace Prisma {
     address?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     reviews?: ReviewUpdateManyWithoutStudentNestedInput
+    quizSubmissions?: StudentQuizSubmissionUpdateManyWithoutStudentNestedInput
     student?: UserUpdateOneRequiredWithoutStudentProfileNestedInput
   }
 
@@ -20794,6 +22526,7 @@ export namespace Prisma {
     address?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     reviews?: ReviewUncheckedUpdateManyWithoutStudentNestedInput
+    quizSubmissions?: StudentQuizSubmissionUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type CourseUpsertWithoutEnrollmentsInput = {
@@ -20840,6 +22573,7 @@ export namespace Prisma {
     address?: string | null
     updatedAt?: Date | string
     enrollments?: CourseEnrollmentCreateNestedManyWithoutStudentInput
+    quizSubmissions?: StudentQuizSubmissionCreateNestedManyWithoutStudentInput
     student: UserCreateNestedOneWithoutStudentProfileInput
   }
 
@@ -20853,6 +22587,7 @@ export namespace Prisma {
     address?: string | null
     updatedAt?: Date | string
     enrollments?: CourseEnrollmentUncheckedCreateNestedManyWithoutStudentInput
+    quizSubmissions?: StudentQuizSubmissionUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentProfileCreateOrConnectWithoutReviewsInput = {
@@ -20909,6 +22644,7 @@ export namespace Prisma {
     address?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     enrollments?: CourseEnrollmentUpdateManyWithoutStudentNestedInput
+    quizSubmissions?: StudentQuizSubmissionUpdateManyWithoutStudentNestedInput
     student?: UserUpdateOneRequiredWithoutStudentProfileNestedInput
   }
 
@@ -20922,6 +22658,7 @@ export namespace Prisma {
     address?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     enrollments?: CourseEnrollmentUncheckedUpdateManyWithoutStudentNestedInput
+    quizSubmissions?: StudentQuizSubmissionUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type CourseUpsertWithoutReviewsInput = {
@@ -20965,8 +22702,6 @@ export namespace Prisma {
     username?: string | null
     password?: string | null
     role: $Enums.Role
-    enrolledAt?: Date | string
-    updatedAt?: Date | string
     firstName?: string | null
     lastName?: string | null
     avatarUrl?: string | null
@@ -20974,10 +22709,12 @@ export namespace Prisma {
     isVerified?: boolean
     resetPasswordToken?: string | null
     resetPasswordTokenExpiry?: Date | string | null
-    studentProfile?: StudentProfileCreateNestedOneWithoutStudentInput
-    instructorProfile?: InstructorProfileCreateNestedOneWithoutInstructorInput
+    enrolledAt?: Date | string
+    updatedAt?: Date | string
     refreshToken?: RefreshTokenCreateNestedManyWithoutUserInput
     receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
+    studentProfile?: StudentProfileCreateNestedOneWithoutStudentInput
+    instructorProfile?: InstructorProfileCreateNestedOneWithoutInstructorInput
   }
 
   export type UserUncheckedCreateWithoutSentMessagesInput = {
@@ -20986,8 +22723,6 @@ export namespace Prisma {
     username?: string | null
     password?: string | null
     role: $Enums.Role
-    enrolledAt?: Date | string
-    updatedAt?: Date | string
     firstName?: string | null
     lastName?: string | null
     avatarUrl?: string | null
@@ -20995,10 +22730,12 @@ export namespace Prisma {
     isVerified?: boolean
     resetPasswordToken?: string | null
     resetPasswordTokenExpiry?: Date | string | null
-    studentProfile?: StudentProfileUncheckedCreateNestedOneWithoutStudentInput
-    instructorProfile?: InstructorProfileUncheckedCreateNestedOneWithoutInstructorInput
+    enrolledAt?: Date | string
+    updatedAt?: Date | string
     refreshToken?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
+    studentProfile?: StudentProfileUncheckedCreateNestedOneWithoutStudentInput
+    instructorProfile?: InstructorProfileUncheckedCreateNestedOneWithoutInstructorInput
   }
 
   export type UserCreateOrConnectWithoutSentMessagesInput = {
@@ -21011,8 +22748,6 @@ export namespace Prisma {
     username?: string | null
     password?: string | null
     role: $Enums.Role
-    enrolledAt?: Date | string
-    updatedAt?: Date | string
     firstName?: string | null
     lastName?: string | null
     avatarUrl?: string | null
@@ -21020,10 +22755,12 @@ export namespace Prisma {
     isVerified?: boolean
     resetPasswordToken?: string | null
     resetPasswordTokenExpiry?: Date | string | null
-    studentProfile?: StudentProfileCreateNestedOneWithoutStudentInput
-    instructorProfile?: InstructorProfileCreateNestedOneWithoutInstructorInput
+    enrolledAt?: Date | string
+    updatedAt?: Date | string
     refreshToken?: RefreshTokenCreateNestedManyWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    studentProfile?: StudentProfileCreateNestedOneWithoutStudentInput
+    instructorProfile?: InstructorProfileCreateNestedOneWithoutInstructorInput
   }
 
   export type UserUncheckedCreateWithoutReceivedMessagesInput = {
@@ -21032,8 +22769,6 @@ export namespace Prisma {
     username?: string | null
     password?: string | null
     role: $Enums.Role
-    enrolledAt?: Date | string
-    updatedAt?: Date | string
     firstName?: string | null
     lastName?: string | null
     avatarUrl?: string | null
@@ -21041,10 +22776,12 @@ export namespace Prisma {
     isVerified?: boolean
     resetPasswordToken?: string | null
     resetPasswordTokenExpiry?: Date | string | null
-    studentProfile?: StudentProfileUncheckedCreateNestedOneWithoutStudentInput
-    instructorProfile?: InstructorProfileUncheckedCreateNestedOneWithoutInstructorInput
+    enrolledAt?: Date | string
+    updatedAt?: Date | string
     refreshToken?: RefreshTokenUncheckedCreateNestedManyWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    studentProfile?: StudentProfileUncheckedCreateNestedOneWithoutStudentInput
+    instructorProfile?: InstructorProfileUncheckedCreateNestedOneWithoutInstructorInput
   }
 
   export type UserCreateOrConnectWithoutReceivedMessagesInput = {
@@ -21068,8 +22805,6 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21077,10 +22812,12 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     resetPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    studentProfile?: StudentProfileUpdateOneWithoutStudentNestedInput
-    instructorProfile?: InstructorProfileUpdateOneWithoutInstructorNestedInput
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     refreshToken?: RefreshTokenUpdateManyWithoutUserNestedInput
     receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
+    studentProfile?: StudentProfileUpdateOneWithoutStudentNestedInput
+    instructorProfile?: InstructorProfileUpdateOneWithoutInstructorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSentMessagesInput = {
@@ -21089,8 +22826,6 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21098,10 +22833,12 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     resetPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    studentProfile?: StudentProfileUncheckedUpdateOneWithoutStudentNestedInput
-    instructorProfile?: InstructorProfileUncheckedUpdateOneWithoutInstructorNestedInput
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     refreshToken?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
+    studentProfile?: StudentProfileUncheckedUpdateOneWithoutStudentNestedInput
+    instructorProfile?: InstructorProfileUncheckedUpdateOneWithoutInstructorNestedInput
   }
 
   export type UserUpsertWithoutReceivedMessagesInput = {
@@ -21120,8 +22857,6 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21129,10 +22864,12 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     resetPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    studentProfile?: StudentProfileUpdateOneWithoutStudentNestedInput
-    instructorProfile?: InstructorProfileUpdateOneWithoutInstructorNestedInput
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     refreshToken?: RefreshTokenUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    studentProfile?: StudentProfileUpdateOneWithoutStudentNestedInput
+    instructorProfile?: InstructorProfileUpdateOneWithoutInstructorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReceivedMessagesInput = {
@@ -21141,8 +22878,6 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21150,25 +22885,31 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     resetPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
     resetPasswordTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    studentProfile?: StudentProfileUncheckedUpdateOneWithoutStudentNestedInput
-    instructorProfile?: InstructorProfileUncheckedUpdateOneWithoutInstructorNestedInput
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     refreshToken?: RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    studentProfile?: StudentProfileUncheckedUpdateOneWithoutStudentNestedInput
+    instructorProfile?: InstructorProfileUncheckedUpdateOneWithoutInstructorNestedInput
   }
 
   export type QuizCreateWithoutAssignmentInput = {
     question: string
     answers?: QuizCreateanswersInput | string[]
+    correctAnswer: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    submissions?: StudentQuizSubmissionCreateNestedManyWithoutQuizInput
   }
 
   export type QuizUncheckedCreateWithoutAssignmentInput = {
     id?: number
     question: string
     answers?: QuizCreateanswersInput | string[]
+    correctAnswer: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    submissions?: StudentQuizSubmissionUncheckedCreateNestedManyWithoutQuizInput
   }
 
   export type QuizCreateOrConnectWithoutAssignmentInput = {
@@ -21261,6 +23002,7 @@ export namespace Prisma {
     assignmentId?: IntFilter<"Quiz"> | number
     question?: StringFilter<"Quiz"> | string
     answers?: StringNullableListFilter<"Quiz">
+    correctAnswer?: IntFilter<"Quiz"> | number
     createdAt?: DateTimeFilter<"Quiz"> | Date | string
     updatedAt?: DateTimeFilter<"Quiz"> | Date | string
   }
@@ -21333,6 +23075,31 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutCourseNestedInput
   }
 
+  export type StudentQuizSubmissionCreateWithoutQuizInput = {
+    answer: number
+    score: number
+    createdAt?: Date | string
+    student: StudentProfileCreateNestedOneWithoutQuizSubmissionsInput
+  }
+
+  export type StudentQuizSubmissionUncheckedCreateWithoutQuizInput = {
+    id?: number
+    studentId: number
+    answer: number
+    score: number
+    createdAt?: Date | string
+  }
+
+  export type StudentQuizSubmissionCreateOrConnectWithoutQuizInput = {
+    where: StudentQuizSubmissionWhereUniqueInput
+    create: XOR<StudentQuizSubmissionCreateWithoutQuizInput, StudentQuizSubmissionUncheckedCreateWithoutQuizInput>
+  }
+
+  export type StudentQuizSubmissionCreateManyQuizInputEnvelope = {
+    data: StudentQuizSubmissionCreateManyQuizInput | StudentQuizSubmissionCreateManyQuizInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AssignmentCreateWithoutQuizzesInput = {
     title: string
     description: string
@@ -21355,6 +23122,22 @@ export namespace Prisma {
   export type AssignmentCreateOrConnectWithoutQuizzesInput = {
     where: AssignmentWhereUniqueInput
     create: XOR<AssignmentCreateWithoutQuizzesInput, AssignmentUncheckedCreateWithoutQuizzesInput>
+  }
+
+  export type StudentQuizSubmissionUpsertWithWhereUniqueWithoutQuizInput = {
+    where: StudentQuizSubmissionWhereUniqueInput
+    update: XOR<StudentQuizSubmissionUpdateWithoutQuizInput, StudentQuizSubmissionUncheckedUpdateWithoutQuizInput>
+    create: XOR<StudentQuizSubmissionCreateWithoutQuizInput, StudentQuizSubmissionUncheckedCreateWithoutQuizInput>
+  }
+
+  export type StudentQuizSubmissionUpdateWithWhereUniqueWithoutQuizInput = {
+    where: StudentQuizSubmissionWhereUniqueInput
+    data: XOR<StudentQuizSubmissionUpdateWithoutQuizInput, StudentQuizSubmissionUncheckedUpdateWithoutQuizInput>
+  }
+
+  export type StudentQuizSubmissionUpdateManyWithWhereWithoutQuizInput = {
+    where: StudentQuizSubmissionScalarWhereInput
+    data: XOR<StudentQuizSubmissionUpdateManyMutationInput, StudentQuizSubmissionUncheckedUpdateManyWithoutQuizInput>
   }
 
   export type AssignmentUpsertWithoutQuizzesInput = {
@@ -21383,6 +23166,126 @@ export namespace Prisma {
     instructorId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentProfileCreateWithoutQuizSubmissionsInput = {
+    profilePic?: string | null
+    full_name?: string | null
+    bio?: string | null
+    phone?: string | null
+    address?: string | null
+    updatedAt?: Date | string
+    enrollments?: CourseEnrollmentCreateNestedManyWithoutStudentInput
+    reviews?: ReviewCreateNestedManyWithoutStudentInput
+    student: UserCreateNestedOneWithoutStudentProfileInput
+  }
+
+  export type StudentProfileUncheckedCreateWithoutQuizSubmissionsInput = {
+    id?: number
+    studentId: number
+    profilePic?: string | null
+    full_name?: string | null
+    bio?: string | null
+    phone?: string | null
+    address?: string | null
+    updatedAt?: Date | string
+    enrollments?: CourseEnrollmentUncheckedCreateNestedManyWithoutStudentInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutStudentInput
+  }
+
+  export type StudentProfileCreateOrConnectWithoutQuizSubmissionsInput = {
+    where: StudentProfileWhereUniqueInput
+    create: XOR<StudentProfileCreateWithoutQuizSubmissionsInput, StudentProfileUncheckedCreateWithoutQuizSubmissionsInput>
+  }
+
+  export type QuizCreateWithoutSubmissionsInput = {
+    question: string
+    answers?: QuizCreateanswersInput | string[]
+    correctAnswer: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    assignment: AssignmentCreateNestedOneWithoutQuizzesInput
+  }
+
+  export type QuizUncheckedCreateWithoutSubmissionsInput = {
+    id?: number
+    assignmentId: number
+    question: string
+    answers?: QuizCreateanswersInput | string[]
+    correctAnswer: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuizCreateOrConnectWithoutSubmissionsInput = {
+    where: QuizWhereUniqueInput
+    create: XOR<QuizCreateWithoutSubmissionsInput, QuizUncheckedCreateWithoutSubmissionsInput>
+  }
+
+  export type StudentProfileUpsertWithoutQuizSubmissionsInput = {
+    update: XOR<StudentProfileUpdateWithoutQuizSubmissionsInput, StudentProfileUncheckedUpdateWithoutQuizSubmissionsInput>
+    create: XOR<StudentProfileCreateWithoutQuizSubmissionsInput, StudentProfileUncheckedCreateWithoutQuizSubmissionsInput>
+    where?: StudentProfileWhereInput
+  }
+
+  export type StudentProfileUpdateToOneWithWhereWithoutQuizSubmissionsInput = {
+    where?: StudentProfileWhereInput
+    data: XOR<StudentProfileUpdateWithoutQuizSubmissionsInput, StudentProfileUncheckedUpdateWithoutQuizSubmissionsInput>
+  }
+
+  export type StudentProfileUpdateWithoutQuizSubmissionsInput = {
+    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
+    full_name?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    enrollments?: CourseEnrollmentUpdateManyWithoutStudentNestedInput
+    reviews?: ReviewUpdateManyWithoutStudentNestedInput
+    student?: UserUpdateOneRequiredWithoutStudentProfileNestedInput
+  }
+
+  export type StudentProfileUncheckedUpdateWithoutQuizSubmissionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    profilePic?: NullableStringFieldUpdateOperationsInput | string | null
+    full_name?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    enrollments?: CourseEnrollmentUncheckedUpdateManyWithoutStudentNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutStudentNestedInput
+  }
+
+  export type QuizUpsertWithoutSubmissionsInput = {
+    update: XOR<QuizUpdateWithoutSubmissionsInput, QuizUncheckedUpdateWithoutSubmissionsInput>
+    create: XOR<QuizCreateWithoutSubmissionsInput, QuizUncheckedCreateWithoutSubmissionsInput>
+    where?: QuizWhereInput
+  }
+
+  export type QuizUpdateToOneWithWhereWithoutSubmissionsInput = {
+    where?: QuizWhereInput
+    data: XOR<QuizUpdateWithoutSubmissionsInput, QuizUncheckedUpdateWithoutSubmissionsInput>
+  }
+
+  export type QuizUpdateWithoutSubmissionsInput = {
+    question?: StringFieldUpdateOperationsInput | string
+    answers?: QuizUpdateanswersInput | string[]
+    correctAnswer?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignment?: AssignmentUpdateOneRequiredWithoutQuizzesNestedInput
+  }
+
+  export type QuizUncheckedUpdateWithoutSubmissionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    assignmentId?: IntFieldUpdateOperationsInput | number
+    question?: StringFieldUpdateOperationsInput | string
+    answers?: QuizUpdateanswersInput | string[]
+    correctAnswer?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -21491,6 +23394,14 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type StudentQuizSubmissionCreateManyStudentInput = {
+    id?: number
+    quizId: number
+    answer: number
+    score: number
+    createdAt?: Date | string
+  }
+
   export type CourseEnrollmentUpdateWithoutStudentInput = {
     enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     course?: CourseUpdateOneRequiredWithoutEnrollmentsNestedInput
@@ -21532,6 +23443,29 @@ export namespace Prisma {
     comment?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentQuizSubmissionUpdateWithoutStudentInput = {
+    answer?: IntFieldUpdateOperationsInput | number
+    score?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quiz?: QuizUpdateOneRequiredWithoutSubmissionsNestedInput
+  }
+
+  export type StudentQuizSubmissionUncheckedUpdateWithoutStudentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quizId?: IntFieldUpdateOperationsInput | number
+    answer?: IntFieldUpdateOperationsInput | number
+    score?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentQuizSubmissionUncheckedUpdateManyWithoutStudentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quizId?: IntFieldUpdateOperationsInput | number
+    answer?: IntFieldUpdateOperationsInput | number
+    score?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CourseCreateManyInstructorInput = {
@@ -21744,6 +23678,7 @@ export namespace Prisma {
     id?: number
     question: string
     answers?: QuizCreateanswersInput | string[]
+    correctAnswer: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -21751,24 +23686,60 @@ export namespace Prisma {
   export type QuizUpdateWithoutAssignmentInput = {
     question?: StringFieldUpdateOperationsInput | string
     answers?: QuizUpdateanswersInput | string[]
+    correctAnswer?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submissions?: StudentQuizSubmissionUpdateManyWithoutQuizNestedInput
   }
 
   export type QuizUncheckedUpdateWithoutAssignmentInput = {
     id?: IntFieldUpdateOperationsInput | number
     question?: StringFieldUpdateOperationsInput | string
     answers?: QuizUpdateanswersInput | string[]
+    correctAnswer?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submissions?: StudentQuizSubmissionUncheckedUpdateManyWithoutQuizNestedInput
   }
 
   export type QuizUncheckedUpdateManyWithoutAssignmentInput = {
     id?: IntFieldUpdateOperationsInput | number
     question?: StringFieldUpdateOperationsInput | string
     answers?: QuizUpdateanswersInput | string[]
+    correctAnswer?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentQuizSubmissionCreateManyQuizInput = {
+    id?: number
+    studentId: number
+    answer: number
+    score: number
+    createdAt?: Date | string
+  }
+
+  export type StudentQuizSubmissionUpdateWithoutQuizInput = {
+    answer?: IntFieldUpdateOperationsInput | number
+    score?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    student?: StudentProfileUpdateOneRequiredWithoutQuizSubmissionsNestedInput
+  }
+
+  export type StudentQuizSubmissionUncheckedUpdateWithoutQuizInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    answer?: IntFieldUpdateOperationsInput | number
+    score?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentQuizSubmissionUncheckedUpdateManyWithoutQuizInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    answer?: IntFieldUpdateOperationsInput | number
+    score?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

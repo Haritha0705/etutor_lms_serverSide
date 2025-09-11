@@ -26,8 +26,9 @@ import { UpdateQuizDto } from './dto/update-quiz.dto';
 import { AssignmentsService } from './assignments.service';
 import { CreateAssignmentDto } from './dto/create-assignment.dto';
 import { UpdateAssignmentDto } from './dto/update-assignment.dto';
+import { CreateQuizSubmissionDto } from './dto/create-quiz-submission.dto';
 
-@Roles(Role.INSTRUCTOR)
+@Roles(Role.INSTRUCTOR, Role.STUDENT)
 @Controller('courses')
 export class CoursesController {
   constructor(
@@ -185,5 +186,27 @@ export class CoursesController {
   @Delete('quizzes/:id')
   deleteQuiz(@Param('id') id: string) {
     return this.quizzesService.deleteQuiz(+id);
+  }
+
+  // --- Quizzes Submission endpoints ---
+
+  @Post('quizzes/submission')
+  quizSubmission(@Body() createQuizSubmissionDto: CreateQuizSubmissionDto) {
+    return this.quizzesService.quizSubmission(createQuizSubmissionDto);
+  }
+
+  @Get('quizzes/submission/student/:studentId')
+  findAllQuizSubmissionsByStudent(@Param('studentId') studentId: string) {
+    return this.quizzesService.findAllQuizSubmissionsByStudent(+studentId);
+  }
+
+  @Get('quizzes/submission/quiz/:quizId')
+  findQuizSubmissionsAllByQuiz(@Param('quizId') quizId: string) {
+    return this.quizzesService.findQuizSubmissionsAllByQuiz(+quizId);
+  }
+
+  @Get('quizzes/submission/:id')
+  findOneQuizSubmission(@Param('id') id: string) {
+    return this.quizzesService.findOneQuizSubmission(+id);
   }
 }

@@ -68,8 +68,9 @@ model StudentProfile {
   phone      String? @db.VarChar(20)
   address    String? @db.VarChar(300)
 
-  enrollments CourseEnrollment[]
-  reviews     Review[]
+  enrollments     CourseEnrollment[]
+  reviews         Review[]
+  quizSubmissions StudentQuizSubmission[]
 
   updatedAt DateTime @updatedAt
   student   User     @relation("StudentUserProfile", fields: [studentId], references: [id], onDelete: Cascade)
@@ -191,10 +192,12 @@ model Assignment {
 }
 
 model Quiz {
-  id           Int      @id @default(autoincrement())
-  assignmentId Int
-  question     String   @db.Text
-  answers      String[] @db.Text
+  id            Int                     @id @default(autoincrement())
+  assignmentId  Int
+  question      String                  @db.Text
+  answers       String[]                @db.Text
+  correctAnswer Int                     @db.Integer
+  submissions   StudentQuizSubmission[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -202,4 +205,19 @@ model Quiz {
   assignment Assignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
 
   @@index([assignmentId])
+}
+
+model StudentQuizSubmission {
+  id        Int      @id @default(autoincrement())
+  studentId Int
+  quizId    Int
+  answer    Int      @db.Integer
+  score     Int      @db.Integer
+  createdAt DateTime @default(now())
+
+  student StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  quiz    Quiz           @relation(fields: [quizId], references: [id], onDelete: Cascade)
+
+  @@index([studentId])
+  @@index([quizId])
 }

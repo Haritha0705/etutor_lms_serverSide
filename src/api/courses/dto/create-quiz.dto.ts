@@ -12,4 +12,8 @@ export class CreateQuizDto {
   @IsInt()
   @IsNotEmpty()
   assignmentId: number;
+
+  @IsInt()
+  @IsNotEmpty()
+  correctAnswer: number;
 }
