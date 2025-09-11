@@ -30,9 +30,11 @@ model User {
   resetPasswordToken       String?   @db.VarChar(255)
   resetPasswordTokenExpiry DateTime?
 
-  refreshToken      RefreshToken[]
   studentProfile    StudentProfile?    @relation("StudentUserProfile")
   instructorProfile InstructorProfile? @relation("InstructorUserProfile")
+  refreshToken      RefreshToken[]
+  sentMessages      Message[]          @relation("SentMessages")
+  receivedMessages  Message[]          @relation("ReceivedMessages")
 }
 
 model RefreshToken {
@@ -144,4 +146,19 @@ model Review {
   @@unique([studentId, courseId])
   @@index([studentId])
   @@index([courseId])
+}
+
+model Message {
+  id         Int      @id @default(autoincrement())
+  senderId   Int
+  receiverId Int
+  content    String   @db.Text
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  sender   User @relation("SentMessages", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver User @relation("ReceivedMessages", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  @@index([senderId])
+  @@index([receiverId])
 }

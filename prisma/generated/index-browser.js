@@ -210,6 +210,15 @@ exports.Prisma.ReviewScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.MessageScalarFieldEnum = {
+  id: 'id',
+  senderId: 'senderId',
+  receiverId: 'receiverId',
+  content: 'content',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -239,7 +248,8 @@ exports.Prisma.ModelName = {
   Course: 'Course',
   Lesson: 'Lesson',
   CourseEnrollment: 'CourseEnrollment',
-  Review: 'Review'
+  Review: 'Review',
+  Message: 'Message'
 };
 
 /**

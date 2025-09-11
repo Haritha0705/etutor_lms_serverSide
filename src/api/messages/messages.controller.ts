@@ -1,34 +1,24 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { MessagesService } from './messages.service';
 import { CreateMessageDto } from './dto/create-message.dto';
-import { UpdateMessageDto } from './dto/update-message.dto';
+import { Roles } from '../../decorator/roles/roles.decorator';
+import { Role } from '../../enum/role.enum';
 
+@Roles(Role.STUDENT, Role.INSTRUCTOR)
 @Controller('messages')
 export class MessagesController {
   constructor(private readonly messagesService: MessagesService) {}
 
   @Post()
-  create(@Body() createMessageDto: CreateMessageDto) {
-    return this.messagesService.create(createMessageDto);
+  sendMessage(@Body() dto: CreateMessageDto) {
+    return this.messagesService.sendMessage(dto);
   }
 
-  @Get()
-  findAll() {
-    return this.messagesService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.messagesService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMessageDto: UpdateMessageDto) {
-    return this.messagesService.update(+id, updateMessageDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.messagesService.remove(+id);
+  @Get('chat/:user1Id/:user2Id')
+  getChatHistory(
+    @Param('user1Id') user1Id: string,
+    @Param('user2Id') user2Id: string,
+  ) {
+    return this.messagesService.getChatHistory(+user1Id, +user2Id);
   }
 }
