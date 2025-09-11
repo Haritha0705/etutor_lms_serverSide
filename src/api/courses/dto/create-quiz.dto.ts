@@ -11,9 +11,5 @@ export class CreateQuizDto {
 
   @IsInt()
   @IsNotEmpty()
-  courseId: number;
-
-  @IsInt()
-  @IsNotEmpty()
-  instructorId: number;
+  assignmentId: number;
 }

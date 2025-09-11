@@ -67,10 +67,9 @@ model StudentProfile {
   address    String?  @db.VarChar(300)
   updatedAt  DateTime @updatedAt
 
-  enrollments           CourseEnrollment[]
-  reviews               Review[]
-  StudentQuizSubmission StudentQuizSubmission[]
-  student               User                    @relation("StudentUserProfile", fields: [studentId], references: [id], onDelete: Cascade)
+  enrollments CourseEnrollment[]
+  reviews     Review[]
+  student     User               @relation("StudentUserProfile", fields: [studentId], references: [id], onDelete: Cascade)
 }
 
 model InstructorProfile {
@@ -82,10 +81,9 @@ model InstructorProfile {
   profilePic   String?  @db.VarChar(500)
   updatedAt    DateTime @updatedAt
 
-  instructor User @relation("InstructorUserProfile", fields: [instructorId], references: [id], onDelete: Cascade)
-
-  courses Course[]
-  quizzes Quiz[]
+  courses    Course[]
+  assignment Assignment[]
+  instructor User         @relation("InstructorUserProfile", fields: [instructorId], references: [id], onDelete: Cascade)
 }
 
 model Course {
@@ -100,7 +98,7 @@ model Course {
   lessons     Lesson[]
   enrollments CourseEnrollment[]
   reviews     Review[]
-  quizzes     Quiz[]
+  assignment  Assignment[]
   instructor  InstructorProfile  @relation(fields: [instructorId], references: [id], onDelete: Cascade)
 
   @@index([instructorId])
@@ -166,34 +164,32 @@ model Message {
   @@index([receiverId])
 }
 
-model Quiz {
+model Assignment {
   id           Int      @id @default(autoincrement())
   courseId     Int
   instructorId Int
-  question     String   @db.Text
-  answers      String[] @db.Text
+  title        String   @db.VarChar(255)
+  description  String   @db.Text
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  StudentQuizSubmission StudentQuizSubmission[]
-  instructor            InstructorProfile       @relation(fields: [instructorId], references: [id], onDelete: Cascade)
-  course                Course                  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  quizzes    Quiz[]
+  instructor InstructorProfile @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  course     Course            @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
   @@index([courseId])
   @@index([instructorId])
 }
 
-model StudentQuizSubmission {
-  id        Int      @id @default(autoincrement())
-  studentId Int
-  quizId    Int
-  answer    Int
-  score     Int?
-  createdAt DateTime @default(now())
+model Quiz {
+  id           Int      @id @default(autoincrement())
+  assignmentId Int
+  question     String   @db.Text
+  answers      String[] @db.Text
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
-  student StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
-  quiz    Quiz           @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  assignment Assignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
 
-  @@index([studentId])
-  @@index([quizId])
+  @@index([assignmentId])
 }

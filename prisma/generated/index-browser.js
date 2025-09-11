@@ -219,23 +219,23 @@ exports.Prisma.MessageScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.QuizScalarFieldEnum = {
+exports.Prisma.AssignmentScalarFieldEnum = {
   id: 'id',
   courseId: 'courseId',
   instructorId: 'instructorId',
-  question: 'question',
-  answers: 'answers',
+  title: 'title',
+  description: 'description',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.StudentQuizSubmissionScalarFieldEnum = {
+exports.Prisma.QuizScalarFieldEnum = {
   id: 'id',
-  studentId: 'studentId',
-  quizId: 'quizId',
-  answer: 'answer',
-  score: 'score',
-  createdAt: 'createdAt'
+  assignmentId: 'assignmentId',
+  question: 'question',
+  answers: 'answers',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -269,8 +269,8 @@ exports.Prisma.ModelName = {
   CourseEnrollment: 'CourseEnrollment',
   Review: 'Review',
   Message: 'Message',
-  Quiz: 'Quiz',
-  StudentQuizSubmission: 'StudentQuizSubmission'
+  Assignment: 'Assignment',
+  Quiz: 'Quiz'
 };
 
 /**

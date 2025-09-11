@@ -23,6 +23,9 @@ import { ReviewService } from './review.service';
 import { CreateQuizDto } from './dto/create-quiz.dto';
 import { QuizzesService } from './quizzes.service';
 import { UpdateQuizDto } from './dto/update-quiz.dto';
+import { AssignmentsService } from './assignments.service';
+import { CreateAssignmentDto } from './dto/create-assignment.dto';
+import { UpdateAssignmentDto } from './dto/update-assignment.dto';
 
 @Roles(Role.INSTRUCTOR)
 @Controller('courses')
@@ -33,6 +36,7 @@ export class CoursesController {
     private readonly enrollmentsService: EnrollmentsService,
     private readonly reviewService: ReviewService,
     private readonly quizzesService: QuizzesService,
+    private readonly assignmentsService: AssignmentsService,
   ) {}
 
   // --- Course endpoints ---
@@ -128,15 +132,44 @@ export class CoursesController {
     return this.reviewService.deleteReview(+id);
   }
 
+  // --- Assignments endpoints ---
+  @Post('assignment')
+  createAssignment(@Body() createAssignmentDto: CreateAssignmentDto) {
+    return this.assignmentsService.createAssignment(createAssignmentDto);
+  }
+
+  @Get('assignment/course/:courseId')
+  findAllAssignments(@Param('courseId') courseId: string) {
+    return this.assignmentsService.findAllAssignments(+courseId);
+  }
+
+  @Get('assignment/:id')
+  findOneAssignment(@Param('id') id: string) {
+    return this.assignmentsService.findOneAssignment(+id);
+  }
+
+  @Patch('assignment/:id')
+  updateAssignment(
+    @Param('id') id: string,
+    @Body() updateAssignmentDto: UpdateAssignmentDto,
+  ) {
+    return this.assignmentsService.updateAssignment(+id, updateAssignmentDto);
+  }
+
+  @Delete('assignment/:id')
+  deleteAssignment(@Param('id') id: string) {
+    return this.assignmentsService.deleteAssignment(+id);
+  }
+
   // --- Quizzes endpoints ---
   @Post('quizzes')
   createQuiz(@Body() createQuizDto: CreateQuizDto) {
     return this.quizzesService.createQuiz(createQuizDto);
   }
 
-  @Get('quizzes/course/:courseId')
-  findAllQuiz(@Param('courseId') courseId: string) {
-    return this.quizzesService.findAllQuiz(+courseId);
+  @Get('quizzes/assignment/:assignmentId')
+  findAllQuiz(@Param('assignmentId') assignmentId: string) {
+    return this.quizzesService.findAllQuiz(+assignmentId);
   }
 
   @Get('quizzes/:id')

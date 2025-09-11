@@ -16,32 +16,20 @@ export class QuizzesService {
 
   /** Create a new Quiz */
   async createQuiz(createQuizDto: CreateQuizDto) {
-    const { courseId, question, answers, instructorId } = createQuizDto;
+    const { assignmentId, question, answers } = createQuizDto;
 
     try {
-      // Validate course
-      const course = await this.DB.course.findUnique({
-        where: { id: courseId },
+      const assignment = await this.DB.assignment.findUnique({
+        where: { id: assignmentId },
       });
-      if (!course)
-        throw new NotFoundException(`Course with ID ${courseId} not found`);
+      if (!assignment)
+        throw new NotFoundException(`Course with ID ${assignmentId} not found`);
 
-      // Validate instructor
-      const instructor = await this.DB.instructorProfile.findUnique({
-        where: { id: instructorId },
-      });
-      if (!instructor)
-        throw new NotFoundException(
-          `Instructor with ID ${instructorId} not found`,
-        );
-
-      // Create quiz
       const quiz = await this.DB.quiz.create({
         data: {
           question,
           answers,
-          course: { connect: { id: courseId } },
-          instructor: { connect: { id: instructorId } },
+          assignment: { connect: { id: assignmentId } },
         },
       });
 
@@ -58,23 +46,25 @@ export class QuizzesService {
   }
 
   /** Get all Quizzes for a course */
-  async findAllQuiz(courseId: number) {
+  async findAllQuiz(assignmentId: number) {
     try {
-      const course = await this.DB.course.findUnique({
-        where: { id: courseId },
+      const assignment = await this.DB.assignment.findUnique({
+        where: { id: assignmentId },
       });
-      if (!course)
-        throw new NotFoundException(`Course with ID ${courseId} not found`);
+      if (!assignment)
+        throw new NotFoundException(
+          `Assignment with ID ${assignmentId} not found`,
+        );
 
       const quizzes = await this.DB.quiz.findMany({
-        where: { courseId },
+        where: { assignmentId },
         orderBy: { createdAt: 'desc' },
       });
 
       return { success: true, data: quizzes };
     } catch (error) {
       this.logger.error(
-        `Failed to fetch quizzes for course ${courseId}`,
+        `Failed to fetch quizzes for course ${assignmentId}`,
         error.stack,
       );
       throw new InternalServerErrorException('Failed to fetch quizzes');
@@ -98,30 +88,22 @@ export class QuizzesService {
   /** Update a Quiz */
   async updateQuiz(id: number, updateQuizDto: UpdateQuizDto) {
     try {
-      const { courseId, instructorId, ...quizData } = updateQuizDto;
+      const { assignmentId, ...quizData } = updateQuizDto;
 
       const existingQuiz = await this.DB.quiz.findUnique({ where: { id } });
       if (!existingQuiz)
         throw new NotFoundException(`Quiz with ID ${id} not found`);
 
       const data: any = { ...quizData };
-      if (courseId) {
-        const course = await this.DB.course.findUnique({
-          where: { id: courseId },
+      if (assignmentId) {
+        const assignment = await this.DB.assignment.findUnique({
+          where: { id: assignmentId },
         });
-        if (!course)
-          throw new NotFoundException(`Course with ID ${courseId} not found`);
-        data.course = { connect: { id: courseId } };
-      }
-      if (instructorId) {
-        const instructor = await this.DB.instructorProfile.findUnique({
-          where: { id: instructorId },
-        });
-        if (!instructor)
+        if (!assignment)
           throw new NotFoundException(
-            `Instructor with ID ${instructorId} not found`,
+            `Course with ID ${assignmentId} not found`,
           );
-        data.instructor = { connect: { id: instructorId } };
+        data.assignment = { connect: { id: assignmentId } };
       }
 
       const updatedQuiz = await this.DB.quiz.update({

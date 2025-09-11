@@ -80,7 +80,12 @@ export class AssignmentsService {
   /** Get a single Assignment by ID */
   async findOneAssignment(id: number) {
     try {
-      const assignment = await this.DB.assignment.findUnique({ where: { id } });
+      const assignment = await this.DB.assignment.findUnique({
+        where: { id },
+        include: {
+          quizzes: true,
+        },
+      });
       if (!assignment)
         throw new NotFoundException(`Quiz with ID ${id} not found`);
 
