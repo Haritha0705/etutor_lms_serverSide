@@ -49,8 +49,12 @@ export class QuizzesService {
   }
 
   /** Get all Quizzes for a course */
-  async findAllQuiz(assignmentId: number) {
+  async findAllQuiz(assignmentId: number, page: number, limit: number) {
     try {
+      page = page || 1;
+      limit = limit || 10;
+      const skip = (page - 1) * limit;
+
       const assignment = await this.DB.assignment.findUnique({
         where: { id: assignmentId },
       });
@@ -60,11 +64,26 @@ export class QuizzesService {
         );
 
       const quizzes = await this.DB.quiz.findMany({
+        skip,
+        take: limit,
         where: { assignmentId },
         orderBy: { createdAt: 'desc' },
       });
 
-      return { success: true, data: quizzes };
+      const totalCount = await this.DB.quiz.count({
+        where: { assignmentId },
+      });
+      const totalPages = Math.ceil(totalCount / limit);
+
+      return {
+        success: true,
+        data: quizzes,
+        meta: {
+          page,
+          limit,
+          totalPages,
+        },
+      };
     } catch (error) {
       this.logger.error(
         `Failed to fetch quizzes for course ${assignmentId}`,

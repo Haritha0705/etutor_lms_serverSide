@@ -197,7 +197,7 @@ export class CoursesController {
 
   // --- Quizzes endpoints ---
 
-  @Roles(Role.INSTRUCTOR)
+  @Roles(Role.STUDENT)
   @Post('quizzes')
   createQuiz(@Body() createQuizDto: CreateQuizDto) {
     return this.quizzesService.createQuiz(createQuizDto);
@@ -205,8 +205,12 @@ export class CoursesController {
 
   @Roles(Role.STUDENT)
   @Get('quizzes/assignment/:assignmentId')
-  findAllQuiz(@Param('assignmentId') assignmentId: string) {
-    return this.quizzesService.findAllQuiz(+assignmentId);
+  findAllQuiz(
+    @Param('assignmentId') assignmentId: string,
+    @Query('page') page: string,
+    @Query('limit') limit: string,
+  ) {
+    return this.quizzesService.findAllQuiz(+assignmentId, +page, +limit);
   }
 
   @Roles(Role.STUDENT)
