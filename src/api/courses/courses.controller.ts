@@ -6,7 +6,7 @@ import {
   Param,
   Patch,
   Post,
-  Req,
+  Query,
 } from '@nestjs/common';
 import { CoursesService } from './courses.service';
 import { CreateCourseDto } from './dto/create-course.dto';
@@ -53,8 +53,8 @@ export class CoursesController {
 
   @Roles(Role.STUDENT)
   @Get()
-  findAllCourses() {
-    return this.coursesService.findAllCourses();
+  findAllCourses(@Query('page') page: string, @Query('limit') limit: string) {
+    return this.coursesService.findAllCourses(+page, +limit);
   }
 
   @Roles(Role.STUDENT)

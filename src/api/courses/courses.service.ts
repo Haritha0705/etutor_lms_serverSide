@@ -42,13 +42,31 @@ export class CoursesService {
   }
 
   /** Fetch all courses */
-  async findAllCourses() {
+  async findAllCourses(page: number, limit: number) {
     try {
+      page = 1;
+      limit = 12;
+      const skip = (page - 1) * limit;
+
       const courses = await this.DB.course.findMany({
+        skip,
+        take: limit,
         include: { instructor: true },
+        orderBy: { createdAt: 'desc' },
       });
-      this.logger.log(`Fetched ${courses.length} courses`);
-      return { success: true, data: courses };
+
+      const totalCount = await this.DB.course.count();
+      const totalPages = Math.ceil(totalCount / limit);
+
+      return {
+        success: true,
+        data: courses,
+        meta: {
+          page,
+          limit,
+          totalPages,
+        },
+      };
     } catch (error) {
       this.logger.error('Failed to fetch courses', error.stack);
       throw new InternalServerErrorException('Failed to fetch courses');
