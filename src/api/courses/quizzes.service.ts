@@ -205,30 +205,111 @@ export class QuizzesService {
   }
 
   /** All submissions by a student */
-  async findAllQuizSubmissionsByStudent(studentId: number) {
-    return this.DB.studentQuizSubmission.findMany({
-      where: { studentId },
-      include: { quiz: true },
-      orderBy: { createdAt: 'desc' },
-    });
+  async findAllQuizSubmissionsByStudent(
+    studentId: number,
+    page: number,
+    limit: number,
+  ) {
+    try {
+      page = page || 1;
+      limit = limit || 10;
+      const skip = (page - 1) * limit;
+
+      const student = await this.DB.studentProfile.findUnique({
+        where: { id: studentId },
+      });
+      if (!student) throw new NotFoundException('Course not found');
+
+      const quizSubmission = await this.DB.studentQuizSubmission.findMany({
+        skip,
+        take: limit,
+        where: { studentId },
+        include: { quiz: true },
+        orderBy: { createdAt: 'desc' },
+      });
+
+      const totalCount = await this.DB.studentQuizSubmission.count({
+        where: { studentId },
+      });
+      const totalPages = Math.ceil(totalCount / limit);
+
+      return {
+        success: true,
+        data: quizSubmission,
+        meta: {
+          page,
+          limit,
+          totalPages,
+        },
+      };
+    } catch (error) {
+      this.logger.error('Failed to fetch courses', error.stack);
+      throw new InternalServerErrorException('Failed to fetch courses');
+    }
   }
 
   /** All submissions for a quiz */
-  async findQuizSubmissionsAllByQuiz(quizId: number) {
-    return this.DB.studentQuizSubmission.findMany({
-      where: { quizId },
-      include: { student: true },
-      orderBy: { createdAt: 'desc' },
-    });
+  async findQuizSubmissionsAllByQuiz(
+    quizId: number,
+    page: number,
+    limit: number,
+  ) {
+    try {
+      page = page || 1;
+      limit = limit || 10;
+      const skip = (page - 1) * limit;
+
+      const quiz = await this.DB.quiz.findUnique({
+        where: { id: quizId },
+      });
+      if (!quiz) throw new NotFoundException('Course not found');
+
+      const quizSubmission = await this.DB.studentQuizSubmission.findMany({
+        skip,
+        take: limit,
+        where: { quizId },
+        include: { student: true },
+        orderBy: { createdAt: 'desc' },
+      });
+
+      const totalCount = await this.DB.studentQuizSubmission.count({
+        where: { quizId },
+      });
+      const totalPages = Math.ceil(totalCount / limit);
+
+      return {
+        success: true,
+        data: quizSubmission,
+        meta: {
+          page,
+          limit,
+          totalPages,
+        },
+      };
+    } catch (error) {
+      this.logger.error('Failed to fetch courses', error.stack);
+      throw new InternalServerErrorException('Failed to fetch courses');
+    }
   }
 
   /** Single submission */
   async findOneQuizSubmission(id: number) {
-    const submission = await this.DB.studentQuizSubmission.findUnique({
-      where: { id },
-      include: { student: true, quiz: true },
-    });
-    if (!submission) throw new NotFoundException(`Submission ${id} not found`);
-    return submission;
+    try {
+      const quiz = await this.DB.quiz.findUnique({
+        where: { id: id },
+      });
+      if (!quiz) throw new NotFoundException('Course not found');
+
+      const submission = await this.DB.studentQuizSubmission.findUnique({
+        where: { id },
+        include: { student: true, quiz: true },
+      });
+      if (!submission)
+        throw new NotFoundException(`Submission ${id} not found`);
+      return submission;
+    } catch (error) {
+      this.logger.error('Failed to fetch courses', error.stack);
+      throw new InternalServerErrorException('Failed to fetch courses');
+    }
   }
 }
