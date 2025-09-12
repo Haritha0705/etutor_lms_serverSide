@@ -72,20 +72,39 @@ export class ReviewService {
   }
 
   /** List all reviews for a specific course */
-  async listReviewsForCourse(courseId: number) {
+  async listReviewsForCourse(courseId: number, page: number, limit: number) {
     try {
+      page = page || 1;
+      limit = limit || 10;
+      const skip = (page - 1) * limit;
+
       const course = await this.DB.course.findUnique({
         where: { id: courseId },
       });
       if (!course) throw new NotFoundException('Course not found');
 
       const reviews = await this.DB.review.findMany({
+        skip,
+        take: limit,
         where: { courseId },
-        orderBy: { createdAt: 'desc' },
         include: { student: true },
+        orderBy: { createdAt: 'desc' },
       });
 
-      return { success: true, data: reviews };
+      const totalCount = await this.DB.review.count({
+        where: { courseId },
+      });
+      const totalPages = Math.ceil(totalCount / limit);
+
+      return {
+        success: true,
+        data: reviews,
+        meta: {
+          page,
+          limit,
+          totalPages,
+        },
+      };
     } catch (error) {
       this.logger.error(
         `Failed to list reviews for course ${courseId}`,

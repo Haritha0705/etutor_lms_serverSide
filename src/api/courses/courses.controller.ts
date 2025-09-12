@@ -137,8 +137,12 @@ export class CoursesController {
 
   @Roles(Role.STUDENT)
   @Get('review/:id')
-  ListReviewsForCourse(@Param('id') id: string) {
-    return this.reviewService.listReviewsForCourse(+id);
+  ListReviewsForCourse(
+    @Param('id') id: string,
+    @Query('page') page: string,
+    @Query('limit') limit: string,
+  ) {
+    return this.reviewService.listReviewsForCourse(+id, +page, +limit);
   }
 
   @Roles(Role.STUDENT)

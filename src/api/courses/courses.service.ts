@@ -44,8 +44,8 @@ export class CoursesService {
   /** Fetch all courses */
   async findAllCourses(page: number, limit: number) {
     try {
-      page = 1;
-      limit = 12;
+      page = page || 1;
+      limit = limit || 10;
       const skip = (page - 1) * limit;
 
       const courses = await this.DB.course.findMany({
