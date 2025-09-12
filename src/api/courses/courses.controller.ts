@@ -80,7 +80,7 @@ export class CoursesController {
 
   // --- Lesson endpoints ---
 
-  @Roles(Role.INSTRUCTOR)
+  @Roles(Role.STUDENT)
   @Post('lessons')
   createLesson(@Body() createLessonDto: CreateLessonDto) {
     return this.lessonsService.createLesson(createLessonDto);
@@ -126,6 +126,16 @@ export class CoursesController {
   }
 
   @Roles(Role.STUDENT)
+  @Get('enroll/course/:id')
+  allEnrollStudent(
+    @Param('id') id: string,
+    @Query('page') page: string,
+    @Query('limit') limit: string,
+  ) {
+    return this.enrollmentsService.allEnrollStudent(+id, +page, +limit);
+  }
+
+  @Roles(Role.STUDENT)
   @Delete('unenroll')
   unenroll(@Body() dto: CourseEnrollmentDto) {
     return this.enrollmentsService.unenroll(dto);
@@ -133,7 +143,7 @@ export class CoursesController {
 
   // --- Review endpoints ---
 
-  @Roles(Role.STUDENT)
+  @Roles(Role.INSTRUCTOR)
   @Post('review')
   createReview(@Body() createReviewDto: CreateReviewDto) {
     return this.reviewService.createReview(createReviewDto);
@@ -174,8 +184,12 @@ export class CoursesController {
 
   @Roles(Role.STUDENT)
   @Get('assignment/course/:courseId')
-  findAllAssignments(@Param('courseId') courseId: string) {
-    return this.assignmentsService.findAllAssignments(+courseId);
+  findAllAssignments(
+    @Param('courseId') courseId: string,
+    @Query('page') page: string,
+    @Query('limit') limit: string,
+  ) {
+    return this.assignmentsService.findAllAssignments(+courseId, +page, +limit);
   }
 
   @Roles(Role.STUDENT)

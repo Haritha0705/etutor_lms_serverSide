@@ -33,10 +33,10 @@ export class EnrollmentsService {
       });
       if (!course) throw new NotFoundException('Course not found');
 
-      // Check existing enrollment
+
       let enrollment = await this.DB.courseEnrollment.findUnique({
         where: {
-          studentId_courseId: { studentId, courseId }, // <-- requires @@unique([studentId, courseId]) in Prisma schema
+          studentId_courseId: { studentId, courseId },
         },
       });
 
@@ -64,6 +64,50 @@ export class EnrollmentsService {
         throw error;
       }
       throw new InternalServerErrorException('Failed to enroll in course');
+    }
+  }
+
+  /** All Enroll student in a course */
+  async allEnrollStudent(courseId: number, page: number, limit: number){
+    try {
+      page = page || 1;
+      limit = limit || 10;
+      const skip = (page - 1) * limit;
+
+      const course = await this.DB.course.findUnique({
+        where: { id: courseId },
+      });
+      if (!course) {
+        throw new NotFoundException(`Course with ID ${courseId} not found`);
+      }
+
+      const allcourses = await this.DB.courseEnrollment.findMany({
+        skip,
+        take: limit,
+        where: { courseId },
+        orderBy: { enrolledAt: 'desc' },
+      });
+
+      const totalCount = await this.DB.courseEnrollment.count({
+        where: { courseId },
+      });
+      const totalPages = Math.ceil(totalCount / limit);
+
+      return {
+        success: true,
+        data: allcourses,
+        meta: {
+          page,
+          limit,
+          totalPages,
+        },
+      };
+    } catch (error) {
+      this.logger.error(
+        `Failed to fetch lessons for course ${courseId}`,
+        error.stack,
+      );
+      throw new InternalServerErrorException('Failed to fetch lessons');
     }
   }
 
