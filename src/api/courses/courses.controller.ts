@@ -88,8 +88,12 @@ export class CoursesController {
 
   @Roles(Role.STUDENT)
   @Get('lessons/course/:id')
-  findAllLesson(@Param('id') id: string) {
-    return this.lessonsService.findAllLessons(+id);
+  findAllLesson(
+    @Param('id') id: string,
+    @Query('page') page: string,
+    @Query('limit') limit: string,
+  ) {
+    return this.lessonsService.findAllLessons(+id, +page, +limit);
   }
 
   @Roles(Role.STUDENT)

@@ -46,8 +46,12 @@ export class LessonsService {
   }
 
   /** Get all lessons for a course */
-  async findAllLessons(courseId: number) {
+  async findAllLessons(courseId: number, page: number, limit: number) {
     try {
+      page = page || 1;
+      limit = limit || 10;
+      const skip = (page - 1) * limit;
+
       const course = await this.DB.course.findUnique({
         where: { id: courseId },
       });
@@ -56,11 +60,26 @@ export class LessonsService {
       }
 
       const lessons = await this.DB.lesson.findMany({
+        skip,
+        take: limit,
         where: { courseId },
         orderBy: { createdAt: 'desc' },
       });
 
-      return { success: true, data: lessons };
+      const totalCount = await this.DB.lesson.count({
+        where: { courseId },
+      });
+      const totalPages = Math.ceil(totalCount / limit);
+
+      return {
+        success: true,
+        data: lessons,
+        meta: {
+          page,
+          limit,
+          totalPages,
+        },
+      };
     } catch (error) {
       this.logger.error(
         `Failed to fetch lessons for course ${courseId}`,
