@@ -248,6 +248,17 @@ exports.Prisma.StudentQuizSubmissionScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.CertificateScalarFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  courseId: 'courseId',
+  studentName: 'studentName',
+  url: 'url',
+  issuedAt: 'issuedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -281,7 +292,8 @@ exports.Prisma.ModelName = {
   Message: 'Message',
   Assignment: 'Assignment',
   Quiz: 'Quiz',
-  StudentQuizSubmission: 'StudentQuizSubmission'
+  StudentQuizSubmission: 'StudentQuizSubmission',
+  Certificate: 'Certificate'
 };
 
 /**

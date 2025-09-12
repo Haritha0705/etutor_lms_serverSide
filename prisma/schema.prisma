@@ -71,6 +71,7 @@ model StudentProfile {
   enrollments     CourseEnrollment[]
   reviews         Review[]
   quizSubmissions StudentQuizSubmission[]
+  certificate     Certificate[]
 
   updatedAt DateTime @updatedAt
   student   User     @relation("StudentUserProfile", fields: [studentId], references: [id], onDelete: Cascade)
@@ -99,10 +100,11 @@ model Course {
   description  String @db.Text
   category     String @db.VarChar(100)
 
-  lessons     Lesson[]
-  enrollments CourseEnrollment[]
-  reviews     Review[]
-  assignment  Assignment[]
+  lessons      Lesson[]
+  enrollments  CourseEnrollment[]
+  reviews      Review[]
+  assignment   Assignment[]
+  certificates Certificate[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -220,4 +222,23 @@ model StudentQuizSubmission {
 
   @@index([studentId])
   @@index([quizId])
+}
+
+model Certificate {
+  id          Int    @id @default(autoincrement())
+  studentId   Int
+  courseId    Int
+  studentName String
+  url         String
+
+  issuedAt  DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  student StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  course  Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, courseId])
+  @@index([studentId])
+  @@index([courseId])
 }

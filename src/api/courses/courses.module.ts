@@ -7,6 +7,7 @@ import { LessonsService } from './lessons.service';
 import { ReviewService } from './review.service';
 import { QuizzesService } from './quizzes.service';
 import { AssignmentsService } from './assignments.service';
+import { CertificatesService } from './certificates.service';
 
 @Module({
   imports: [PrismaModule],
@@ -18,6 +19,7 @@ import { AssignmentsService } from './assignments.service';
     ReviewService,
     QuizzesService,
     AssignmentsService,
+    CertificatesService,
   ],
 })
 export class CoursesModule {}
