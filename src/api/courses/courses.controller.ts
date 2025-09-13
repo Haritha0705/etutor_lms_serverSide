@@ -310,7 +310,15 @@ export class CoursesController {
 
   @Roles(Role.STUDENT)
   @Get('certificates/student/:studentId')
-  async listUserCertificates(@Param('studentId') studentId: string) {
-    return this.certificatesService.listUserCertificates(+studentId);
+  async listUserCertificates(
+    @Param('studentId') studentId: string,
+    @Query('page') page: string,
+    @Query('limit') limit: string,
+  ) {
+    return this.certificatesService.listUserCertificates(
+      +studentId,
+      +page,
+      +limit,
+    );
   }
 }

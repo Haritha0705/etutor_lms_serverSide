@@ -33,7 +33,6 @@ export class EnrollmentsService {
       });
       if (!course) throw new NotFoundException('Course not found');
 
-
       let enrollment = await this.DB.courseEnrollment.findUnique({
         where: {
           studentId_courseId: { studentId, courseId },
@@ -55,7 +54,7 @@ export class EnrollmentsService {
     } catch (error: any) {
       this.logger.error(
         `Failed to enroll student ${studentId} in course ${courseId}`,
-        error?.stack || error,
+        error,
       );
       if (
         error instanceof NotFoundException ||
@@ -68,7 +67,7 @@ export class EnrollmentsService {
   }
 
   /** All Enroll student in a course */
-  async allEnrollStudent(courseId: number, page: number, limit: number){
+  async allEnrollStudent(courseId: number, page: number, limit: number) {
     try {
       page = page || 1;
       limit = limit || 10;
@@ -105,7 +104,7 @@ export class EnrollmentsService {
     } catch (error) {
       this.logger.error(
         `Failed to fetch lessons for course ${courseId}`,
-        error.stack,
+        error,
       );
       throw new InternalServerErrorException('Failed to fetch lessons');
     }
@@ -153,7 +152,7 @@ export class EnrollmentsService {
     } catch (error: any) {
       this.logger.error(
         `Failed to unenroll student ${studentId} from course ${courseId}`,
-        error?.stack || error,
+        error,
       );
       if (
         error instanceof NotFoundException ||

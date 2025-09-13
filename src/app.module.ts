@@ -8,6 +8,7 @@ import { ApiCacheInterceptor } from './interceptor/api-cache/api-cache.intercept
 import { CacheModule } from '@nestjs/cache-manager';
 import { MessagesModule } from './api/messages/messages.module';
 import { AnalyticsModule } from './api/analytics/analytics.module';
+import { RecommendationModule } from './api/recommendation/recommendation.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { AnalyticsModule } from './api/analytics/analytics.module';
     CoursesModule,
     MessagesModule,
     AnalyticsModule,
+    RecommendationModule,
   ],
   providers: [
     {

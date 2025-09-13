@@ -35,7 +35,7 @@ export class CoursesService {
         course,
       };
     } catch (error) {
-      this.logger.error('Failed to create course', error.stack);
+      this.logger.error('Failed to create course', error);
       if (error instanceof NotFoundException) throw error;
       throw new InternalServerErrorException('Failed to create course');
     }
@@ -68,7 +68,7 @@ export class CoursesService {
         },
       };
     } catch (error) {
-      this.logger.error('Failed to fetch courses', error.stack);
+      this.logger.error('Failed to fetch courses', error);
       throw new InternalServerErrorException('Failed to fetch courses');
     }
   }
@@ -89,7 +89,7 @@ export class CoursesService {
       this.logger.log(`Fetched course with ID: ${id}`);
       return { success: true, coursesProfile: course };
     } catch (error) {
-      this.logger.error(`Failed to fetch course with ID: ${id}`, error.stack);
+      this.logger.error(`Failed to fetch course with ID: ${id}`, error);
       if (error instanceof NotFoundException) throw error;
       throw new InternalServerErrorException('Failed to fetch course');
     }
@@ -135,7 +135,7 @@ export class CoursesService {
         updateProfile: updatedCourse,
       };
     } catch (error) {
-      this.logger.error(`Failed to update course with ID: ${id}`, error.stack);
+      this.logger.error(`Failed to update course with ID: ${id}`, error);
       if (error instanceof NotFoundException) throw error;
       throw new InternalServerErrorException('Failed to update course');
     }
@@ -158,7 +158,7 @@ export class CoursesService {
         message: `Course #${id} deleted successfully`,
       };
     } catch (error) {
-      this.logger.error(`Failed to delete course with ID: ${id}`, error.stack);
+      this.logger.error(`Failed to delete course with ID: ${id}`, error);
       if (error instanceof NotFoundException) throw error;
       throw new InternalServerErrorException('Failed to delete course');
     }

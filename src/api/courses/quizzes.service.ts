@@ -42,7 +42,7 @@ export class QuizzesService {
         quiz,
       };
     } catch (error) {
-      this.logger.error(`Failed to create quiz`, error.stack);
+      this.logger.error(`Failed to create quiz`, error);
       if (error instanceof NotFoundException) throw error;
       throw new InternalServerErrorException('Failed to create quiz');
     }
@@ -87,7 +87,7 @@ export class QuizzesService {
     } catch (error) {
       this.logger.error(
         `Failed to fetch quizzes for course ${assignmentId}`,
-        error.stack,
+        error,
       );
       throw new InternalServerErrorException('Failed to fetch quizzes');
     }
@@ -101,7 +101,7 @@ export class QuizzesService {
 
       return { success: true, data: quiz };
     } catch (error) {
-      this.logger.error(`Failed to fetch quiz with ID ${id}`, error.stack);
+      this.logger.error(`Failed to fetch quiz with ID ${id}`, error);
       if (error instanceof NotFoundException) throw error;
       throw new InternalServerErrorException('Failed to fetch quiz');
     }
@@ -139,7 +139,7 @@ export class QuizzesService {
         updatedQuiz,
       };
     } catch (error) {
-      this.logger.error(`Failed to update quiz with ID ${id}`, error.stack);
+      this.logger.error(`Failed to update quiz with ID ${id}`, error);
       if (error instanceof NotFoundException) throw error;
       throw new InternalServerErrorException('Failed to update quiz');
     }
@@ -159,7 +159,7 @@ export class QuizzesService {
         message: `Quiz #${id} deleted successfully`,
       };
     } catch (error) {
-      this.logger.error(`Failed to delete quiz with ID ${id}`, error.stack);
+      this.logger.error(`Failed to delete quiz with ID ${id}`, error);
       if (error instanceof NotFoundException) throw error;
       throw new InternalServerErrorException('Failed to delete quiz');
     }
@@ -192,7 +192,7 @@ export class QuizzesService {
         submission,
       };
     } catch (err) {
-      this.logger.error(`Failed to create quiz submission`, err.stack);
+      this.logger.error(`Failed to create quiz submission`, err);
       if (
         err instanceof NotFoundException ||
         err instanceof BadRequestException
@@ -243,7 +243,7 @@ export class QuizzesService {
         },
       };
     } catch (error) {
-      this.logger.error('Failed to fetch courses', error.stack);
+      this.logger.error('Failed to fetch courses', error);
       throw new InternalServerErrorException('Failed to fetch courses');
     }
   }
@@ -287,7 +287,7 @@ export class QuizzesService {
         },
       };
     } catch (error) {
-      this.logger.error('Failed to fetch courses', error.stack);
+      this.logger.error('Failed to fetch courses', error);
       throw new InternalServerErrorException('Failed to fetch courses');
     }
   }
@@ -308,7 +308,7 @@ export class QuizzesService {
         throw new NotFoundException(`Submission ${id} not found`);
       return submission;
     } catch (error) {
-      this.logger.error('Failed to fetch courses', error.stack);
+      this.logger.error('Failed to fetch courses', error);
       throw new InternalServerErrorException('Failed to fetch courses');
     }
   }

@@ -60,7 +60,7 @@ export class ReviewService {
     } catch (error) {
       this.logger.error(
         `Failed to create review for course ${courseId}`,
-        error.stack,
+        error,
       );
       if (
         error instanceof NotFoundException ||
@@ -106,10 +106,7 @@ export class ReviewService {
         },
       };
     } catch (error) {
-      this.logger.error(
-        `Failed to list reviews for course ${courseId}`,
-        error.stack,
-      );
+      this.logger.error(`Failed to list reviews for course ${courseId}`, error);
       if (error instanceof NotFoundException) throw error;
       throw new InternalServerErrorException('Failed to fetch reviews');
     }
@@ -160,7 +157,7 @@ export class ReviewService {
         data: updatedReview,
       };
     } catch (error) {
-      this.logger.error(`Failed to update review with ID ${id}`, error.stack);
+      this.logger.error(`Failed to update review with ID ${id}`, error);
       if (error instanceof NotFoundException) throw error;
       throw new InternalServerErrorException('Failed to update review');
     }
@@ -186,7 +183,7 @@ export class ReviewService {
         message: `Review #${id} deleted successfully`,
       };
     } catch (error) {
-      this.logger.error(`Failed to delete review with ID ${id}`, error.stack);
+      this.logger.error(`Failed to delete review with ID ${id}`, error);
       if (error instanceof NotFoundException) throw error;
       throw new InternalServerErrorException('Failed to delete review');
     }

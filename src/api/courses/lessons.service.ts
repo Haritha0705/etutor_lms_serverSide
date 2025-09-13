@@ -39,7 +39,7 @@ export class LessonsService {
         lesson,
       };
     } catch (error) {
-      this.logger.error(`Failed to create lesson`, error.stack);
+      this.logger.error(`Failed to create lesson`, error);
       if (error instanceof NotFoundException) throw error;
       throw new InternalServerErrorException('Failed to create lesson');
     }
@@ -83,7 +83,7 @@ export class LessonsService {
     } catch (error) {
       this.logger.error(
         `Failed to fetch lessons for course ${courseId}`,
-        error.stack,
+        error,
       );
       throw new InternalServerErrorException('Failed to fetch lessons');
     }
@@ -100,7 +100,7 @@ export class LessonsService {
 
       return { success: true, data: lesson };
     } catch (error) {
-      this.logger.error(`Failed to fetch lesson with ID ${id}`, error.stack);
+      this.logger.error(`Failed to fetch lesson with ID ${id}`, error);
       if (error instanceof NotFoundException) throw error;
       throw new InternalServerErrorException('Failed to fetch lesson');
     }
@@ -163,7 +163,7 @@ export class LessonsService {
         message: `Lesson #${id} deleted successfully`,
       };
     } catch (error) {
-      this.logger.error(`Failed to delete lesson with ID ${id}`, error.stack);
+      this.logger.error(`Failed to delete lesson with ID ${id}`, error);
       if (error instanceof NotFoundException) throw error;
       throw new InternalServerErrorException('Failed to delete lesson');
     }

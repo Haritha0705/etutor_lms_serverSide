@@ -15,17 +15,35 @@ export class UserService {
   private readonly logger = new Logger(UserService.name);
   constructor(private readonly DB: PrismaService) {}
 
-  async getAllUsers(): Promise<{ id: number; email: string; role: string }[]> {
+  async getAllUsers(page: number, limit: number) {
     try {
+      page = page || 1;
+      limit = limit || 10;
+      const skip = (page - 1) * limit;
+
       const users = await this.DB.user.findMany({
+        skip,
+        take: limit,
         select: {
           id: true,
           email: true,
           role: true,
         },
+        orderBy: { enrolledAt: 'desc' },
       });
 
-      return users;
+      const totalCount = await this.DB.user.count();
+      const totalPages = Math.ceil(totalCount / limit);
+
+      return {
+        success: true,
+        data: users,
+        meta: {
+          page,
+          limit,
+          totalPages,
+        },
+      };
     } catch (error) {
       this.logger.error(`getAllUsers failed`, error.stack);
       throw new InternalServerErrorException('Failed to fetch users');

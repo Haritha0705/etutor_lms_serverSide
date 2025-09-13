@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Patch } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Query,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { Roles } from '../../decorator/roles/roles.decorator';
 import { Role } from '../../enum/role.enum';
@@ -13,8 +21,8 @@ export class UserController {
 
   @Roles(Role.ADMIN)
   @Get('all-users')
-  getAllUsers() {
-    return this.userService.getAllUsers();
+  getAllUsers(@Query('page') page: string, @Query('limit') limit: string) {
+    return this.userService.getAllUsers(+page, +limit);
   }
 
   @Roles(Role.STUDENT, Role.INSTRUCTOR)

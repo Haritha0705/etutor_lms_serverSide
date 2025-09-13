@@ -45,7 +45,7 @@ export class CertificatesService {
         certificate,
       };
     } catch (error) {
-      this.logger.error(`Failed to create quiz`, error.stack);
+      this.logger.error(`Failed to create quiz`, error);
       if (error instanceof NotFoundException) throw error;
       throw new InternalServerErrorException('Failed to create quiz');
     }
@@ -63,25 +63,49 @@ export class CertificatesService {
       }
       return certificate;
     } catch (error) {
-      this.logger.error(`Failed to create quiz`, error.stack);
+      this.logger.error(`Failed to create quiz`, error);
       if (error instanceof NotFoundException) throw error;
       throw new InternalServerErrorException('Failed to create quiz');
     }
   }
 
   /** List certificates */
-  async listUserCertificates(studentId: number) {
+  async listUserCertificates(studentId: number, page: number, limit: number) {
     try {
-      const listOfCertificates = this.DB.certificate.findMany({
+      page = page || 1;
+      limit = limit || 10;
+      const skip = (page - 1) * limit;
+
+      const student = await this.DB.studentProfile.findUnique({
+        where: { id: studentId },
+      });
+      if (!student) {
+        throw new NotFoundException(`Course with ID ${studentId} not found`);
+      }
+
+      const listOfCertificates = await this.DB.certificate.findMany({
+        skip,
+        take: limit,
         where: { studentId },
         orderBy: { issuedAt: 'desc' },
       });
-      if (!listOfCertificates) {
-        throw new NotFoundException('Certificate not found');
-      }
-      return listOfCertificates;
+
+      const totalCount = await this.DB.certificate.count({
+        where: { studentId },
+      });
+      const totalPages = Math.ceil(totalCount / limit);
+
+      return {
+        success: true,
+        data: listOfCertificates,
+        meta: {
+          page,
+          limit,
+          totalPages,
+        },
+      };
     } catch (error) {
-      this.logger.error(`Failed to create quiz`, error.stack);
+      this.logger.error(`Failed to create quiz`, error);
       if (error instanceof NotFoundException) throw error;
       throw new InternalServerErrorException('Failed to create quiz');
     }
