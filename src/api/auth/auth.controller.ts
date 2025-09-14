@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignupAuthDto } from './dto/signup-auth';
 import { LoginAuthDto } from './dto/login-auth.dto';
@@ -12,6 +20,7 @@ import { ResetPasswordDto } from './dto/Reset-password.dto';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { Roles } from '../../decorator/roles/roles.decorator';
 import { Role } from '../../enum/role.enum';
+import express from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -41,15 +50,22 @@ export class AuthController {
   }
 
   @Public()
-  @Get('google')
+  @Get('google/login')
   @UseGuards(GoogleAuthGuard)
   googleLogin() {}
 
+  @Public()
   @Get('google/callback')
   @UseGuards(GoogleAuthGuard)
-  googleCallback(@Req() req: any) {
-    const user = req.user;
-    return this.authService.loginWithGoogle(user);
+  async googleCallback(
+    @Req() req: express.Request,
+    @Res() res: express.Response,
+  ) {
+    const user: any = req.user;
+    const result = await this.authService.loginWithGoogle(user);
+    return res.redirect(
+      `http://localhost:4000?token=${result.token.accessToken}`,
+    );
   }
 
   @Post('send-otp')
@@ -78,20 +94,6 @@ export class AuthController {
       dto.email,
       dto.token,
       dto.newPassword,
-    );
-  }
-
-  @Post('google/test')
-  async testGoogleSignup(@Body() body: any) {
-    return this.authService.validateGoogleUser(
-      {
-        email: body.email,
-        firstname: body.firstname,
-        lastname: body.lastname,
-        avatarUrl: body.avatarUrl,
-        googleId: body.googleId,
-      },
-      body.role,
     );
   }
 }

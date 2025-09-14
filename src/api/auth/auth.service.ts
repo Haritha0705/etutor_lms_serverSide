@@ -299,10 +299,7 @@ export class AuthService {
     }
   }
 
-  async validateGoogleUser(
-    googleUser: OAuthUserDto,
-    role: Role.STUDENT | Role.INSTRUCTOR,
-  ) {
+  async validateGoogleUser(googleUser: OAuthUserDto) {
     try {
       const { email, firstname, lastname, avatarUrl, googleId } = googleUser;
 
@@ -321,14 +318,12 @@ export class AuthService {
         return user;
       }
 
-      // Create Google user + profile in a transaction
       const result = await this.DB.$transaction(async (prisma) => {
-        // 1. Create Google user
         const newUser = await prisma.user.create({
           data: {
             email,
             username: email.split('@')[0],
-            role: role, // pass enum directly
+            role: Role.STUDENT,
             password: null,
             googleId,
             firstName: firstname,
@@ -344,45 +339,27 @@ export class AuthService {
           },
         });
 
-        // 2. Create profile based on role
-        if (newUser.role === Role.STUDENT) {
-          await prisma.studentProfile.create({
-            data: {
-              studentId: newUser.id,
-              full_name:
-                firstname && lastname
-                  ? `${firstname} ${lastname}`
-                  : newUser.username,
-              profilePic: avatarUrl ?? null,
-              bio: null,
-              phone: null,
-              address: null,
-            },
-          });
-        } else if (newUser.role === Role.INSTRUCTOR) {
-          await prisma.instructorProfile.create({
-            data: {
-              instructorId: newUser.id,
-              full_name:
-                firstname && lastname
-                  ? `${firstname} ${lastname}`
-                  : newUser.username,
-              profilePic: avatarUrl ?? null,
-              expertise: null,
-              bio: null,
-            },
-          });
-        }
+        await prisma.studentProfile.create({
+          data: {
+            studentId: newUser.id,
+            full_name:
+              firstname && lastname
+                ? `${firstname} ${lastname}`
+                : newUser.username,
+            profilePic: avatarUrl ?? null,
+            bio: null,
+            phone: null,
+            address: null,
+          },
+        });
 
-        // 3. Generate JWT
         const payload: CreateJwt = {
           userId: newUser.id,
           email: newUser.email,
-          role,
+          role: Role.STUDENT,
         };
         const tokens = await this.jwt.generateToken(payload);
 
-        // 4. Save refresh token inside transaction
         await prisma.refreshToken.create({
           data: {
             token: tokens.refreshToken,
@@ -406,7 +383,7 @@ export class AuthService {
       const payload: CreateJwt = {
         userId: user.id,
         email: user.email,
-        role: user.role,
+        role: Role.STUDENT,
       };
 
       const tokens = await this.jwt.generateToken(payload);
@@ -435,8 +412,7 @@ export class AuthService {
         status: 200,
         message: 'Logged in with Google.',
         user: safeUser,
-        accessToken: tokens.accessToken,
-        refreshToken: tokens.refreshToken,
+        token: tokens,
       };
     } catch (error: unknown) {
       console.log(error);
