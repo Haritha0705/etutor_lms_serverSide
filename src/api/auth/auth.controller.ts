@@ -68,11 +68,13 @@ export class AuthController {
     );
   }
 
+  @Public()
   @Post('send-otp')
   sendOtp(@Body() sendOtpDto: SendOtpDto) {
     return this.authService.sendOtp(sendOtpDto.email);
   }
 
+  @Public()
   @Post('verify-otp')
   verifyOtp(@Body() verifyOtpDto: VerifyOtpDto) {
     return this.authService.verifyOtp(verifyOtpDto);
@@ -95,5 +97,17 @@ export class AuthController {
       dto.token,
       dto.newPassword,
     );
+  }
+
+  @Public()
+  @Post('request-signup-otp')
+  requestSignupOtp(@Body() dto: SignupAuthDto) {
+    return this.authService.requestSignupOtp(dto);
+  }
+
+  @Public()
+  @Post('verify-signup-otp')
+  verifySignupOtp(@Body() dto: VerifyOtpDto) {
+    return this.authService.verifySignupOtp(dto.email, dto.otp);
   }
 }

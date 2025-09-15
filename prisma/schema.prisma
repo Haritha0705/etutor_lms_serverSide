@@ -51,6 +51,17 @@ model RefreshToken {
   @@index([userId])
 }
 
+model TempSignupOtp {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  username  String
+  role      Role
+  password  String
+  code      String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
 model Otp {
   id        Int      @id @default(autoincrement())
   email     String   @db.VarChar(255)

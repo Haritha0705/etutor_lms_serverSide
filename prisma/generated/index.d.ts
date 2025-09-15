@@ -24,6 +24,11 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  */
 export type RefreshToken = $Result.DefaultSelection<Prisma.$RefreshTokenPayload>
 /**
+ * Model TempSignupOtp
+ * 
+ */
+export type TempSignupOtp = $Result.DefaultSelection<Prisma.$TempSignupOtpPayload>
+/**
  * Model Otp
  * 
  */
@@ -239,6 +244,16 @@ export class PrismaClient<
     * ```
     */
   get refreshToken(): Prisma.RefreshTokenDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.tempSignupOtp`: Exposes CRUD operations for the **TempSignupOtp** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TempSignupOtps
+    * const tempSignupOtps = await prisma.tempSignupOtp.findMany()
+    * ```
+    */
+  get tempSignupOtp(): Prisma.TempSignupOtpDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.otp`: Exposes CRUD operations for the **Otp** model.
@@ -801,6 +816,7 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     RefreshToken: 'RefreshToken',
+    TempSignupOtp: 'TempSignupOtp',
     Otp: 'Otp',
     StudentProfile: 'StudentProfile',
     InstructorProfile: 'InstructorProfile',
@@ -831,7 +847,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "refreshToken" | "otp" | "studentProfile" | "instructorProfile" | "course" | "lesson" | "courseEnrollment" | "review" | "message" | "assignment" | "quiz" | "studentQuizSubmission" | "certificate"
+      modelProps: "user" | "refreshToken" | "tempSignupOtp" | "otp" | "studentProfile" | "instructorProfile" | "course" | "lesson" | "courseEnrollment" | "review" | "message" | "assignment" | "quiz" | "studentQuizSubmission" | "certificate"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -980,6 +996,80 @@ export namespace Prisma {
           count: {
             args: Prisma.RefreshTokenCountArgs<ExtArgs>
             result: $Utils.Optional<RefreshTokenCountAggregateOutputType> | number
+          }
+        }
+      }
+      TempSignupOtp: {
+        payload: Prisma.$TempSignupOtpPayload<ExtArgs>
+        fields: Prisma.TempSignupOtpFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TempSignupOtpFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TempSignupOtpPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TempSignupOtpFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TempSignupOtpPayload>
+          }
+          findFirst: {
+            args: Prisma.TempSignupOtpFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TempSignupOtpPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TempSignupOtpFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TempSignupOtpPayload>
+          }
+          findMany: {
+            args: Prisma.TempSignupOtpFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TempSignupOtpPayload>[]
+          }
+          create: {
+            args: Prisma.TempSignupOtpCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TempSignupOtpPayload>
+          }
+          createMany: {
+            args: Prisma.TempSignupOtpCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TempSignupOtpCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TempSignupOtpPayload>[]
+          }
+          delete: {
+            args: Prisma.TempSignupOtpDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TempSignupOtpPayload>
+          }
+          update: {
+            args: Prisma.TempSignupOtpUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TempSignupOtpPayload>
+          }
+          deleteMany: {
+            args: Prisma.TempSignupOtpDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TempSignupOtpUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TempSignupOtpUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TempSignupOtpPayload>[]
+          }
+          upsert: {
+            args: Prisma.TempSignupOtpUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TempSignupOtpPayload>
+          }
+          aggregate: {
+            args: Prisma.TempSignupOtpAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTempSignupOtp>
+          }
+          groupBy: {
+            args: Prisma.TempSignupOtpGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TempSignupOtpGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TempSignupOtpCountArgs<ExtArgs>
+            result: $Utils.Optional<TempSignupOtpCountAggregateOutputType> | number
           }
         }
       }
@@ -1965,6 +2055,7 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     user?: UserOmit
     refreshToken?: RefreshTokenOmit
+    tempSignupOtp?: TempSignupOtpOmit
     otp?: OtpOmit
     studentProfile?: StudentProfileOmit
     instructorProfile?: InstructorProfileOmit
@@ -4748,6 +4839,1074 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: RefreshTokenInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model TempSignupOtp
+   */
+
+  export type AggregateTempSignupOtp = {
+    _count: TempSignupOtpCountAggregateOutputType | null
+    _avg: TempSignupOtpAvgAggregateOutputType | null
+    _sum: TempSignupOtpSumAggregateOutputType | null
+    _min: TempSignupOtpMinAggregateOutputType | null
+    _max: TempSignupOtpMaxAggregateOutputType | null
+  }
+
+  export type TempSignupOtpAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type TempSignupOtpSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type TempSignupOtpMinAggregateOutputType = {
+    id: number | null
+    email: string | null
+    username: string | null
+    role: $Enums.Role | null
+    password: string | null
+    code: string | null
+    expiresAt: Date | null
+    createdAt: Date | null
+  }
+
+  export type TempSignupOtpMaxAggregateOutputType = {
+    id: number | null
+    email: string | null
+    username: string | null
+    role: $Enums.Role | null
+    password: string | null
+    code: string | null
+    expiresAt: Date | null
+    createdAt: Date | null
+  }
+
+  export type TempSignupOtpCountAggregateOutputType = {
+    id: number
+    email: number
+    username: number
+    role: number
+    password: number
+    code: number
+    expiresAt: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type TempSignupOtpAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type TempSignupOtpSumAggregateInputType = {
+    id?: true
+  }
+
+  export type TempSignupOtpMinAggregateInputType = {
+    id?: true
+    email?: true
+    username?: true
+    role?: true
+    password?: true
+    code?: true
+    expiresAt?: true
+    createdAt?: true
+  }
+
+  export type TempSignupOtpMaxAggregateInputType = {
+    id?: true
+    email?: true
+    username?: true
+    role?: true
+    password?: true
+    code?: true
+    expiresAt?: true
+    createdAt?: true
+  }
+
+  export type TempSignupOtpCountAggregateInputType = {
+    id?: true
+    email?: true
+    username?: true
+    role?: true
+    password?: true
+    code?: true
+    expiresAt?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type TempSignupOtpAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TempSignupOtp to aggregate.
+     */
+    where?: TempSignupOtpWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TempSignupOtps to fetch.
+     */
+    orderBy?: TempSignupOtpOrderByWithRelationInput | TempSignupOtpOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TempSignupOtpWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TempSignupOtps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TempSignupOtps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TempSignupOtps
+    **/
+    _count?: true | TempSignupOtpCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TempSignupOtpAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TempSignupOtpSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TempSignupOtpMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TempSignupOtpMaxAggregateInputType
+  }
+
+  export type GetTempSignupOtpAggregateType<T extends TempSignupOtpAggregateArgs> = {
+        [P in keyof T & keyof AggregateTempSignupOtp]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTempSignupOtp[P]>
+      : GetScalarType<T[P], AggregateTempSignupOtp[P]>
+  }
+
+
+
+
+  export type TempSignupOtpGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TempSignupOtpWhereInput
+    orderBy?: TempSignupOtpOrderByWithAggregationInput | TempSignupOtpOrderByWithAggregationInput[]
+    by: TempSignupOtpScalarFieldEnum[] | TempSignupOtpScalarFieldEnum
+    having?: TempSignupOtpScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TempSignupOtpCountAggregateInputType | true
+    _avg?: TempSignupOtpAvgAggregateInputType
+    _sum?: TempSignupOtpSumAggregateInputType
+    _min?: TempSignupOtpMinAggregateInputType
+    _max?: TempSignupOtpMaxAggregateInputType
+  }
+
+  export type TempSignupOtpGroupByOutputType = {
+    id: number
+    email: string
+    username: string
+    role: $Enums.Role
+    password: string
+    code: string
+    expiresAt: Date
+    createdAt: Date
+    _count: TempSignupOtpCountAggregateOutputType | null
+    _avg: TempSignupOtpAvgAggregateOutputType | null
+    _sum: TempSignupOtpSumAggregateOutputType | null
+    _min: TempSignupOtpMinAggregateOutputType | null
+    _max: TempSignupOtpMaxAggregateOutputType | null
+  }
+
+  type GetTempSignupOtpGroupByPayload<T extends TempSignupOtpGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TempSignupOtpGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TempSignupOtpGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TempSignupOtpGroupByOutputType[P]>
+            : GetScalarType<T[P], TempSignupOtpGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TempSignupOtpSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    username?: boolean
+    role?: boolean
+    password?: boolean
+    code?: boolean
+    expiresAt?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["tempSignupOtp"]>
+
+  export type TempSignupOtpSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    username?: boolean
+    role?: boolean
+    password?: boolean
+    code?: boolean
+    expiresAt?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["tempSignupOtp"]>
+
+  export type TempSignupOtpSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    username?: boolean
+    role?: boolean
+    password?: boolean
+    code?: boolean
+    expiresAt?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["tempSignupOtp"]>
+
+  export type TempSignupOtpSelectScalar = {
+    id?: boolean
+    email?: boolean
+    username?: boolean
+    role?: boolean
+    password?: boolean
+    code?: boolean
+    expiresAt?: boolean
+    createdAt?: boolean
+  }
+
+  export type TempSignupOtpOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "role" | "password" | "code" | "expiresAt" | "createdAt", ExtArgs["result"]["tempSignupOtp"]>
+
+  export type $TempSignupOtpPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TempSignupOtp"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      email: string
+      username: string
+      role: $Enums.Role
+      password: string
+      code: string
+      expiresAt: Date
+      createdAt: Date
+    }, ExtArgs["result"]["tempSignupOtp"]>
+    composites: {}
+  }
+
+  type TempSignupOtpGetPayload<S extends boolean | null | undefined | TempSignupOtpDefaultArgs> = $Result.GetResult<Prisma.$TempSignupOtpPayload, S>
+
+  type TempSignupOtpCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TempSignupOtpFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TempSignupOtpCountAggregateInputType | true
+    }
+
+  export interface TempSignupOtpDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TempSignupOtp'], meta: { name: 'TempSignupOtp' } }
+    /**
+     * Find zero or one TempSignupOtp that matches the filter.
+     * @param {TempSignupOtpFindUniqueArgs} args - Arguments to find a TempSignupOtp
+     * @example
+     * // Get one TempSignupOtp
+     * const tempSignupOtp = await prisma.tempSignupOtp.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TempSignupOtpFindUniqueArgs>(args: SelectSubset<T, TempSignupOtpFindUniqueArgs<ExtArgs>>): Prisma__TempSignupOtpClient<$Result.GetResult<Prisma.$TempSignupOtpPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one TempSignupOtp that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TempSignupOtpFindUniqueOrThrowArgs} args - Arguments to find a TempSignupOtp
+     * @example
+     * // Get one TempSignupOtp
+     * const tempSignupOtp = await prisma.tempSignupOtp.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TempSignupOtpFindUniqueOrThrowArgs>(args: SelectSubset<T, TempSignupOtpFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TempSignupOtpClient<$Result.GetResult<Prisma.$TempSignupOtpPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TempSignupOtp that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TempSignupOtpFindFirstArgs} args - Arguments to find a TempSignupOtp
+     * @example
+     * // Get one TempSignupOtp
+     * const tempSignupOtp = await prisma.tempSignupOtp.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TempSignupOtpFindFirstArgs>(args?: SelectSubset<T, TempSignupOtpFindFirstArgs<ExtArgs>>): Prisma__TempSignupOtpClient<$Result.GetResult<Prisma.$TempSignupOtpPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TempSignupOtp that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TempSignupOtpFindFirstOrThrowArgs} args - Arguments to find a TempSignupOtp
+     * @example
+     * // Get one TempSignupOtp
+     * const tempSignupOtp = await prisma.tempSignupOtp.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TempSignupOtpFindFirstOrThrowArgs>(args?: SelectSubset<T, TempSignupOtpFindFirstOrThrowArgs<ExtArgs>>): Prisma__TempSignupOtpClient<$Result.GetResult<Prisma.$TempSignupOtpPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more TempSignupOtps that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TempSignupOtpFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TempSignupOtps
+     * const tempSignupOtps = await prisma.tempSignupOtp.findMany()
+     * 
+     * // Get first 10 TempSignupOtps
+     * const tempSignupOtps = await prisma.tempSignupOtp.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const tempSignupOtpWithIdOnly = await prisma.tempSignupOtp.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TempSignupOtpFindManyArgs>(args?: SelectSubset<T, TempSignupOtpFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TempSignupOtpPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a TempSignupOtp.
+     * @param {TempSignupOtpCreateArgs} args - Arguments to create a TempSignupOtp.
+     * @example
+     * // Create one TempSignupOtp
+     * const TempSignupOtp = await prisma.tempSignupOtp.create({
+     *   data: {
+     *     // ... data to create a TempSignupOtp
+     *   }
+     * })
+     * 
+     */
+    create<T extends TempSignupOtpCreateArgs>(args: SelectSubset<T, TempSignupOtpCreateArgs<ExtArgs>>): Prisma__TempSignupOtpClient<$Result.GetResult<Prisma.$TempSignupOtpPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many TempSignupOtps.
+     * @param {TempSignupOtpCreateManyArgs} args - Arguments to create many TempSignupOtps.
+     * @example
+     * // Create many TempSignupOtps
+     * const tempSignupOtp = await prisma.tempSignupOtp.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TempSignupOtpCreateManyArgs>(args?: SelectSubset<T, TempSignupOtpCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TempSignupOtps and returns the data saved in the database.
+     * @param {TempSignupOtpCreateManyAndReturnArgs} args - Arguments to create many TempSignupOtps.
+     * @example
+     * // Create many TempSignupOtps
+     * const tempSignupOtp = await prisma.tempSignupOtp.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TempSignupOtps and only return the `id`
+     * const tempSignupOtpWithIdOnly = await prisma.tempSignupOtp.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TempSignupOtpCreateManyAndReturnArgs>(args?: SelectSubset<T, TempSignupOtpCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TempSignupOtpPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a TempSignupOtp.
+     * @param {TempSignupOtpDeleteArgs} args - Arguments to delete one TempSignupOtp.
+     * @example
+     * // Delete one TempSignupOtp
+     * const TempSignupOtp = await prisma.tempSignupOtp.delete({
+     *   where: {
+     *     // ... filter to delete one TempSignupOtp
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TempSignupOtpDeleteArgs>(args: SelectSubset<T, TempSignupOtpDeleteArgs<ExtArgs>>): Prisma__TempSignupOtpClient<$Result.GetResult<Prisma.$TempSignupOtpPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one TempSignupOtp.
+     * @param {TempSignupOtpUpdateArgs} args - Arguments to update one TempSignupOtp.
+     * @example
+     * // Update one TempSignupOtp
+     * const tempSignupOtp = await prisma.tempSignupOtp.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TempSignupOtpUpdateArgs>(args: SelectSubset<T, TempSignupOtpUpdateArgs<ExtArgs>>): Prisma__TempSignupOtpClient<$Result.GetResult<Prisma.$TempSignupOtpPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more TempSignupOtps.
+     * @param {TempSignupOtpDeleteManyArgs} args - Arguments to filter TempSignupOtps to delete.
+     * @example
+     * // Delete a few TempSignupOtps
+     * const { count } = await prisma.tempSignupOtp.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TempSignupOtpDeleteManyArgs>(args?: SelectSubset<T, TempSignupOtpDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TempSignupOtps.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TempSignupOtpUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TempSignupOtps
+     * const tempSignupOtp = await prisma.tempSignupOtp.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TempSignupOtpUpdateManyArgs>(args: SelectSubset<T, TempSignupOtpUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TempSignupOtps and returns the data updated in the database.
+     * @param {TempSignupOtpUpdateManyAndReturnArgs} args - Arguments to update many TempSignupOtps.
+     * @example
+     * // Update many TempSignupOtps
+     * const tempSignupOtp = await prisma.tempSignupOtp.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more TempSignupOtps and only return the `id`
+     * const tempSignupOtpWithIdOnly = await prisma.tempSignupOtp.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TempSignupOtpUpdateManyAndReturnArgs>(args: SelectSubset<T, TempSignupOtpUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TempSignupOtpPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one TempSignupOtp.
+     * @param {TempSignupOtpUpsertArgs} args - Arguments to update or create a TempSignupOtp.
+     * @example
+     * // Update or create a TempSignupOtp
+     * const tempSignupOtp = await prisma.tempSignupOtp.upsert({
+     *   create: {
+     *     // ... data to create a TempSignupOtp
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TempSignupOtp we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TempSignupOtpUpsertArgs>(args: SelectSubset<T, TempSignupOtpUpsertArgs<ExtArgs>>): Prisma__TempSignupOtpClient<$Result.GetResult<Prisma.$TempSignupOtpPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of TempSignupOtps.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TempSignupOtpCountArgs} args - Arguments to filter TempSignupOtps to count.
+     * @example
+     * // Count the number of TempSignupOtps
+     * const count = await prisma.tempSignupOtp.count({
+     *   where: {
+     *     // ... the filter for the TempSignupOtps we want to count
+     *   }
+     * })
+    **/
+    count<T extends TempSignupOtpCountArgs>(
+      args?: Subset<T, TempSignupOtpCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TempSignupOtpCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TempSignupOtp.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TempSignupOtpAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TempSignupOtpAggregateArgs>(args: Subset<T, TempSignupOtpAggregateArgs>): Prisma.PrismaPromise<GetTempSignupOtpAggregateType<T>>
+
+    /**
+     * Group by TempSignupOtp.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TempSignupOtpGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TempSignupOtpGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TempSignupOtpGroupByArgs['orderBy'] }
+        : { orderBy?: TempSignupOtpGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TempSignupOtpGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTempSignupOtpGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TempSignupOtp model
+   */
+  readonly fields: TempSignupOtpFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TempSignupOtp.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TempSignupOtpClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TempSignupOtp model
+   */
+  interface TempSignupOtpFieldRefs {
+    readonly id: FieldRef<"TempSignupOtp", 'Int'>
+    readonly email: FieldRef<"TempSignupOtp", 'String'>
+    readonly username: FieldRef<"TempSignupOtp", 'String'>
+    readonly role: FieldRef<"TempSignupOtp", 'Role'>
+    readonly password: FieldRef<"TempSignupOtp", 'String'>
+    readonly code: FieldRef<"TempSignupOtp", 'String'>
+    readonly expiresAt: FieldRef<"TempSignupOtp", 'DateTime'>
+    readonly createdAt: FieldRef<"TempSignupOtp", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TempSignupOtp findUnique
+   */
+  export type TempSignupOtpFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TempSignupOtp
+     */
+    select?: TempSignupOtpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TempSignupOtp
+     */
+    omit?: TempSignupOtpOmit<ExtArgs> | null
+    /**
+     * Filter, which TempSignupOtp to fetch.
+     */
+    where: TempSignupOtpWhereUniqueInput
+  }
+
+  /**
+   * TempSignupOtp findUniqueOrThrow
+   */
+  export type TempSignupOtpFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TempSignupOtp
+     */
+    select?: TempSignupOtpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TempSignupOtp
+     */
+    omit?: TempSignupOtpOmit<ExtArgs> | null
+    /**
+     * Filter, which TempSignupOtp to fetch.
+     */
+    where: TempSignupOtpWhereUniqueInput
+  }
+
+  /**
+   * TempSignupOtp findFirst
+   */
+  export type TempSignupOtpFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TempSignupOtp
+     */
+    select?: TempSignupOtpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TempSignupOtp
+     */
+    omit?: TempSignupOtpOmit<ExtArgs> | null
+    /**
+     * Filter, which TempSignupOtp to fetch.
+     */
+    where?: TempSignupOtpWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TempSignupOtps to fetch.
+     */
+    orderBy?: TempSignupOtpOrderByWithRelationInput | TempSignupOtpOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TempSignupOtps.
+     */
+    cursor?: TempSignupOtpWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TempSignupOtps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TempSignupOtps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TempSignupOtps.
+     */
+    distinct?: TempSignupOtpScalarFieldEnum | TempSignupOtpScalarFieldEnum[]
+  }
+
+  /**
+   * TempSignupOtp findFirstOrThrow
+   */
+  export type TempSignupOtpFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TempSignupOtp
+     */
+    select?: TempSignupOtpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TempSignupOtp
+     */
+    omit?: TempSignupOtpOmit<ExtArgs> | null
+    /**
+     * Filter, which TempSignupOtp to fetch.
+     */
+    where?: TempSignupOtpWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TempSignupOtps to fetch.
+     */
+    orderBy?: TempSignupOtpOrderByWithRelationInput | TempSignupOtpOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TempSignupOtps.
+     */
+    cursor?: TempSignupOtpWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TempSignupOtps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TempSignupOtps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TempSignupOtps.
+     */
+    distinct?: TempSignupOtpScalarFieldEnum | TempSignupOtpScalarFieldEnum[]
+  }
+
+  /**
+   * TempSignupOtp findMany
+   */
+  export type TempSignupOtpFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TempSignupOtp
+     */
+    select?: TempSignupOtpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TempSignupOtp
+     */
+    omit?: TempSignupOtpOmit<ExtArgs> | null
+    /**
+     * Filter, which TempSignupOtps to fetch.
+     */
+    where?: TempSignupOtpWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TempSignupOtps to fetch.
+     */
+    orderBy?: TempSignupOtpOrderByWithRelationInput | TempSignupOtpOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TempSignupOtps.
+     */
+    cursor?: TempSignupOtpWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TempSignupOtps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TempSignupOtps.
+     */
+    skip?: number
+    distinct?: TempSignupOtpScalarFieldEnum | TempSignupOtpScalarFieldEnum[]
+  }
+
+  /**
+   * TempSignupOtp create
+   */
+  export type TempSignupOtpCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TempSignupOtp
+     */
+    select?: TempSignupOtpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TempSignupOtp
+     */
+    omit?: TempSignupOtpOmit<ExtArgs> | null
+    /**
+     * The data needed to create a TempSignupOtp.
+     */
+    data: XOR<TempSignupOtpCreateInput, TempSignupOtpUncheckedCreateInput>
+  }
+
+  /**
+   * TempSignupOtp createMany
+   */
+  export type TempSignupOtpCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TempSignupOtps.
+     */
+    data: TempSignupOtpCreateManyInput | TempSignupOtpCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TempSignupOtp createManyAndReturn
+   */
+  export type TempSignupOtpCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TempSignupOtp
+     */
+    select?: TempSignupOtpSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TempSignupOtp
+     */
+    omit?: TempSignupOtpOmit<ExtArgs> | null
+    /**
+     * The data used to create many TempSignupOtps.
+     */
+    data: TempSignupOtpCreateManyInput | TempSignupOtpCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TempSignupOtp update
+   */
+  export type TempSignupOtpUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TempSignupOtp
+     */
+    select?: TempSignupOtpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TempSignupOtp
+     */
+    omit?: TempSignupOtpOmit<ExtArgs> | null
+    /**
+     * The data needed to update a TempSignupOtp.
+     */
+    data: XOR<TempSignupOtpUpdateInput, TempSignupOtpUncheckedUpdateInput>
+    /**
+     * Choose, which TempSignupOtp to update.
+     */
+    where: TempSignupOtpWhereUniqueInput
+  }
+
+  /**
+   * TempSignupOtp updateMany
+   */
+  export type TempSignupOtpUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TempSignupOtps.
+     */
+    data: XOR<TempSignupOtpUpdateManyMutationInput, TempSignupOtpUncheckedUpdateManyInput>
+    /**
+     * Filter which TempSignupOtps to update
+     */
+    where?: TempSignupOtpWhereInput
+    /**
+     * Limit how many TempSignupOtps to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TempSignupOtp updateManyAndReturn
+   */
+  export type TempSignupOtpUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TempSignupOtp
+     */
+    select?: TempSignupOtpSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TempSignupOtp
+     */
+    omit?: TempSignupOtpOmit<ExtArgs> | null
+    /**
+     * The data used to update TempSignupOtps.
+     */
+    data: XOR<TempSignupOtpUpdateManyMutationInput, TempSignupOtpUncheckedUpdateManyInput>
+    /**
+     * Filter which TempSignupOtps to update
+     */
+    where?: TempSignupOtpWhereInput
+    /**
+     * Limit how many TempSignupOtps to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TempSignupOtp upsert
+   */
+  export type TempSignupOtpUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TempSignupOtp
+     */
+    select?: TempSignupOtpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TempSignupOtp
+     */
+    omit?: TempSignupOtpOmit<ExtArgs> | null
+    /**
+     * The filter to search for the TempSignupOtp to update in case it exists.
+     */
+    where: TempSignupOtpWhereUniqueInput
+    /**
+     * In case the TempSignupOtp found by the `where` argument doesn't exist, create a new TempSignupOtp with this data.
+     */
+    create: XOR<TempSignupOtpCreateInput, TempSignupOtpUncheckedCreateInput>
+    /**
+     * In case the TempSignupOtp was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TempSignupOtpUpdateInput, TempSignupOtpUncheckedUpdateInput>
+  }
+
+  /**
+   * TempSignupOtp delete
+   */
+  export type TempSignupOtpDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TempSignupOtp
+     */
+    select?: TempSignupOtpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TempSignupOtp
+     */
+    omit?: TempSignupOtpOmit<ExtArgs> | null
+    /**
+     * Filter which TempSignupOtp to delete.
+     */
+    where: TempSignupOtpWhereUniqueInput
+  }
+
+  /**
+   * TempSignupOtp deleteMany
+   */
+  export type TempSignupOtpDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TempSignupOtps to delete
+     */
+    where?: TempSignupOtpWhereInput
+    /**
+     * Limit how many TempSignupOtps to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * TempSignupOtp without action
+   */
+  export type TempSignupOtpDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TempSignupOtp
+     */
+    select?: TempSignupOtpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TempSignupOtp
+     */
+    omit?: TempSignupOtpOmit<ExtArgs> | null
   }
 
 
@@ -18573,6 +19732,20 @@ export namespace Prisma {
   export type RefreshTokenScalarFieldEnum = (typeof RefreshTokenScalarFieldEnum)[keyof typeof RefreshTokenScalarFieldEnum]
 
 
+  export const TempSignupOtpScalarFieldEnum: {
+    id: 'id',
+    email: 'email',
+    username: 'username',
+    role: 'role',
+    password: 'password',
+    code: 'code',
+    expiresAt: 'expiresAt',
+    createdAt: 'createdAt'
+  };
+
+  export type TempSignupOtpScalarFieldEnum = (typeof TempSignupOtpScalarFieldEnum)[keyof typeof TempSignupOtpScalarFieldEnum]
+
+
   export const OtpScalarFieldEnum: {
     id: 'id',
     email: 'email',
@@ -19001,6 +20174,75 @@ export namespace Prisma {
     userId?: IntWithAggregatesFilter<"RefreshToken"> | number
     expiresAt?: DateTimeWithAggregatesFilter<"RefreshToken"> | Date | string
     createdAt?: DateTimeWithAggregatesFilter<"RefreshToken"> | Date | string
+  }
+
+  export type TempSignupOtpWhereInput = {
+    AND?: TempSignupOtpWhereInput | TempSignupOtpWhereInput[]
+    OR?: TempSignupOtpWhereInput[]
+    NOT?: TempSignupOtpWhereInput | TempSignupOtpWhereInput[]
+    id?: IntFilter<"TempSignupOtp"> | number
+    email?: StringFilter<"TempSignupOtp"> | string
+    username?: StringFilter<"TempSignupOtp"> | string
+    role?: EnumRoleFilter<"TempSignupOtp"> | $Enums.Role
+    password?: StringFilter<"TempSignupOtp"> | string
+    code?: StringFilter<"TempSignupOtp"> | string
+    expiresAt?: DateTimeFilter<"TempSignupOtp"> | Date | string
+    createdAt?: DateTimeFilter<"TempSignupOtp"> | Date | string
+  }
+
+  export type TempSignupOtpOrderByWithRelationInput = {
+    id?: SortOrder
+    email?: SortOrder
+    username?: SortOrder
+    role?: SortOrder
+    password?: SortOrder
+    code?: SortOrder
+    expiresAt?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type TempSignupOtpWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    email?: string
+    AND?: TempSignupOtpWhereInput | TempSignupOtpWhereInput[]
+    OR?: TempSignupOtpWhereInput[]
+    NOT?: TempSignupOtpWhereInput | TempSignupOtpWhereInput[]
+    username?: StringFilter<"TempSignupOtp"> | string
+    role?: EnumRoleFilter<"TempSignupOtp"> | $Enums.Role
+    password?: StringFilter<"TempSignupOtp"> | string
+    code?: StringFilter<"TempSignupOtp"> | string
+    expiresAt?: DateTimeFilter<"TempSignupOtp"> | Date | string
+    createdAt?: DateTimeFilter<"TempSignupOtp"> | Date | string
+  }, "id" | "email">
+
+  export type TempSignupOtpOrderByWithAggregationInput = {
+    id?: SortOrder
+    email?: SortOrder
+    username?: SortOrder
+    role?: SortOrder
+    password?: SortOrder
+    code?: SortOrder
+    expiresAt?: SortOrder
+    createdAt?: SortOrder
+    _count?: TempSignupOtpCountOrderByAggregateInput
+    _avg?: TempSignupOtpAvgOrderByAggregateInput
+    _max?: TempSignupOtpMaxOrderByAggregateInput
+    _min?: TempSignupOtpMinOrderByAggregateInput
+    _sum?: TempSignupOtpSumOrderByAggregateInput
+  }
+
+  export type TempSignupOtpScalarWhereWithAggregatesInput = {
+    AND?: TempSignupOtpScalarWhereWithAggregatesInput | TempSignupOtpScalarWhereWithAggregatesInput[]
+    OR?: TempSignupOtpScalarWhereWithAggregatesInput[]
+    NOT?: TempSignupOtpScalarWhereWithAggregatesInput | TempSignupOtpScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"TempSignupOtp"> | number
+    email?: StringWithAggregatesFilter<"TempSignupOtp"> | string
+    username?: StringWithAggregatesFilter<"TempSignupOtp"> | string
+    role?: EnumRoleWithAggregatesFilter<"TempSignupOtp"> | $Enums.Role
+    password?: StringWithAggregatesFilter<"TempSignupOtp"> | string
+    code?: StringWithAggregatesFilter<"TempSignupOtp"> | string
+    expiresAt?: DateTimeWithAggregatesFilter<"TempSignupOtp"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"TempSignupOtp"> | Date | string
   }
 
   export type OtpWhereInput = {
@@ -20018,6 +21260,80 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     token?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TempSignupOtpCreateInput = {
+    email: string
+    username: string
+    role: $Enums.Role
+    password: string
+    code: string
+    expiresAt: Date | string
+    createdAt?: Date | string
+  }
+
+  export type TempSignupOtpUncheckedCreateInput = {
+    id?: number
+    email: string
+    username: string
+    role: $Enums.Role
+    password: string
+    code: string
+    expiresAt: Date | string
+    createdAt?: Date | string
+  }
+
+  export type TempSignupOtpUpdateInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    password?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TempSignupOtpUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    password?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TempSignupOtpCreateManyInput = {
+    id?: number
+    email: string
+    username: string
+    role: $Enums.Role
+    password: string
+    code: string
+    expiresAt: Date | string
+    createdAt?: Date | string
+  }
+
+  export type TempSignupOtpUpdateManyMutationInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    password?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TempSignupOtpUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    password?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -21123,6 +22439,47 @@ export namespace Prisma {
   export type RefreshTokenSumOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+  }
+
+  export type TempSignupOtpCountOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    username?: SortOrder
+    role?: SortOrder
+    password?: SortOrder
+    code?: SortOrder
+    expiresAt?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type TempSignupOtpAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type TempSignupOtpMaxOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    username?: SortOrder
+    role?: SortOrder
+    password?: SortOrder
+    code?: SortOrder
+    expiresAt?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type TempSignupOtpMinOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    username?: SortOrder
+    role?: SortOrder
+    password?: SortOrder
+    code?: SortOrder
+    expiresAt?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type TempSignupOtpSumOrderByAggregateInput = {
+    id?: SortOrder
   }
 
   export type OtpCountOrderByAggregateInput = {

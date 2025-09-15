@@ -145,6 +145,17 @@ exports.Prisma.RefreshTokenScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.TempSignupOtpScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  username: 'username',
+  role: 'role',
+  password: 'password',
+  code: 'code',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.OtpScalarFieldEnum = {
   id: 'id',
   email: 'email',
@@ -282,6 +293,7 @@ exports.Role = exports.$Enums.Role = {
 exports.Prisma.ModelName = {
   User: 'User',
   RefreshToken: 'RefreshToken',
+  TempSignupOtp: 'TempSignupOtp',
   Otp: 'Otp',
   StudentProfile: 'StudentProfile',
   InstructorProfile: 'InstructorProfile',

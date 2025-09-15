@@ -556,4 +556,142 @@ export class AuthService {
       throw new InternalServerErrorException('Could not reset password');
     }
   }
+
+
+
+  /** Request OTP before creating a user */
+  async requestSignupOtp(
+    userData: SignupAuthDto,
+  ): Promise<{ message: string }> {
+    const { username, email, password, role } = userData;
+
+    if (!username || !email || !password || !role) {
+      throw new BadRequestException('All fields are required.');
+    }
+
+    // Check if user/email already exists
+    const existingUser = await this.DB.user.findFirst({
+      where: { OR: [{ email }, { username }] },
+    });
+
+    if (existingUser) throw new ConflictException('User already exists.');
+
+    try {
+      const otp = Math.floor(100000 + Math.random() * 900000).toString();
+      const expireAt = new Date(Date.now() + 10 * 60 * 1000);
+
+      const hashedPassword = await bcrypt.hash(password, 12);
+
+      await this.DB.tempSignupOtp.upsert({
+        where: { email },
+        update: {
+          username,
+          password: hashedPassword,
+          code: otp,
+          expiresAt: expireAt,
+          role,
+        },
+        create: {
+          username,
+          email,
+          password: hashedPassword,
+          code: otp,
+          expiresAt: expireAt,
+          role,
+        },
+      });
+
+      // Send OTP via email
+      await this.mailerService.sendMail({
+        to: email,
+        subject: 'Verify Your Email',
+        html: `<p>Your OTP is <b>${otp}</b>. It expires in 10 minutes.</p>`,
+      });
+
+      return { message: 'OTP sent to email' };
+    } catch (err) {
+      console.error('requestSignupOtp error:', err);
+      throw new InternalServerErrorException(
+        'Failed to send OTP. Try again later.',
+      );
+    }
+  }
+
+  /** Verify OTP and create the user */
+  async verifySignupOtp(email: string, otp: string) {
+    const temp = await this.DB.tempSignupOtp.findFirst({
+      where: { email, code: otp },
+    });
+
+    if (!temp) throw new BadRequestException('Invalid or expired OTP');
+    if (new Date() > temp.expiresAt)
+      throw new BadRequestException('OTP expired');
+
+    try {
+      const result = await this.DB.$transaction(async (prisma) => {
+        // 1️⃣ Create User
+        const newUser = await prisma.user.create({
+          data: {
+            username: temp.username,
+            email: temp.email,
+            password: temp.password,
+            role: temp.role,
+            isVerified: true,
+          },
+          select: {
+            id: true,
+            username: true,
+            email: true,
+            role: true,
+          },
+        });
+
+        // 2️⃣ Create corresponding profile
+        if (newUser.role === 'student') {
+          await prisma.studentProfile.create({
+            data: { studentId: newUser.id },
+          });
+        } else if (newUser.role === 'instructor') {
+          await prisma.instructorProfile.create({
+            data: { instructorId: newUser.id },
+          });
+        }
+
+        // 3️⃣ Generate JWT
+        const payload: CreateJwt = {
+          userId: newUser.id,
+          email: newUser.email,
+          role: newUser.role as Role,
+        };
+        const tokens = await this.jwt.generateToken(payload);
+
+        // 4️⃣ Save refresh token
+        await prisma.refreshToken.create({
+          data: {
+            token: tokens.refreshToken,
+            userId: newUser.id,
+            expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+          },
+        });
+
+        // 5️⃣ Delete temp signup
+        await prisma.tempSignupOtp.delete({ where: { id: temp.id } });
+
+        return { newUser, tokens };
+      });
+
+      return {
+        success: true,
+        status: 201,
+        user: result.newUser,
+        message: 'Signup successful. You are now verified!',
+        token: result.tokens,
+      };
+    } catch (err) {
+      console.error('verifySignupOtp error:', err);
+      throw new InternalServerErrorException(
+        'Failed to verify OTP. Try again later.',
+      );
+    }
+  }
 }
