@@ -28,14 +28,56 @@ export class AuthController {
 
   @Public()
   @Post('signup')
-  signup(@Body() userData: SignupAuthDto) {
-    return this.authService.signup(userData);
+  async signup(@Body() userData: SignupAuthDto, @Res() res: express.Response) {
+    const result = await this.authService.signup(userData);
+
+    const { accessToken, refreshToken } = result.token;
+
+    res.cookie('accessToken', accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      path: '/',
+    });
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      path: '/',
+    });
+
+    return res.json({
+      success: true,
+      status: 201,
+      message: result.message,
+    });
   }
 
   @Public()
   @Post('login')
-  login(@Body() userData: LoginAuthDto) {
-    return this.authService.login(userData);
+  async login(@Body() userData: LoginAuthDto, @Res() res: express.Response) {
+    const result = await this.authService.login(userData);
+
+    const { accessToken, refreshToken } = result.token;
+
+    res.cookie('accessToken', accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      path: '/',
+    });
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      path: '/',
+    });
+
+    return res.json({
+      success: true,
+      status: 200,
+      message: result.message,
+    });
   }
 
   @Roles(Role.STUDENT, Role.INSTRUCTOR)
@@ -107,7 +149,31 @@ export class AuthController {
 
   @Public()
   @Post('verify-signup-otp')
-  verifySignupOtp(@Body() dto: VerifyOtpDto) {
-    return this.authService.verifySignupOtp(dto.email, dto.otp);
+  async verifySignupOtp(
+    @Body() dto: VerifyOtpDto,
+    @Res() res: express.Response,
+  ) {
+    const result = await this.authService.verifySignupOtp(dto.email, dto.otp);
+
+    const { accessToken, refreshToken } = result.token;
+
+    res.cookie('accessToken', accessToken, {
+      httpOnly: true,
+      secure: process.env.ACCESS_JWT_SECRET === 'your_access_secret_here',
+      sameSite: 'strict',
+      path: '/',
+    });
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: process.env.REFRESH_JWT_SECRET === 'your_refresh_secret_here',
+      sameSite: 'strict',
+      path: '/',
+    });
+
+    return res.json({
+      success: true,
+      status: 201,
+      message: result.message,
+    });
   }
 }
