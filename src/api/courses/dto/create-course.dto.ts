@@ -5,6 +5,7 @@ import {
   IsBoolean,
   IsOptional,
   IsEnum,
+  ArrayNotEmpty,
 } from 'class-validator';
 import { Level } from '../../../enum/level.enum';
 import { Duration } from '../../../enum/duration.enum';
@@ -41,19 +42,20 @@ export class CreateCourseDto {
   @IsInt()
   price?: number;
 
-  @IsEnum(Tool)
-  @IsNotEmpty()
-  tools: Tool;
-
   @IsEnum(Category)
   @IsNotEmpty()
   category: Category;
+
+  @IsOptional()
+  @IsString()
+  categoryIcon?: string;
 
   @IsEnum(SubCategory)
   @IsNotEmpty()
   subCategory: SubCategory;
 
-  @IsOptional()
-  @IsString()
-  categoryIcon?: string;
+  @IsNotEmpty()
+  @ArrayNotEmpty()
+  @IsEnum(Tool, { each: true })
+  tools: Tool[];
 }
