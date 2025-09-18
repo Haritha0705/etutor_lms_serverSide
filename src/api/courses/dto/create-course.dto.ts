@@ -1,19 +1,59 @@
-import { IsString, IsNotEmpty, IsInt } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsInt,
+  IsBoolean,
+  IsOptional,
+  IsEnum,
+} from 'class-validator';
+import { Level } from '../../../enum/level.enum';
+import { Duration } from '../../../enum/duration.enum';
+import { Tool } from '../../../enum/tools.enum';
+import { Category } from '../../../enum/category.enum';
+import { SubCategory } from '../../../enum/subCategory.enum';
 
 export class CreateCourseDto {
+  @IsInt()
+  @IsNotEmpty()
+  instructorId: number;
+
   @IsString()
   @IsNotEmpty()
   title: string;
 
-  @IsString()
   @IsNotEmpty()
-  description: string;
+  @IsEnum(Duration)
+  description: Duration;
 
   @IsString()
   @IsNotEmpty()
-  category: string;
+  duration: string;
 
+  @IsEnum(Level)
+  @IsNotEmpty()
+  level: Level;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  isPaid: boolean;
+
+  @IsOptional()
   @IsInt()
+  price?: number;
+
+  @IsEnum(Tool)
   @IsNotEmpty()
-  instructorId: number;
+  tools: Tool;
+
+  @IsEnum(Category)
+  @IsNotEmpty()
+  category: Category;
+
+  @IsEnum(SubCategory)
+  @IsNotEmpty()
+  subCategory: SubCategory;
+
+  @IsOptional()
+  @IsString()
+  categoryIcon?: string;
 }
