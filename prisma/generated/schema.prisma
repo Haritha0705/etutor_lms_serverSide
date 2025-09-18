@@ -14,6 +14,12 @@ enum Role {
   instructor
 }
 
+enum Level {
+  beginner
+  intermediate
+  expert
+}
+
 model User {
   id                       Int       @id @default(autoincrement())
   email                    String    @unique @db.VarChar(255)
@@ -105,11 +111,16 @@ model InstructorProfile {
 }
 
 model Course {
-  id           Int    @id @default(autoincrement())
-  instructorId Int
-  title        String @db.VarChar(255)
-  description  String @db.Text
-  category     String @db.VarChar(100)
+  id            Int     @id @default(autoincrement())
+  instructorId  Int
+  categoryId    Int
+  subCategoryId Int
+  title         String  @db.VarChar(255)
+  description   String  @db.Text
+  duration      String  @db.VarChar(100)
+  level         Level
+  isPaid        Boolean @default(false)
+  price         Int?
 
   lessons      Lesson[]
   enrollments  CourseEnrollment[]
@@ -120,9 +131,30 @@ model Course {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  instructor InstructorProfile @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  instructor  InstructorProfile @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  category    Category          @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  subCategory SubCategory       @relation(fields: [subCategoryId], references: [id], onDelete: Cascade)
 
   @@index([instructorId])
+  @@index([categoryId])
+  @@index([subCategoryId])
+}
+
+model Category {
+  id            Int           @id @default(autoincrement())
+  name          String
+  icon          String?
+  courses       Course[]
+  subCategories SubCategory[]
+}
+
+model SubCategory {
+  id         Int      @id @default(autoincrement())
+  name       String
+  count      Int
+  categoryId Int
+  courses    Course[]
+  category   Category @relation(fields: [categoryId], references: [id])
 }
 
 model Lesson {

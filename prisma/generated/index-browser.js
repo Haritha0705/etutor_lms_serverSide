@@ -188,11 +188,29 @@ exports.Prisma.InstructorProfileScalarFieldEnum = {
 exports.Prisma.CourseScalarFieldEnum = {
   id: 'id',
   instructorId: 'instructorId',
+  categoryId: 'categoryId',
+  subCategoryId: 'subCategoryId',
   title: 'title',
   description: 'description',
-  category: 'category',
+  duration: 'duration',
+  level: 'level',
+  isPaid: 'isPaid',
+  price: 'price',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  icon: 'icon'
+};
+
+exports.Prisma.SubCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  count: 'count',
+  categoryId: 'categoryId'
 };
 
 exports.Prisma.LessonScalarFieldEnum = {
@@ -290,6 +308,12 @@ exports.Role = exports.$Enums.Role = {
   instructor: 'instructor'
 };
 
+exports.Level = exports.$Enums.Level = {
+  beginner: 'beginner',
+  intermediate: 'intermediate',
+  expert: 'expert'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   RefreshToken: 'RefreshToken',
@@ -298,6 +322,8 @@ exports.Prisma.ModelName = {
   StudentProfile: 'StudentProfile',
   InstructorProfile: 'InstructorProfile',
   Course: 'Course',
+  Category: 'Category',
+  SubCategory: 'SubCategory',
   Lesson: 'Lesson',
   CourseEnrollment: 'CourseEnrollment',
   Review: 'Review',
