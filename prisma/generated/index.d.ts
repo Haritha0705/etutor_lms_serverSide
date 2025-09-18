@@ -9396,24 +9396,18 @@ export namespace Prisma {
   export type CourseAvgAggregateOutputType = {
     id: number | null
     instructorId: number | null
-    categoryId: number | null
-    subCategoryId: number | null
     price: number | null
   }
 
   export type CourseSumAggregateOutputType = {
     id: number | null
     instructorId: number | null
-    categoryId: number | null
-    subCategoryId: number | null
     price: number | null
   }
 
   export type CourseMinAggregateOutputType = {
     id: number | null
     instructorId: number | null
-    categoryId: number | null
-    subCategoryId: number | null
     title: string | null
     description: string | null
     duration: string | null
@@ -9430,8 +9424,6 @@ export namespace Prisma {
   export type CourseMaxAggregateOutputType = {
     id: number | null
     instructorId: number | null
-    categoryId: number | null
-    subCategoryId: number | null
     title: string | null
     description: string | null
     duration: string | null
@@ -9448,8 +9440,6 @@ export namespace Prisma {
   export type CourseCountAggregateOutputType = {
     id: number
     instructorId: number
-    categoryId: number
-    subCategoryId: number
     title: number
     description: number
     duration: number
@@ -9469,24 +9459,18 @@ export namespace Prisma {
   export type CourseAvgAggregateInputType = {
     id?: true
     instructorId?: true
-    categoryId?: true
-    subCategoryId?: true
     price?: true
   }
 
   export type CourseSumAggregateInputType = {
     id?: true
     instructorId?: true
-    categoryId?: true
-    subCategoryId?: true
     price?: true
   }
 
   export type CourseMinAggregateInputType = {
     id?: true
     instructorId?: true
-    categoryId?: true
-    subCategoryId?: true
     title?: true
     description?: true
     duration?: true
@@ -9503,8 +9487,6 @@ export namespace Prisma {
   export type CourseMaxAggregateInputType = {
     id?: true
     instructorId?: true
-    categoryId?: true
-    subCategoryId?: true
     title?: true
     description?: true
     duration?: true
@@ -9521,8 +9503,6 @@ export namespace Prisma {
   export type CourseCountAggregateInputType = {
     id?: true
     instructorId?: true
-    categoryId?: true
-    subCategoryId?: true
     title?: true
     description?: true
     duration?: true
@@ -9627,8 +9607,6 @@ export namespace Prisma {
   export type CourseGroupByOutputType = {
     id: number
     instructorId: number
-    categoryId: number
-    subCategoryId: number
     title: string
     description: string
     duration: string
@@ -9665,8 +9643,6 @@ export namespace Prisma {
   export type CourseSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     instructorId?: boolean
-    categoryId?: boolean
-    subCategoryId?: boolean
     title?: boolean
     description?: boolean
     duration?: boolean
@@ -9691,8 +9667,6 @@ export namespace Prisma {
   export type CourseSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     instructorId?: boolean
-    categoryId?: boolean
-    subCategoryId?: boolean
     title?: boolean
     description?: boolean
     duration?: boolean
@@ -9711,8 +9685,6 @@ export namespace Prisma {
   export type CourseSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     instructorId?: boolean
-    categoryId?: boolean
-    subCategoryId?: boolean
     title?: boolean
     description?: boolean
     duration?: boolean
@@ -9731,8 +9703,6 @@ export namespace Prisma {
   export type CourseSelectScalar = {
     id?: boolean
     instructorId?: boolean
-    categoryId?: boolean
-    subCategoryId?: boolean
     title?: boolean
     description?: boolean
     duration?: boolean
@@ -9747,7 +9717,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type CourseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "instructorId" | "categoryId" | "subCategoryId" | "title" | "description" | "duration" | "level" | "isPaid" | "price" | "category" | "categoryIcon" | "subCategory" | "tools" | "createdAt" | "updatedAt", ExtArgs["result"]["course"]>
+  export type CourseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "instructorId" | "title" | "description" | "duration" | "level" | "isPaid" | "price" | "category" | "categoryIcon" | "subCategory" | "tools" | "createdAt" | "updatedAt", ExtArgs["result"]["course"]>
   export type CourseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     lessons?: boolean | Course$lessonsArgs<ExtArgs>
     enrollments?: boolean | Course$enrollmentsArgs<ExtArgs>
@@ -9777,8 +9747,6 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       instructorId: number
-      categoryId: number
-      subCategoryId: number
       title: string
       description: string
       duration: string
@@ -10222,8 +10190,6 @@ export namespace Prisma {
   interface CourseFieldRefs {
     readonly id: FieldRef<"Course", 'Int'>
     readonly instructorId: FieldRef<"Course", 'Int'>
-    readonly categoryId: FieldRef<"Course", 'Int'>
-    readonly subCategoryId: FieldRef<"Course", 'Int'>
     readonly title: FieldRef<"Course", 'String'>
     readonly description: FieldRef<"Course", 'String'>
     readonly duration: FieldRef<"Course", 'String'>
@@ -19925,8 +19891,6 @@ export namespace Prisma {
   export const CourseScalarFieldEnum: {
     id: 'id',
     instructorId: 'instructorId',
-    categoryId: 'categoryId',
-    subCategoryId: 'subCategoryId',
     title: 'title',
     description: 'description',
     duration: 'duration',
@@ -20623,8 +20587,6 @@ export namespace Prisma {
     NOT?: CourseWhereInput | CourseWhereInput[]
     id?: IntFilter<"Course"> | number
     instructorId?: IntFilter<"Course"> | number
-    categoryId?: IntFilter<"Course"> | number
-    subCategoryId?: IntFilter<"Course"> | number
     title?: StringFilter<"Course"> | string
     description?: StringFilter<"Course"> | string
     duration?: StringFilter<"Course"> | string
@@ -20648,8 +20610,6 @@ export namespace Prisma {
   export type CourseOrderByWithRelationInput = {
     id?: SortOrder
     instructorId?: SortOrder
-    categoryId?: SortOrder
-    subCategoryId?: SortOrder
     title?: SortOrder
     description?: SortOrder
     duration?: SortOrder
@@ -20676,8 +20636,6 @@ export namespace Prisma {
     OR?: CourseWhereInput[]
     NOT?: CourseWhereInput | CourseWhereInput[]
     instructorId?: IntFilter<"Course"> | number
-    categoryId?: IntFilter<"Course"> | number
-    subCategoryId?: IntFilter<"Course"> | number
     title?: StringFilter<"Course"> | string
     description?: StringFilter<"Course"> | string
     duration?: StringFilter<"Course"> | string
@@ -20701,8 +20659,6 @@ export namespace Prisma {
   export type CourseOrderByWithAggregationInput = {
     id?: SortOrder
     instructorId?: SortOrder
-    categoryId?: SortOrder
-    subCategoryId?: SortOrder
     title?: SortOrder
     description?: SortOrder
     duration?: SortOrder
@@ -20728,8 +20684,6 @@ export namespace Prisma {
     NOT?: CourseScalarWhereWithAggregatesInput | CourseScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Course"> | number
     instructorId?: IntWithAggregatesFilter<"Course"> | number
-    categoryId?: IntWithAggregatesFilter<"Course"> | number
-    subCategoryId?: IntWithAggregatesFilter<"Course"> | number
     title?: StringWithAggregatesFilter<"Course"> | string
     description?: StringWithAggregatesFilter<"Course"> | string
     duration?: StringWithAggregatesFilter<"Course"> | string
@@ -21761,8 +21715,6 @@ export namespace Prisma {
   }
 
   export type CourseCreateInput = {
-    categoryId: number
-    subCategoryId: number
     title: string
     description: string
     duration: string
@@ -21786,8 +21738,6 @@ export namespace Prisma {
   export type CourseUncheckedCreateInput = {
     id?: number
     instructorId: number
-    categoryId: number
-    subCategoryId: number
     title: string
     description: string
     duration: string
@@ -21808,8 +21758,6 @@ export namespace Prisma {
   }
 
   export type CourseUpdateInput = {
-    categoryId?: IntFieldUpdateOperationsInput | number
-    subCategoryId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
@@ -21833,8 +21781,6 @@ export namespace Prisma {
   export type CourseUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     instructorId?: IntFieldUpdateOperationsInput | number
-    categoryId?: IntFieldUpdateOperationsInput | number
-    subCategoryId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
@@ -21857,8 +21803,6 @@ export namespace Prisma {
   export type CourseCreateManyInput = {
     id?: number
     instructorId: number
-    categoryId: number
-    subCategoryId: number
     title: string
     description: string
     duration: string
@@ -21874,8 +21818,6 @@ export namespace Prisma {
   }
 
   export type CourseUpdateManyMutationInput = {
-    categoryId?: IntFieldUpdateOperationsInput | number
-    subCategoryId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
@@ -21893,8 +21835,6 @@ export namespace Prisma {
   export type CourseUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     instructorId?: IntFieldUpdateOperationsInput | number
-    categoryId?: IntFieldUpdateOperationsInput | number
-    subCategoryId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
@@ -22970,8 +22910,6 @@ export namespace Prisma {
   export type CourseCountOrderByAggregateInput = {
     id?: SortOrder
     instructorId?: SortOrder
-    categoryId?: SortOrder
-    subCategoryId?: SortOrder
     title?: SortOrder
     description?: SortOrder
     duration?: SortOrder
@@ -22989,16 +22927,12 @@ export namespace Prisma {
   export type CourseAvgOrderByAggregateInput = {
     id?: SortOrder
     instructorId?: SortOrder
-    categoryId?: SortOrder
-    subCategoryId?: SortOrder
     price?: SortOrder
   }
 
   export type CourseMaxOrderByAggregateInput = {
     id?: SortOrder
     instructorId?: SortOrder
-    categoryId?: SortOrder
-    subCategoryId?: SortOrder
     title?: SortOrder
     description?: SortOrder
     duration?: SortOrder
@@ -23015,8 +22949,6 @@ export namespace Prisma {
   export type CourseMinOrderByAggregateInput = {
     id?: SortOrder
     instructorId?: SortOrder
-    categoryId?: SortOrder
-    subCategoryId?: SortOrder
     title?: SortOrder
     description?: SortOrder
     duration?: SortOrder
@@ -23033,8 +22965,6 @@ export namespace Prisma {
   export type CourseSumOrderByAggregateInput = {
     id?: SortOrder
     instructorId?: SortOrder
-    categoryId?: SortOrder
-    subCategoryId?: SortOrder
     price?: SortOrder
   }
 
@@ -25401,8 +25331,6 @@ export namespace Prisma {
   }
 
   export type CourseCreateWithoutInstructorInput = {
-    categoryId: number
-    subCategoryId: number
     title: string
     description: string
     duration: string
@@ -25424,8 +25352,6 @@ export namespace Prisma {
 
   export type CourseUncheckedCreateWithoutInstructorInput = {
     id?: number
-    categoryId: number
-    subCategoryId: number
     title: string
     description: string
     duration: string
@@ -25552,8 +25478,6 @@ export namespace Prisma {
     NOT?: CourseScalarWhereInput | CourseScalarWhereInput[]
     id?: IntFilter<"Course"> | number
     instructorId?: IntFilter<"Course"> | number
-    categoryId?: IntFilter<"Course"> | number
-    subCategoryId?: IntFilter<"Course"> | number
     title?: StringFilter<"Course"> | string
     description?: StringFilter<"Course"> | string
     duration?: StringFilter<"Course"> | string
@@ -25931,8 +25855,6 @@ export namespace Prisma {
   }
 
   export type CourseCreateWithoutLessonsInput = {
-    categoryId: number
-    subCategoryId: number
     title: string
     description: string
     duration: string
@@ -25955,8 +25877,6 @@ export namespace Prisma {
   export type CourseUncheckedCreateWithoutLessonsInput = {
     id?: number
     instructorId: number
-    categoryId: number
-    subCategoryId: number
     title: string
     description: string
     duration: string
@@ -25992,8 +25912,6 @@ export namespace Prisma {
   }
 
   export type CourseUpdateWithoutLessonsInput = {
-    categoryId?: IntFieldUpdateOperationsInput | number
-    subCategoryId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
@@ -26016,8 +25934,6 @@ export namespace Prisma {
   export type CourseUncheckedUpdateWithoutLessonsInput = {
     id?: IntFieldUpdateOperationsInput | number
     instructorId?: IntFieldUpdateOperationsInput | number
-    categoryId?: IntFieldUpdateOperationsInput | number
-    subCategoryId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
@@ -26069,8 +25985,6 @@ export namespace Prisma {
   }
 
   export type CourseCreateWithoutEnrollmentsInput = {
-    categoryId: number
-    subCategoryId: number
     title: string
     description: string
     duration: string
@@ -26093,8 +26007,6 @@ export namespace Prisma {
   export type CourseUncheckedCreateWithoutEnrollmentsInput = {
     id?: number
     instructorId: number
-    categoryId: number
-    subCategoryId: number
     title: string
     description: string
     duration: string
@@ -26168,8 +26080,6 @@ export namespace Prisma {
   }
 
   export type CourseUpdateWithoutEnrollmentsInput = {
-    categoryId?: IntFieldUpdateOperationsInput | number
-    subCategoryId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
@@ -26192,8 +26102,6 @@ export namespace Prisma {
   export type CourseUncheckedUpdateWithoutEnrollmentsInput = {
     id?: IntFieldUpdateOperationsInput | number
     instructorId?: IntFieldUpdateOperationsInput | number
-    categoryId?: IntFieldUpdateOperationsInput | number
-    subCategoryId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
@@ -26245,8 +26153,6 @@ export namespace Prisma {
   }
 
   export type CourseCreateWithoutReviewsInput = {
-    categoryId: number
-    subCategoryId: number
     title: string
     description: string
     duration: string
@@ -26269,8 +26175,6 @@ export namespace Prisma {
   export type CourseUncheckedCreateWithoutReviewsInput = {
     id?: number
     instructorId: number
-    categoryId: number
-    subCategoryId: number
     title: string
     description: string
     duration: string
@@ -26344,8 +26248,6 @@ export namespace Prisma {
   }
 
   export type CourseUpdateWithoutReviewsInput = {
-    categoryId?: IntFieldUpdateOperationsInput | number
-    subCategoryId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
@@ -26368,8 +26270,6 @@ export namespace Prisma {
   export type CourseUncheckedUpdateWithoutReviewsInput = {
     id?: IntFieldUpdateOperationsInput | number
     instructorId?: IntFieldUpdateOperationsInput | number
-    categoryId?: IntFieldUpdateOperationsInput | number
-    subCategoryId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
@@ -26640,8 +26540,6 @@ export namespace Prisma {
   }
 
   export type CourseCreateWithoutAssignmentInput = {
-    categoryId: number
-    subCategoryId: number
     title: string
     description: string
     duration: string
@@ -26664,8 +26562,6 @@ export namespace Prisma {
   export type CourseUncheckedCreateWithoutAssignmentInput = {
     id?: number
     instructorId: number
-    categoryId: number
-    subCategoryId: number
     title: string
     description: string
     duration: string
@@ -26762,8 +26658,6 @@ export namespace Prisma {
   }
 
   export type CourseUpdateWithoutAssignmentInput = {
-    categoryId?: IntFieldUpdateOperationsInput | number
-    subCategoryId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
@@ -26786,8 +26680,6 @@ export namespace Prisma {
   export type CourseUncheckedUpdateWithoutAssignmentInput = {
     id?: IntFieldUpdateOperationsInput | number
     instructorId?: IntFieldUpdateOperationsInput | number
-    categoryId?: IntFieldUpdateOperationsInput | number
-    subCategoryId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
@@ -27058,8 +26950,6 @@ export namespace Prisma {
   }
 
   export type CourseCreateWithoutCertificatesInput = {
-    categoryId: number
-    subCategoryId: number
     title: string
     description: string
     duration: string
@@ -27082,8 +26972,6 @@ export namespace Prisma {
   export type CourseUncheckedCreateWithoutCertificatesInput = {
     id?: number
     instructorId: number
-    categoryId: number
-    subCategoryId: number
     title: string
     description: string
     duration: string
@@ -27157,8 +27045,6 @@ export namespace Prisma {
   }
 
   export type CourseUpdateWithoutCertificatesInput = {
-    categoryId?: IntFieldUpdateOperationsInput | number
-    subCategoryId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
@@ -27181,8 +27067,6 @@ export namespace Prisma {
   export type CourseUncheckedUpdateWithoutCertificatesInput = {
     id?: IntFieldUpdateOperationsInput | number
     instructorId?: IntFieldUpdateOperationsInput | number
-    categoryId?: IntFieldUpdateOperationsInput | number
-    subCategoryId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
@@ -27420,8 +27304,6 @@ export namespace Prisma {
 
   export type CourseCreateManyInstructorInput = {
     id?: number
-    categoryId: number
-    subCategoryId: number
     title: string
     description: string
     duration: string
@@ -27446,8 +27328,6 @@ export namespace Prisma {
   }
 
   export type CourseUpdateWithoutInstructorInput = {
-    categoryId?: IntFieldUpdateOperationsInput | number
-    subCategoryId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
@@ -27469,8 +27349,6 @@ export namespace Prisma {
 
   export type CourseUncheckedUpdateWithoutInstructorInput = {
     id?: IntFieldUpdateOperationsInput | number
-    categoryId?: IntFieldUpdateOperationsInput | number
-    subCategoryId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
@@ -27492,8 +27370,6 @@ export namespace Prisma {
 
   export type CourseUncheckedUpdateManyWithoutInstructorInput = {
     id?: IntFieldUpdateOperationsInput | number
-    categoryId?: IntFieldUpdateOperationsInput | number
-    subCategoryId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string

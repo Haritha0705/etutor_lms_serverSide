@@ -188,8 +188,6 @@ exports.Prisma.InstructorProfileScalarFieldEnum = {
 exports.Prisma.CourseScalarFieldEnum = {
   id: 'id',
   instructorId: 'instructorId',
-  categoryId: 'categoryId',
-  subCategoryId: 'subCategoryId',
   title: 'title',
   description: 'description',
   duration: 'duration',

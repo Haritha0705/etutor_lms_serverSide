@@ -77,6 +77,7 @@ export class AuthController {
       success: true,
       status: 200,
       message: result.message,
+      token: result.token,
     });
   }
 

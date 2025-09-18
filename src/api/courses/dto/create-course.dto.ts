@@ -24,11 +24,11 @@ export class CreateCourseDto {
 
   @IsNotEmpty()
   @IsEnum(Duration)
-  description: Duration;
+  duration: Duration;
 
   @IsString()
   @IsNotEmpty()
-  duration: string;
+  description: string;
 
   @IsEnum(Level)
   @IsNotEmpty()
