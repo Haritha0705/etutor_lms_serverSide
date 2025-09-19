@@ -30,6 +30,11 @@ import { UpdateAssignmentDto } from './dto/update-assignment.dto';
 import { CreateQuizSubmissionDto } from './dto/create-quiz-submission.dto';
 import { CertificatesService } from './certificates.service';
 import { CreateCertificateDto } from './dto/create-certificate.dto';
+import { Level } from '../../enum/level.enum';
+import { SubCategory } from '../../enum/subCategory.enum';
+import { Category } from '../../enum/category.enum';
+import { FilterService } from './filter.service';
+import { Duration } from '../../enum/duration.enum';
 
 @Controller('courses')
 export class CoursesController {
@@ -41,6 +46,7 @@ export class CoursesController {
     private readonly quizzesService: QuizzesService,
     private readonly assignmentsService: AssignmentsService,
     private readonly certificatesService: CertificatesService,
+    private readonly filterService: FilterService,
   ) {}
 
   // --- Course endpoints ---
@@ -320,5 +326,25 @@ export class CoursesController {
       +page,
       +limit,
     );
+  }
+
+  @Roles(Role.INSTRUCTOR)
+  @Post('filter')
+  filterCourses(
+    @Query('categoryName') categoryName?: Category,
+    @Query('subCategoryName') subCategoryName?: SubCategory,
+    @Query('level') level?: Level,
+    @Query('duration') duration?: Duration,
+    @Query('isPaid') isPaid?: string,
+  ) {
+    const isPaidBool = isPaid === undefined ? undefined : isPaid === 'true';
+
+    return this.filterService.filterCourses({
+      categoryName,
+      subCategoryName,
+      level,
+      duration,
+      isPaid: isPaidBool,
+    });
   }
 }
