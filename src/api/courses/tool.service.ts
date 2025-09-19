@@ -28,7 +28,7 @@ export class ToolService {
       const tool = await this.DB.tool.create({
         data: {
           name: createToolDto.name,
-          count: createToolDto.count,
+          coursesCount: 0,
           subCategoryId: createToolDto.subCategoryId,
         },
       });

@@ -111,18 +111,17 @@ model InstructorProfile {
 }
 
 model Course {
-  id           Int      @id @default(autoincrement())
-  instructorId Int
-  title        String   @db.VarChar(255)
-  description  String   @db.Text
-  duration     String   @db.VarChar(100)
-  level        Level
-  isPaid       Boolean  @default(false)
-  price        Int?
-  category     String   @db.VarChar(100)
-  categoryIcon String?
-  subCategory  String   @db.VarChar(100)
-  tools        String[]
+  id            Int     @id @default(autoincrement())
+  instructorId  Int
+  categoryId    Int
+  subCategoryId Int
+  toolId        Int
+  title         String  @db.VarChar(255)
+  description   String  @db.Text
+  duration      String  @db.VarChar(100)
+  level         Level
+  isPaid        Boolean @default(false)
+  price         Int?
 
   lessons      Lesson[]
   enrollments  CourseEnrollment[]
@@ -133,9 +132,48 @@ model Course {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  instructor InstructorProfile @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  instructor  InstructorProfile @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  category    Category          @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  subCategory SubCategory       @relation(fields: [subCategoryId], references: [id], onDelete: Cascade)
+  tool        Tool              @relation(fields: [toolId], references: [id], onDelete: Cascade)
 
   @@index([instructorId])
+  @@index([categoryId])
+  @@index([subCategoryId])
+  @@index([toolId])
+}
+
+model Category {
+  id           Int     @id @default(autoincrement())
+  name         String  @unique
+  coursesCount Int     @default(0)
+  icon         String?
+
+  courses       Course[]
+  subCategories SubCategory[]
+}
+
+model SubCategory {
+  id           Int    @id @default(autoincrement())
+  name         String @unique
+  coursesCount Int    @default(0)
+  categoryId   Int
+
+  courses Course[]
+  tools   Tool[]
+
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+}
+
+model Tool {
+  id            Int    @id @default(autoincrement())
+  name          String @unique
+  coursesCount  Int    @default(0)
+  subCategoryId Int
+
+  courses Course[]
+
+  subCategory SubCategory @relation(fields: [subCategoryId], references: [id], onDelete: Cascade)
 }
 
 model Lesson {

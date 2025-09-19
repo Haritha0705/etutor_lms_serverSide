@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { CreateCourseDto } from './dto/create-course.dto';
-import { UpdateCourseDto } from './dto/update-course.dto';
+// import { UpdateCourseDto } from './dto/update-course.dto';
 import { PrismaService } from '../../config/prisma/prisma.service';
 
 @Injectable()
@@ -19,20 +19,85 @@ export class CoursesService {
       const instructorExists = await this.DB.instructorProfile.findUnique({
         where: { id: createCourseDto.instructorId },
       });
-
       if (!instructorExists) {
         throw new NotFoundException(
           `Instructor with ID ${createCourseDto.instructorId} not found`,
         );
       }
-      const course = await this.DB.course.create({
-        data: createCourseDto,
+
+      const category = await this.DB.category.findUnique({
+        where: { name: createCourseDto.categoryName },
       });
-      this.logger.log(`Course created successfully: ${course.id}`);
+      if (!category)
+        throw new NotFoundException(
+          `Category "${createCourseDto.categoryName}" not found`,
+        );
+
+      const subCategory = await this.DB.subCategory.findFirst({
+        where: {
+          name: createCourseDto.subCategoryName,
+          categoryId: category.id,
+        },
+      });
+      if (!subCategory)
+        throw new NotFoundException(
+          `SubCategory "${createCourseDto.subCategoryName}" not found under category "${createCourseDto.categoryName}"`,
+        );
+
+      const tool = await this.DB.tool.findFirst({
+        where: {
+          name: createCourseDto.toolName,
+          subCategoryId: subCategory.id,
+        },
+      });
+      if (!tool)
+        throw new NotFoundException(
+          `Tool "${createCourseDto.toolName}" not found under subcategory "${createCourseDto.subCategoryName}"`,
+        );
+
+      const course = await this.DB.$transaction(async (prisma) => {
+        const newCourse = await prisma.course.create({
+          data: {
+            title: createCourseDto.title,
+            description: createCourseDto.description,
+            duration: createCourseDto.duration,
+            level: createCourseDto.level,
+            isPaid: createCourseDto.isPaid,
+            price: createCourseDto.price,
+            instructorId: createCourseDto.instructorId,
+            categoryId: category.id,
+            subCategoryId: subCategory.id,
+            toolId: tool.id,
+          },
+        });
+
+        await prisma.category.update({
+          where: { id: category.id },
+          data: { coursesCount: { increment: 1 } },
+        });
+        await prisma.subCategory.update({
+          where: { id: subCategory.id },
+          data: { coursesCount: { increment: 1 } },
+        });
+        await prisma.tool.update({
+          where: { id: tool.id },
+          data: { coursesCount: { increment: 1 } },
+        });
+
+        return newCourse;
+      });
+
       return {
-        success: true,
-        message: 'Course created successfully',
-        course,
+        title: course.title,
+        description: course.description,
+        duration: course.duration,
+        level: course.level,
+        isPaid: course.isPaid,
+        price: course.price,
+        categoryName: category.name,
+        subCategoryName: subCategory.name,
+        toolName: tool.name,
+        instructorId: course.instructorId,
       };
     } catch (error) {
       this.logger.error('Failed to create course', error);
@@ -96,50 +161,50 @@ export class CoursesService {
   }
 
   /** Update a course */
-  async updateCourse(id: number, updateCourseDto: UpdateCourseDto) {
-    try {
-      const { instructorId, ...courseData } = updateCourseDto;
-
-      const existingCourse = await this.DB.course.findUnique({ where: { id } });
-      if (!existingCourse) {
-        throw new NotFoundException(`Course with ID ${id} not found`);
-      }
-
-      let instructorConnect: { connect: { id: number } } | undefined =
-        undefined;
-      if (instructorId) {
-        const instructorExists = await this.DB.instructorProfile.findUnique({
-          where: { id: instructorId },
-        });
-
-        if (!instructorExists) {
-          throw new NotFoundException(
-            `Instructor with ID ${updateCourseDto.instructorId} not found`,
-          );
-        }
-
-        instructorConnect = { connect: { id: instructorId } };
-      }
-
-      const updatedCourse = await this.DB.course.update({
-        where: { id },
-        data: {
-          ...courseData,
-          ...(instructorConnect ? { instructor: instructorConnect } : {}),
-        },
-      });
-
-      return {
-        success: true,
-        message: 'Course updated successfully',
-        updateProfile: updatedCourse,
-      };
-    } catch (error) {
-      this.logger.error(`Failed to update course with ID: ${id}`, error);
-      if (error instanceof NotFoundException) throw error;
-      throw new InternalServerErrorException('Failed to update course');
-    }
-  }
+  // async updateCourse(id: number, updateCourseDto: UpdateCourseDto) {
+  //   try {
+  //     const { instructorId, ...courseData } = updateCourseDto;
+  //
+  //     const existingCourse = await this.DB.course.findUnique({ where: { id } });
+  //     if (!existingCourse) {
+  //       throw new NotFoundException(`Course with ID ${id} not found`);
+  //     }
+  //
+  //     let instructorConnect: { connect: { id: number } } | undefined =
+  //       undefined;
+  //     if (instructorId) {
+  //       const instructorExists = await this.DB.instructorProfile.findUnique({
+  //         where: { id: instructorId },
+  //       });
+  //
+  //       if (!instructorExists) {
+  //         throw new NotFoundException(
+  //           `Instructor with ID ${updateCourseDto.instructorId} not found`,
+  //         );
+  //       }
+  //
+  //       instructorConnect = { connect: { id: instructorId } };
+  //     }
+  //
+  //     const updatedCourse = await this.DB.course.update({
+  //       where: { id },
+  //       data: {
+  //         ...courseData,
+  //         ...(instructorConnect ? { instructor: instructorConnect } : {}),
+  //       },
+  //     });
+  //
+  //     return {
+  //       success: true,
+  //       message: 'Course updated successfully',
+  //       updateProfile: updatedCourse,
+  //     };
+  //   } catch (error) {
+  //     this.logger.error(`Failed to update course with ID: ${id}`, error);
+  //     if (error instanceof NotFoundException) throw error;
+  //     throw new InternalServerErrorException('Failed to update course');
+  //   }
+  // }
 
   /** Delete a course */
   async deleteCourse(id: number) {

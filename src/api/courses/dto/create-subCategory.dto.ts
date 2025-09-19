@@ -8,8 +8,4 @@ export class CreateSubCategoryDto {
   @IsString()
   @IsNotEmpty()
   name: string;
-
-  @IsInt()
-  @IsNotEmpty()
-  count: number;
 }

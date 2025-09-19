@@ -28,7 +28,7 @@ export class SubCategoryService {
       const subCategory = await this.DB.subCategory.create({
         data: {
           name: createSubCategoryDto.name,
-          count: createSubCategoryDto.count,
+          coursesCount: 0,
           categoryId: createSubCategoryDto.categoryId,
         },
       });

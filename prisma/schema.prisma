@@ -144,32 +144,36 @@ model Course {
 }
 
 model Category {
-  id            Int           @id @default(autoincrement())
-  name          String
-  icon          String?
+  id           Int     @id @default(autoincrement())
+  name         String  @unique
+  coursesCount Int     @default(0)
+  icon         String?
+
   courses       Course[]
   subCategories SubCategory[]
 }
 
 model SubCategory {
-  id         Int      @id @default(autoincrement())
-  name       String
-  count      Int
-  categoryId Int
-  courses    Course[]
+  id           Int    @id @default(autoincrement())
+  name         String @unique
+  coursesCount Int    @default(0)
+  categoryId   Int
 
-  category Category @relation(fields: [categoryId], references: [id])
-  tools    Tool[]
+  courses Course[]
+  tools   Tool[]
+
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 }
 
 model Tool {
   id            Int    @id @default(autoincrement())
-  name          String
-  count         Int
+  name          String @unique
+  coursesCount  Int    @default(0)
   subCategoryId Int
 
-  subCategory SubCategory @relation(fields: [subCategoryId], references: [id])
-  courses     Course[]
+  courses Course[]
+
+  subCategory SubCategory @relation(fields: [subCategoryId], references: [id], onDelete: Cascade)
 }
 
 model Lesson {

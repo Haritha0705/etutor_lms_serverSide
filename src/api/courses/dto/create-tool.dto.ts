@@ -8,8 +8,4 @@ export class CreateToolDto {
   @IsString()
   @IsNotEmpty()
   name: string;
-
-  @IsInt()
-  @IsNotEmpty()
-  count: number;
 }

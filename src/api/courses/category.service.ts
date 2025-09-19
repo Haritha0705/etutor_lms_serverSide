@@ -13,12 +13,10 @@ export class CategoryService {
       const category = await this.DB.category.create({
         data: {
           name: createCategoryDto.name,
-          count: createCategoryDto.count,
-          icon: createCategoryDto.icon || null,
+          icon: createCategoryDto.icon ?? null,
         },
       });
 
-      this.logger.log(`Category created with ID ${category.id}`);
       return category;
     } catch (error) {
       this.logger.error(

@@ -35,6 +35,12 @@ import { SubCategory } from '../../enum/subCategory.enum';
 import { Category } from '../../enum/category.enum';
 import { FilterService } from './filter.service';
 import { Duration } from '../../enum/duration.enum';
+import { CategoryService } from './category.service';
+import { SubCategoryService } from './subCategory.service';
+import { ToolService } from './tool.service';
+import { CreateCategoryDto } from './dto/create-category.dto';
+import { CreateSubCategoryDto } from './dto/create-subCategory.dto';
+import { CreateToolDto } from './dto/create-tool.dto';
 
 @Controller('courses')
 export class CoursesController {
@@ -46,6 +52,9 @@ export class CoursesController {
     private readonly quizzesService: QuizzesService,
     private readonly assignmentsService: AssignmentsService,
     private readonly certificatesService: CertificatesService,
+    private readonly categoryService: CategoryService,
+    private readonly subCategoryService: SubCategoryService,
+    private readonly toolService: ToolService,
     private readonly filterService: FilterService,
   ) {}
 
@@ -69,14 +78,14 @@ export class CoursesController {
     return this.coursesService.findOneCourse(+id);
   }
 
-  @Roles(Role.INSTRUCTOR)
-  @Patch(':id')
-  updateCourse(
-    @Param('id') id: string,
-    @Body() updateCourseDto: UpdateCourseDto,
-  ) {
-    return this.coursesService.updateCourse(+id, updateCourseDto);
-  }
+  // @Roles(Role.INSTRUCTOR)
+  // @Patch(':id')
+  // updateCourse(
+  //   @Param('id') id: string,
+  //   @Body() updateCourseDto: UpdateCourseDto,
+  // ) {
+  //   return this.coursesService.updateCourse(+id, updateCourseDto);
+  // }
 
   @Roles(Role.INSTRUCTOR)
   @Delete(':id')
@@ -327,6 +336,32 @@ export class CoursesController {
       +limit,
     );
   }
+
+  // --- Category endpoints ---
+
+  @Roles(Role.INSTRUCTOR)
+  @Post('category')
+  createCategory(@Body() dto: CreateCategoryDto) {
+    return this.categoryService.createCategory(dto);
+  }
+
+  // --- SubCategory endpoints ---
+
+  @Roles(Role.INSTRUCTOR)
+  @Post('sub-category')
+  createSubCategory(@Body() dto: CreateSubCategoryDto) {
+    return this.subCategoryService.createSubCategory(dto);
+  }
+
+  // --- Tool endpoints ---
+
+  @Roles(Role.INSTRUCTOR)
+  @Post('tool')
+  createTool(@Body() dto: CreateToolDto) {
+    return this.toolService.createTool(dto);
+  }
+
+  // --- Filter endpoints ---
 
   @Roles(Role.INSTRUCTOR)
   @Post('filter')
