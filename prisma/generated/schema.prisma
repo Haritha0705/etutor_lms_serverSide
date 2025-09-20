@@ -111,17 +111,18 @@ model InstructorProfile {
 }
 
 model Course {
-  id            Int     @id @default(autoincrement())
-  instructorId  Int
-  categoryId    Int
-  subCategoryId Int
-  toolId        Int
-  title         String  @db.VarChar(255)
-  description   String  @db.Text
-  duration      String  @db.VarChar(100)
-  level         Level
-  isPaid        Boolean @default(false)
-  price         Int?
+  id              Int     @id @default(autoincrement())
+  instructorId    Int
+  categoryId      Int
+  subCategoryId   Int
+  toolId          Int
+  title           String  @db.VarChar(255)
+  description     String  @db.Text
+  duration        String  @db.VarChar(100)
+  level           Level
+  enrollmentCount Int     @default(0)
+  isPaid          Boolean @default(false)
+  price           Int?
 
   lessons      Lesson[]
   enrollments  CourseEnrollment[]

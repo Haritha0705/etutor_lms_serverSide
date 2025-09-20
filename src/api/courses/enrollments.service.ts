@@ -33,17 +33,26 @@ export class EnrollmentsService {
       });
       if (!course) throw new NotFoundException('Course not found');
 
-      let enrollment = await this.DB.courseEnrollment.findUnique({
-        where: {
-          studentId_courseId: { studentId, courseId },
-        },
+      // check if already enrolled
+      const existingEnrollment = await this.DB.courseEnrollment.findUnique({
+        where: { studentId_courseId: { studentId, courseId } },
       });
 
-      if (!enrollment) {
-        enrollment = await this.DB.courseEnrollment.create({
-          data: { studentId, courseId },
-        });
+      if (existingEnrollment) {
+        throw new BadRequestException(
+          'Student already enrolled in this course',
+        );
       }
+
+      // increment course enrollment count
+      await this.DB.course.update({
+        where: { id: course.id },
+        data: { enrollmentCount: { increment: 1 } },
+      });
+
+      const enrollment = await this.DB.courseEnrollment.create({
+        data: { studentId, courseId },
+      });
 
       return {
         success: true,
@@ -141,6 +150,12 @@ export class EnrollmentsService {
 
       const deletedEnrollment = await this.DB.courseEnrollment.delete({
         where: { studentId_courseId: { studentId, courseId } },
+      });
+
+      // decrement course enrollment count
+      await this.DB.course.update({
+        where: { id: course.id },
+        data: { enrollmentCount: { decrement: 1 } },
       });
 
       return {

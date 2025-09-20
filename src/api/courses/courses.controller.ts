@@ -149,7 +149,7 @@ export class CoursesController {
   }
 
   @Roles(Role.STUDENT)
-  @Delete('unenroll')
+  @Post('unenroll')
   unenroll(@Body() dto: CourseEnrollmentDto) {
     return this.enrollmentsService.unenroll(dto);
   }

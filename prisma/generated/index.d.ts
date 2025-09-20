@@ -9783,6 +9783,7 @@ export namespace Prisma {
     categoryId: number | null
     subCategoryId: number | null
     toolId: number | null
+    enrollmentCount: number | null
     price: number | null
   }
 
@@ -9792,6 +9793,7 @@ export namespace Prisma {
     categoryId: number | null
     subCategoryId: number | null
     toolId: number | null
+    enrollmentCount: number | null
     price: number | null
   }
 
@@ -9805,6 +9807,7 @@ export namespace Prisma {
     description: string | null
     duration: string | null
     level: $Enums.Level | null
+    enrollmentCount: number | null
     isPaid: boolean | null
     price: number | null
     createdAt: Date | null
@@ -9821,6 +9824,7 @@ export namespace Prisma {
     description: string | null
     duration: string | null
     level: $Enums.Level | null
+    enrollmentCount: number | null
     isPaid: boolean | null
     price: number | null
     createdAt: Date | null
@@ -9837,6 +9841,7 @@ export namespace Prisma {
     description: number
     duration: number
     level: number
+    enrollmentCount: number
     isPaid: number
     price: number
     createdAt: number
@@ -9851,6 +9856,7 @@ export namespace Prisma {
     categoryId?: true
     subCategoryId?: true
     toolId?: true
+    enrollmentCount?: true
     price?: true
   }
 
@@ -9860,6 +9866,7 @@ export namespace Prisma {
     categoryId?: true
     subCategoryId?: true
     toolId?: true
+    enrollmentCount?: true
     price?: true
   }
 
@@ -9873,6 +9880,7 @@ export namespace Prisma {
     description?: true
     duration?: true
     level?: true
+    enrollmentCount?: true
     isPaid?: true
     price?: true
     createdAt?: true
@@ -9889,6 +9897,7 @@ export namespace Prisma {
     description?: true
     duration?: true
     level?: true
+    enrollmentCount?: true
     isPaid?: true
     price?: true
     createdAt?: true
@@ -9905,6 +9914,7 @@ export namespace Prisma {
     description?: true
     duration?: true
     level?: true
+    enrollmentCount?: true
     isPaid?: true
     price?: true
     createdAt?: true
@@ -10008,6 +10018,7 @@ export namespace Prisma {
     description: string
     duration: string
     level: $Enums.Level
+    enrollmentCount: number
     isPaid: boolean
     price: number | null
     createdAt: Date
@@ -10043,6 +10054,7 @@ export namespace Prisma {
     description?: boolean
     duration?: boolean
     level?: boolean
+    enrollmentCount?: boolean
     isPaid?: boolean
     price?: boolean
     createdAt?: boolean
@@ -10069,6 +10081,7 @@ export namespace Prisma {
     description?: boolean
     duration?: boolean
     level?: boolean
+    enrollmentCount?: boolean
     isPaid?: boolean
     price?: boolean
     createdAt?: boolean
@@ -10089,6 +10102,7 @@ export namespace Prisma {
     description?: boolean
     duration?: boolean
     level?: boolean
+    enrollmentCount?: boolean
     isPaid?: boolean
     price?: boolean
     createdAt?: boolean
@@ -10109,13 +10123,14 @@ export namespace Prisma {
     description?: boolean
     duration?: boolean
     level?: boolean
+    enrollmentCount?: boolean
     isPaid?: boolean
     price?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type CourseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "instructorId" | "categoryId" | "subCategoryId" | "toolId" | "title" | "description" | "duration" | "level" | "isPaid" | "price" | "createdAt" | "updatedAt", ExtArgs["result"]["course"]>
+  export type CourseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "instructorId" | "categoryId" | "subCategoryId" | "toolId" | "title" | "description" | "duration" | "level" | "enrollmentCount" | "isPaid" | "price" | "createdAt" | "updatedAt", ExtArgs["result"]["course"]>
   export type CourseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     lessons?: boolean | Course$lessonsArgs<ExtArgs>
     enrollments?: boolean | Course$enrollmentsArgs<ExtArgs>
@@ -10164,6 +10179,7 @@ export namespace Prisma {
       description: string
       duration: string
       level: $Enums.Level
+      enrollmentCount: number
       isPaid: boolean
       price: number | null
       createdAt: Date
@@ -10609,6 +10625,7 @@ export namespace Prisma {
     readonly description: FieldRef<"Course", 'String'>
     readonly duration: FieldRef<"Course", 'String'>
     readonly level: FieldRef<"Course", 'Level'>
+    readonly enrollmentCount: FieldRef<"Course", 'Int'>
     readonly isPaid: FieldRef<"Course", 'Boolean'>
     readonly price: FieldRef<"Course", 'Int'>
     readonly createdAt: FieldRef<"Course", 'DateTime'>
@@ -23694,6 +23711,7 @@ export namespace Prisma {
     description: 'description',
     duration: 'duration',
     level: 'level',
+    enrollmentCount: 'enrollmentCount',
     isPaid: 'isPaid',
     price: 'price',
     createdAt: 'createdAt',
@@ -24419,6 +24437,7 @@ export namespace Prisma {
     description?: StringFilter<"Course"> | string
     duration?: StringFilter<"Course"> | string
     level?: EnumLevelFilter<"Course"> | $Enums.Level
+    enrollmentCount?: IntFilter<"Course"> | number
     isPaid?: BoolFilter<"Course"> | boolean
     price?: IntNullableFilter<"Course"> | number | null
     createdAt?: DateTimeFilter<"Course"> | Date | string
@@ -24444,6 +24463,7 @@ export namespace Prisma {
     description?: SortOrder
     duration?: SortOrder
     level?: SortOrder
+    enrollmentCount?: SortOrder
     isPaid?: SortOrder
     price?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -24472,6 +24492,7 @@ export namespace Prisma {
     description?: StringFilter<"Course"> | string
     duration?: StringFilter<"Course"> | string
     level?: EnumLevelFilter<"Course"> | $Enums.Level
+    enrollmentCount?: IntFilter<"Course"> | number
     isPaid?: BoolFilter<"Course"> | boolean
     price?: IntNullableFilter<"Course"> | number | null
     createdAt?: DateTimeFilter<"Course"> | Date | string
@@ -24497,6 +24518,7 @@ export namespace Prisma {
     description?: SortOrder
     duration?: SortOrder
     level?: SortOrder
+    enrollmentCount?: SortOrder
     isPaid?: SortOrder
     price?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -24521,6 +24543,7 @@ export namespace Prisma {
     description?: StringWithAggregatesFilter<"Course"> | string
     duration?: StringWithAggregatesFilter<"Course"> | string
     level?: EnumLevelWithAggregatesFilter<"Course"> | $Enums.Level
+    enrollmentCount?: IntWithAggregatesFilter<"Course"> | number
     isPaid?: BoolWithAggregatesFilter<"Course"> | boolean
     price?: IntNullableWithAggregatesFilter<"Course"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"Course"> | Date | string
@@ -25716,6 +25739,7 @@ export namespace Prisma {
     description: string
     duration: string
     level: $Enums.Level
+    enrollmentCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -25741,6 +25765,7 @@ export namespace Prisma {
     description: string
     duration: string
     level: $Enums.Level
+    enrollmentCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -25757,6 +25782,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    enrollmentCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25782,6 +25808,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    enrollmentCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25803,6 +25830,7 @@ export namespace Prisma {
     description: string
     duration: string
     level: $Enums.Level
+    enrollmentCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -25814,6 +25842,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    enrollmentCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25830,6 +25859,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    enrollmentCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27067,6 +27097,7 @@ export namespace Prisma {
     description?: SortOrder
     duration?: SortOrder
     level?: SortOrder
+    enrollmentCount?: SortOrder
     isPaid?: SortOrder
     price?: SortOrder
     createdAt?: SortOrder
@@ -27079,6 +27110,7 @@ export namespace Prisma {
     categoryId?: SortOrder
     subCategoryId?: SortOrder
     toolId?: SortOrder
+    enrollmentCount?: SortOrder
     price?: SortOrder
   }
 
@@ -27092,6 +27124,7 @@ export namespace Prisma {
     description?: SortOrder
     duration?: SortOrder
     level?: SortOrder
+    enrollmentCount?: SortOrder
     isPaid?: SortOrder
     price?: SortOrder
     createdAt?: SortOrder
@@ -27108,6 +27141,7 @@ export namespace Prisma {
     description?: SortOrder
     duration?: SortOrder
     level?: SortOrder
+    enrollmentCount?: SortOrder
     isPaid?: SortOrder
     price?: SortOrder
     createdAt?: SortOrder
@@ -27120,6 +27154,7 @@ export namespace Prisma {
     categoryId?: SortOrder
     subCategoryId?: SortOrder
     toolId?: SortOrder
+    enrollmentCount?: SortOrder
     price?: SortOrder
   }
 
@@ -29886,6 +29921,7 @@ export namespace Prisma {
     description: string
     duration: string
     level: $Enums.Level
+    enrollmentCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -29909,6 +29945,7 @@ export namespace Prisma {
     description: string
     duration: string
     level: $Enums.Level
+    enrollmentCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -30034,6 +30071,7 @@ export namespace Prisma {
     description?: StringFilter<"Course"> | string
     duration?: StringFilter<"Course"> | string
     level?: EnumLevelFilter<"Course"> | $Enums.Level
+    enrollmentCount?: IntFilter<"Course"> | number
     isPaid?: BoolFilter<"Course"> | boolean
     price?: IntNullableFilter<"Course"> | number | null
     createdAt?: DateTimeFilter<"Course"> | Date | string
@@ -30541,6 +30579,7 @@ export namespace Prisma {
     description: string
     duration: string
     level: $Enums.Level
+    enrollmentCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -30564,6 +30603,7 @@ export namespace Prisma {
     description: string
     duration: string
     level: $Enums.Level
+    enrollmentCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -30657,6 +30697,7 @@ export namespace Prisma {
     description: string
     duration: string
     level: $Enums.Level
+    enrollmentCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -30680,6 +30721,7 @@ export namespace Prisma {
     description: string
     duration: string
     level: $Enums.Level
+    enrollmentCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -30817,6 +30859,7 @@ export namespace Prisma {
     description: string
     duration: string
     level: $Enums.Level
+    enrollmentCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -30840,6 +30883,7 @@ export namespace Prisma {
     description: string
     duration: string
     level: $Enums.Level
+    enrollmentCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -30928,6 +30972,7 @@ export namespace Prisma {
     description: string
     duration: string
     level: $Enums.Level
+    enrollmentCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -30952,6 +30997,7 @@ export namespace Prisma {
     description: string
     duration: string
     level: $Enums.Level
+    enrollmentCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -30983,6 +31029,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    enrollmentCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31007,6 +31054,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    enrollmentCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31054,6 +31102,7 @@ export namespace Prisma {
     description: string
     duration: string
     level: $Enums.Level
+    enrollmentCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -31078,6 +31127,7 @@ export namespace Prisma {
     description: string
     duration: string
     level: $Enums.Level
+    enrollmentCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -31147,6 +31197,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    enrollmentCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31171,6 +31222,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    enrollmentCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31218,6 +31270,7 @@ export namespace Prisma {
     description: string
     duration: string
     level: $Enums.Level
+    enrollmentCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -31242,6 +31295,7 @@ export namespace Prisma {
     description: string
     duration: string
     level: $Enums.Level
+    enrollmentCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -31311,6 +31365,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    enrollmentCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31335,6 +31390,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    enrollmentCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31601,6 +31657,7 @@ export namespace Prisma {
     description: string
     duration: string
     level: $Enums.Level
+    enrollmentCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -31625,6 +31682,7 @@ export namespace Prisma {
     description: string
     duration: string
     level: $Enums.Level
+    enrollmentCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -31717,6 +31775,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    enrollmentCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31741,6 +31800,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    enrollmentCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32007,6 +32067,7 @@ export namespace Prisma {
     description: string
     duration: string
     level: $Enums.Level
+    enrollmentCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -32031,6 +32092,7 @@ export namespace Prisma {
     description: string
     duration: string
     level: $Enums.Level
+    enrollmentCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -32100,6 +32162,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    enrollmentCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32124,6 +32187,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    enrollmentCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32360,6 +32424,7 @@ export namespace Prisma {
     description: string
     duration: string
     level: $Enums.Level
+    enrollmentCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -32380,6 +32445,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    enrollmentCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32403,6 +32469,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    enrollmentCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32423,6 +32490,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    enrollmentCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32631,6 +32699,7 @@ export namespace Prisma {
     description: string
     duration: string
     level: $Enums.Level
+    enrollmentCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -32648,6 +32717,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    enrollmentCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32671,6 +32741,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    enrollmentCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32691,6 +32762,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    enrollmentCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32727,6 +32799,7 @@ export namespace Prisma {
     description: string
     duration: string
     level: $Enums.Level
+    enrollmentCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -32744,6 +32817,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    enrollmentCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32767,6 +32841,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    enrollmentCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32787,6 +32862,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    enrollmentCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32821,6 +32897,7 @@ export namespace Prisma {
     description: string
     duration: string
     level: $Enums.Level
+    enrollmentCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -32832,6 +32909,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    enrollmentCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32855,6 +32933,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    enrollmentCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32875,6 +32954,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    enrollmentCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

@@ -120,7 +120,11 @@ export class CoursesService {
       const courses = await this.DB.course.findMany({
         skip,
         take: limit,
-        include: { instructor: true },
+        include: {
+          instructor: true,
+          category: true,
+          reviews: true,
+        },
         orderBy: { createdAt: 'asc' },
       });
 
