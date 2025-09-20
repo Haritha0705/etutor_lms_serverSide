@@ -14,17 +14,17 @@ export class CreateCourseDto {
   @IsNotEmpty()
   instructorId: number;
 
-  @IsString()
+  @IsInt()
   @IsNotEmpty()
-  categoryName: string;
+  categoryId: number;
 
-  @IsString()
+  @IsInt()
   @IsNotEmpty()
-  subCategoryName: string;
+  subCategoryId: number;
 
-  @IsString()
+  @IsInt()
   @IsNotEmpty()
-  toolName: string;
+  toolId: number;
 
   @IsString()
   @IsNotEmpty()
