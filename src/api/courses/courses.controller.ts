@@ -31,17 +31,14 @@ import { UpdateAssignmentDto } from './dto/update-assignment.dto';
 import { CreateQuizSubmissionDto } from './dto/create-quiz-submission.dto';
 import { CertificatesService } from './certificates.service';
 import { CreateCertificateDto } from './dto/create-certificate.dto';
-import { Level } from '../../enum/level.enum';
-import { SubCategory } from '../../enum/subCategory.enum';
-import { Category } from '../../enum/category.enum';
 import { FilterService } from './filter.service';
-import { Duration } from '../../enum/duration.enum';
 import { CategoryService } from './category.service';
 import { SubCategoryService } from './subCategory.service';
 import { ToolService } from './tool.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { CreateSubCategoryDto } from './dto/create-subCategory.dto';
 import { CreateToolDto } from './dto/create-tool.dto';
+import { Public } from '../../decorator/public/public.decorator';
 
 @Controller('courses')
 export class CoursesController {
@@ -67,13 +64,13 @@ export class CoursesController {
     return this.coursesService.createCourse(createCourseDto);
   }
 
-  @Roles(Role.STUDENT)
+  @Public()
   @Get()
   findAllCourses(@Query('page') page: string, @Query('limit') limit: string) {
     return this.coursesService.findAllCourses(+page, +limit);
   }
 
-  @Roles(Role.STUDENT)
+  @Public()
   @Get(':id')
   findOneCourse(@Param('id') id: string) {
     return this.coursesService.findOneCourse(+id);

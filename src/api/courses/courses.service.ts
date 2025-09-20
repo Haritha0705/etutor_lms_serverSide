@@ -115,15 +115,13 @@ export class CoursesService {
   /** Fetch all courses */
   async findAllCourses(page: number, limit: number) {
     try {
-      page = page || 1;
-      limit = limit || 10;
       const skip = (page - 1) * limit;
 
       const courses = await this.DB.course.findMany({
         skip,
         take: limit,
         include: { instructor: true },
-        orderBy: { createdAt: 'desc' },
+        orderBy: { createdAt: 'asc' },
       });
 
       const totalCount = await this.DB.course.count();
@@ -163,15 +161,13 @@ export class CoursesService {
       }
 
       this.logger.log(`Fetched course with ID: ${id}`);
-      return { success: true, coursesProfile: course };
+      return { success: true, data: course };
     } catch (error) {
       this.logger.error(`Failed to fetch course with ID: ${id}`, error);
       if (error instanceof NotFoundException) throw error;
       throw new InternalServerErrorException('Failed to fetch course');
     }
   }
-
-
 
   /** Update a course */
   async updateCourse(id: number, updateCourseDto: UpdateCourseDto) {
@@ -268,9 +264,6 @@ export class CoursesService {
       throw new InternalServerErrorException('Failed to update course');
     }
   }
-
-
-
 
   /** Delete a course */
   async deleteCourse(id: number) {
