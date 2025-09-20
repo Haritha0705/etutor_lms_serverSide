@@ -149,7 +149,12 @@ export class CoursesService {
     try {
       const course = await this.DB.course.findUnique({
         where: { id },
-        include: { instructor: true },
+        include: {
+          instructor: true,
+          category: true,
+          subCategory: true,
+          tool: true,
+        },
       });
 
       if (!course) {
@@ -206,7 +211,6 @@ export class CoursesService {
         subCategory = await this.DB.subCategory.findFirst({
           where: {
             id: updateCourseDto.subCategoryId,
-            categoryId: category.id || existingCourse.categoryId,
           },
         });
         if (!subCategory)
@@ -220,7 +224,6 @@ export class CoursesService {
         tool = await this.DB.tool.findFirst({
           where: {
             id: updateCourseDto.toolId,
-            subCategoryId: subCategory.id || existingCourse.subCategoryId,
           },
         });
         if (!tool)

@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
 import { CoursesService } from './courses.service';
@@ -79,7 +80,7 @@ export class CoursesController {
   }
 
   @Roles(Role.INSTRUCTOR)
-  @Patch(':id')
+  @Put(':id')
   updateCourse(
     @Param('id') id: string,
     @Body() updateCourseDto: UpdateCourseDto,
