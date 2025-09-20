@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { CreateCourseDto } from './dto/create-course.dto';
-// import { UpdateCourseDto } from './dto/update-course.dto';
+import { UpdateCourseDto } from './dto/update-course.dto';
 import { PrismaService } from '../../config/prisma/prisma.service';
 
 @Injectable()
@@ -160,7 +160,7 @@ export class CoursesService {
     }
   }
 
-  /** Update a course */
+  // /** Update a course */
   // async updateCourse(id: number, updateCourseDto: UpdateCourseDto) {
   //   try {
   //     const { instructorId, ...courseData } = updateCourseDto;
@@ -205,6 +205,93 @@ export class CoursesService {
   //     throw new InternalServerErrorException('Failed to update course');
   //   }
   // }
+
+  /** Update a course */
+  async updateCourse(id: number, updateCourseDto: UpdateCourseDto) {
+    try {
+      const existingCourse = await this.DB.course.findUnique({ where: { id } });
+      if (!existingCourse) {
+        throw new NotFoundException(`Course with ID ${id} not found`);
+      }
+
+      // Validate instructor if provided
+      if (updateCourseDto.instructorId) {
+        const instructorExists = await this.DB.instructorProfile.findUnique({
+          where: { id: updateCourseDto.instructorId },
+        });
+        if (!instructorExists) {
+          throw new NotFoundException(
+            `Instructor with ID ${updateCourseDto.instructorId} not found`,
+          );
+        }
+      }
+
+      // Validate category, subCategory, tool
+      const category = await this.DB.category.findUnique({
+        where: { name: updateCourseDto.categoryName },
+      });
+      if (!category)
+        throw new NotFoundException(
+          `Category "${updateCourseDto.categoryName}" not found`,
+        );
+
+      const subCategory = await this.DB.subCategory.findFirst({
+        where: {
+          name: updateCourseDto.subCategoryName,
+          categoryId: category.id,
+        },
+      });
+      if (!subCategory)
+        throw new NotFoundException(
+          `SubCategory "${updateCourseDto.subCategoryName}" not found under category "${updateCourseDto.categoryName}"`,
+        );
+
+      const tool = await this.DB.tool.findFirst({
+        where: {
+          name: updateCourseDto.toolName,
+          subCategoryId: subCategory.id,
+        },
+      });
+      if (!tool)
+        throw new NotFoundException(
+          `Tool "${updateCourseDto.toolName}" not found under subcategory "${updateCourseDto.subCategoryName}"`,
+        );
+
+      // Update course
+      const updatedCourse = await this.DB.course.update({
+        where: { id },
+        data: {
+          title: updateCourseDto.title,
+          description: updateCourseDto.description,
+          duration: updateCourseDto.duration,
+          level: updateCourseDto.level,
+          isPaid: updateCourseDto.isPaid,
+          price: updateCourseDto.price,
+          instructorId: updateCourseDto.instructorId,
+          categoryId: category.id,
+          subCategoryId: subCategory.id,
+          toolId: tool.id,
+        },
+      });
+
+      return {
+        title: updatedCourse.title,
+        description: updatedCourse.description,
+        duration: updatedCourse.duration,
+        level: updatedCourse.level,
+        isPaid: updatedCourse.isPaid,
+        price: updatedCourse.price,
+        categoryName: category.name,
+        subCategoryName: subCategory.name,
+        toolName: tool.name,
+        instructorId: updatedCourse.instructorId,
+      };
+    } catch (error) {
+      this.logger.error(`Failed to update course with ID: ${id}`, error);
+      if (error instanceof NotFoundException) throw error;
+      throw new InternalServerErrorException('Failed to update course');
+    }
+  }
 
   /** Delete a course */
   async deleteCourse(id: number) {

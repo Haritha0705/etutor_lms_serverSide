@@ -78,14 +78,14 @@ export class CoursesController {
     return this.coursesService.findOneCourse(+id);
   }
 
-  // @Roles(Role.INSTRUCTOR)
-  // @Patch(':id')
-  // updateCourse(
-  //   @Param('id') id: string,
-  //   @Body() updateCourseDto: UpdateCourseDto,
-  // ) {
-  //   return this.coursesService.updateCourse(+id, updateCourseDto);
-  // }
+  @Roles(Role.INSTRUCTOR)
+  @Patch(':id')
+  updateCourse(
+    @Param('id') id: string,
+    @Body() updateCourseDto: UpdateCourseDto,
+  ) {
+    return this.coursesService.updateCourse(+id, updateCourseDto);
+  }
 
   @Roles(Role.INSTRUCTOR)
   @Delete(':id')
@@ -366,17 +366,20 @@ export class CoursesController {
   @Roles(Role.INSTRUCTOR)
   @Post('filter')
   filterCourses(
-    @Query('categoryName') categoryName?: Category,
-    @Query('subCategoryName') subCategoryName?: SubCategory,
-    @Query('level') level?: Level,
-    @Query('duration') duration?: Duration,
+    @Query('categoryName') categoryName?: string,
+    @Query('subCategoryName') subCategoryName?: string,
+    @Query('toolName') toolName?: string,
+    @Query('level') level?: string,
+    @Query('duration') duration?: string,
     @Query('isPaid') isPaid?: string,
   ) {
-    const isPaidBool = isPaid === undefined ? undefined : isPaid === 'true';
+    const isPaidBool =
+      isPaid === undefined ? undefined : isPaid.toLowerCase() === 'true';
 
     return this.filterService.filterCourses({
       categoryName,
       subCategoryName,
+      toolName,
       level,
       duration,
       isPaid: isPaidBool,
