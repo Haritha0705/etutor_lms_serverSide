@@ -9784,6 +9784,8 @@ export namespace Prisma {
     subCategoryId: number | null
     toolId: number | null
     enrollmentCount: number | null
+    averageRating: number | null
+    ratingCount: number | null
     price: number | null
   }
 
@@ -9794,6 +9796,8 @@ export namespace Prisma {
     subCategoryId: number | null
     toolId: number | null
     enrollmentCount: number | null
+    averageRating: number | null
+    ratingCount: number | null
     price: number | null
   }
 
@@ -9808,6 +9812,8 @@ export namespace Prisma {
     duration: string | null
     level: $Enums.Level | null
     enrollmentCount: number | null
+    averageRating: number | null
+    ratingCount: number | null
     isPaid: boolean | null
     price: number | null
     createdAt: Date | null
@@ -9825,6 +9831,8 @@ export namespace Prisma {
     duration: string | null
     level: $Enums.Level | null
     enrollmentCount: number | null
+    averageRating: number | null
+    ratingCount: number | null
     isPaid: boolean | null
     price: number | null
     createdAt: Date | null
@@ -9842,6 +9850,8 @@ export namespace Prisma {
     duration: number
     level: number
     enrollmentCount: number
+    averageRating: number
+    ratingCount: number
     isPaid: number
     price: number
     createdAt: number
@@ -9857,6 +9867,8 @@ export namespace Prisma {
     subCategoryId?: true
     toolId?: true
     enrollmentCount?: true
+    averageRating?: true
+    ratingCount?: true
     price?: true
   }
 
@@ -9867,6 +9879,8 @@ export namespace Prisma {
     subCategoryId?: true
     toolId?: true
     enrollmentCount?: true
+    averageRating?: true
+    ratingCount?: true
     price?: true
   }
 
@@ -9881,6 +9895,8 @@ export namespace Prisma {
     duration?: true
     level?: true
     enrollmentCount?: true
+    averageRating?: true
+    ratingCount?: true
     isPaid?: true
     price?: true
     createdAt?: true
@@ -9898,6 +9914,8 @@ export namespace Prisma {
     duration?: true
     level?: true
     enrollmentCount?: true
+    averageRating?: true
+    ratingCount?: true
     isPaid?: true
     price?: true
     createdAt?: true
@@ -9915,6 +9933,8 @@ export namespace Prisma {
     duration?: true
     level?: true
     enrollmentCount?: true
+    averageRating?: true
+    ratingCount?: true
     isPaid?: true
     price?: true
     createdAt?: true
@@ -10019,6 +10039,8 @@ export namespace Prisma {
     duration: string
     level: $Enums.Level
     enrollmentCount: number
+    averageRating: number
+    ratingCount: number
     isPaid: boolean
     price: number | null
     createdAt: Date
@@ -10055,6 +10077,8 @@ export namespace Prisma {
     duration?: boolean
     level?: boolean
     enrollmentCount?: boolean
+    averageRating?: boolean
+    ratingCount?: boolean
     isPaid?: boolean
     price?: boolean
     createdAt?: boolean
@@ -10082,6 +10106,8 @@ export namespace Prisma {
     duration?: boolean
     level?: boolean
     enrollmentCount?: boolean
+    averageRating?: boolean
+    ratingCount?: boolean
     isPaid?: boolean
     price?: boolean
     createdAt?: boolean
@@ -10103,6 +10129,8 @@ export namespace Prisma {
     duration?: boolean
     level?: boolean
     enrollmentCount?: boolean
+    averageRating?: boolean
+    ratingCount?: boolean
     isPaid?: boolean
     price?: boolean
     createdAt?: boolean
@@ -10124,13 +10152,15 @@ export namespace Prisma {
     duration?: boolean
     level?: boolean
     enrollmentCount?: boolean
+    averageRating?: boolean
+    ratingCount?: boolean
     isPaid?: boolean
     price?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type CourseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "instructorId" | "categoryId" | "subCategoryId" | "toolId" | "title" | "description" | "duration" | "level" | "enrollmentCount" | "isPaid" | "price" | "createdAt" | "updatedAt", ExtArgs["result"]["course"]>
+  export type CourseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "instructorId" | "categoryId" | "subCategoryId" | "toolId" | "title" | "description" | "duration" | "level" | "enrollmentCount" | "averageRating" | "ratingCount" | "isPaid" | "price" | "createdAt" | "updatedAt", ExtArgs["result"]["course"]>
   export type CourseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     lessons?: boolean | Course$lessonsArgs<ExtArgs>
     enrollments?: boolean | Course$enrollmentsArgs<ExtArgs>
@@ -10180,6 +10210,8 @@ export namespace Prisma {
       duration: string
       level: $Enums.Level
       enrollmentCount: number
+      averageRating: number
+      ratingCount: number
       isPaid: boolean
       price: number | null
       createdAt: Date
@@ -10626,6 +10658,8 @@ export namespace Prisma {
     readonly duration: FieldRef<"Course", 'String'>
     readonly level: FieldRef<"Course", 'Level'>
     readonly enrollmentCount: FieldRef<"Course", 'Int'>
+    readonly averageRating: FieldRef<"Course", 'Float'>
+    readonly ratingCount: FieldRef<"Course", 'Int'>
     readonly isPaid: FieldRef<"Course", 'Boolean'>
     readonly price: FieldRef<"Course", 'Int'>
     readonly createdAt: FieldRef<"Course", 'DateTime'>
@@ -23712,6 +23746,8 @@ export namespace Prisma {
     duration: 'duration',
     level: 'level',
     enrollmentCount: 'enrollmentCount',
+    averageRating: 'averageRating',
+    ratingCount: 'ratingCount',
     isPaid: 'isPaid',
     price: 'price',
     createdAt: 'createdAt',
@@ -24438,6 +24474,8 @@ export namespace Prisma {
     duration?: StringFilter<"Course"> | string
     level?: EnumLevelFilter<"Course"> | $Enums.Level
     enrollmentCount?: IntFilter<"Course"> | number
+    averageRating?: FloatFilter<"Course"> | number
+    ratingCount?: IntFilter<"Course"> | number
     isPaid?: BoolFilter<"Course"> | boolean
     price?: IntNullableFilter<"Course"> | number | null
     createdAt?: DateTimeFilter<"Course"> | Date | string
@@ -24464,6 +24502,8 @@ export namespace Prisma {
     duration?: SortOrder
     level?: SortOrder
     enrollmentCount?: SortOrder
+    averageRating?: SortOrder
+    ratingCount?: SortOrder
     isPaid?: SortOrder
     price?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -24493,6 +24533,8 @@ export namespace Prisma {
     duration?: StringFilter<"Course"> | string
     level?: EnumLevelFilter<"Course"> | $Enums.Level
     enrollmentCount?: IntFilter<"Course"> | number
+    averageRating?: FloatFilter<"Course"> | number
+    ratingCount?: IntFilter<"Course"> | number
     isPaid?: BoolFilter<"Course"> | boolean
     price?: IntNullableFilter<"Course"> | number | null
     createdAt?: DateTimeFilter<"Course"> | Date | string
@@ -24519,6 +24561,8 @@ export namespace Prisma {
     duration?: SortOrder
     level?: SortOrder
     enrollmentCount?: SortOrder
+    averageRating?: SortOrder
+    ratingCount?: SortOrder
     isPaid?: SortOrder
     price?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -24544,6 +24588,8 @@ export namespace Prisma {
     duration?: StringWithAggregatesFilter<"Course"> | string
     level?: EnumLevelWithAggregatesFilter<"Course"> | $Enums.Level
     enrollmentCount?: IntWithAggregatesFilter<"Course"> | number
+    averageRating?: FloatWithAggregatesFilter<"Course"> | number
+    ratingCount?: IntWithAggregatesFilter<"Course"> | number
     isPaid?: BoolWithAggregatesFilter<"Course"> | boolean
     price?: IntNullableWithAggregatesFilter<"Course"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"Course"> | Date | string
@@ -25740,6 +25786,8 @@ export namespace Prisma {
     duration: string
     level: $Enums.Level
     enrollmentCount?: number
+    averageRating?: number
+    ratingCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -25766,6 +25814,8 @@ export namespace Prisma {
     duration: string
     level: $Enums.Level
     enrollmentCount?: number
+    averageRating?: number
+    ratingCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -25783,6 +25833,8 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     enrollmentCount?: IntFieldUpdateOperationsInput | number
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    ratingCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25809,6 +25861,8 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     enrollmentCount?: IntFieldUpdateOperationsInput | number
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    ratingCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25831,6 +25885,8 @@ export namespace Prisma {
     duration: string
     level: $Enums.Level
     enrollmentCount?: number
+    averageRating?: number
+    ratingCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -25843,6 +25899,8 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     enrollmentCount?: IntFieldUpdateOperationsInput | number
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    ratingCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25860,6 +25918,8 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     enrollmentCount?: IntFieldUpdateOperationsInput | number
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    ratingCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27046,6 +27106,17 @@ export namespace Prisma {
     not?: NestedEnumLevelFilter<$PrismaModel> | $Enums.Level
   }
 
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type IntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -27098,6 +27169,8 @@ export namespace Prisma {
     duration?: SortOrder
     level?: SortOrder
     enrollmentCount?: SortOrder
+    averageRating?: SortOrder
+    ratingCount?: SortOrder
     isPaid?: SortOrder
     price?: SortOrder
     createdAt?: SortOrder
@@ -27111,6 +27184,8 @@ export namespace Prisma {
     subCategoryId?: SortOrder
     toolId?: SortOrder
     enrollmentCount?: SortOrder
+    averageRating?: SortOrder
+    ratingCount?: SortOrder
     price?: SortOrder
   }
 
@@ -27125,6 +27200,8 @@ export namespace Prisma {
     duration?: SortOrder
     level?: SortOrder
     enrollmentCount?: SortOrder
+    averageRating?: SortOrder
+    ratingCount?: SortOrder
     isPaid?: SortOrder
     price?: SortOrder
     createdAt?: SortOrder
@@ -27142,6 +27219,8 @@ export namespace Prisma {
     duration?: SortOrder
     level?: SortOrder
     enrollmentCount?: SortOrder
+    averageRating?: SortOrder
+    ratingCount?: SortOrder
     isPaid?: SortOrder
     price?: SortOrder
     createdAt?: SortOrder
@@ -27155,6 +27234,8 @@ export namespace Prisma {
     subCategoryId?: SortOrder
     toolId?: SortOrder
     enrollmentCount?: SortOrder
+    averageRating?: SortOrder
+    ratingCount?: SortOrder
     price?: SortOrder
   }
 
@@ -27166,6 +27247,22 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumLevelFilter<$PrismaModel>
     _max?: NestedEnumLevelFilter<$PrismaModel>
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -28291,6 +28388,14 @@ export namespace Prisma {
     set?: $Enums.Level
   }
 
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type NullableIntFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
@@ -29206,6 +29311,22 @@ export namespace Prisma {
     _max?: NestedEnumLevelFilter<$PrismaModel>
   }
 
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -29922,6 +30043,8 @@ export namespace Prisma {
     duration: string
     level: $Enums.Level
     enrollmentCount?: number
+    averageRating?: number
+    ratingCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -29946,6 +30069,8 @@ export namespace Prisma {
     duration: string
     level: $Enums.Level
     enrollmentCount?: number
+    averageRating?: number
+    ratingCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -30072,6 +30197,8 @@ export namespace Prisma {
     duration?: StringFilter<"Course"> | string
     level?: EnumLevelFilter<"Course"> | $Enums.Level
     enrollmentCount?: IntFilter<"Course"> | number
+    averageRating?: FloatFilter<"Course"> | number
+    ratingCount?: IntFilter<"Course"> | number
     isPaid?: BoolFilter<"Course"> | boolean
     price?: IntNullableFilter<"Course"> | number | null
     createdAt?: DateTimeFilter<"Course"> | Date | string
@@ -30580,6 +30707,8 @@ export namespace Prisma {
     duration: string
     level: $Enums.Level
     enrollmentCount?: number
+    averageRating?: number
+    ratingCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -30604,6 +30733,8 @@ export namespace Prisma {
     duration: string
     level: $Enums.Level
     enrollmentCount?: number
+    averageRating?: number
+    ratingCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -30698,6 +30829,8 @@ export namespace Prisma {
     duration: string
     level: $Enums.Level
     enrollmentCount?: number
+    averageRating?: number
+    ratingCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -30722,6 +30855,8 @@ export namespace Prisma {
     duration: string
     level: $Enums.Level
     enrollmentCount?: number
+    averageRating?: number
+    ratingCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -30860,6 +30995,8 @@ export namespace Prisma {
     duration: string
     level: $Enums.Level
     enrollmentCount?: number
+    averageRating?: number
+    ratingCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -30884,6 +31021,8 @@ export namespace Prisma {
     duration: string
     level: $Enums.Level
     enrollmentCount?: number
+    averageRating?: number
+    ratingCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -30973,6 +31112,8 @@ export namespace Prisma {
     duration: string
     level: $Enums.Level
     enrollmentCount?: number
+    averageRating?: number
+    ratingCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -30998,6 +31139,8 @@ export namespace Prisma {
     duration: string
     level: $Enums.Level
     enrollmentCount?: number
+    averageRating?: number
+    ratingCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -31030,6 +31173,8 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     enrollmentCount?: IntFieldUpdateOperationsInput | number
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    ratingCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31055,6 +31200,8 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     enrollmentCount?: IntFieldUpdateOperationsInput | number
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    ratingCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31103,6 +31250,8 @@ export namespace Prisma {
     duration: string
     level: $Enums.Level
     enrollmentCount?: number
+    averageRating?: number
+    ratingCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -31128,6 +31277,8 @@ export namespace Prisma {
     duration: string
     level: $Enums.Level
     enrollmentCount?: number
+    averageRating?: number
+    ratingCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -31198,6 +31349,8 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     enrollmentCount?: IntFieldUpdateOperationsInput | number
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    ratingCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31223,6 +31376,8 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     enrollmentCount?: IntFieldUpdateOperationsInput | number
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    ratingCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31271,6 +31426,8 @@ export namespace Prisma {
     duration: string
     level: $Enums.Level
     enrollmentCount?: number
+    averageRating?: number
+    ratingCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -31296,6 +31453,8 @@ export namespace Prisma {
     duration: string
     level: $Enums.Level
     enrollmentCount?: number
+    averageRating?: number
+    ratingCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -31366,6 +31525,8 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     enrollmentCount?: IntFieldUpdateOperationsInput | number
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    ratingCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31391,6 +31552,8 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     enrollmentCount?: IntFieldUpdateOperationsInput | number
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    ratingCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31658,6 +31821,8 @@ export namespace Prisma {
     duration: string
     level: $Enums.Level
     enrollmentCount?: number
+    averageRating?: number
+    ratingCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -31683,6 +31848,8 @@ export namespace Prisma {
     duration: string
     level: $Enums.Level
     enrollmentCount?: number
+    averageRating?: number
+    ratingCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -31776,6 +31943,8 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     enrollmentCount?: IntFieldUpdateOperationsInput | number
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    ratingCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31801,6 +31970,8 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     enrollmentCount?: IntFieldUpdateOperationsInput | number
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    ratingCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32068,6 +32239,8 @@ export namespace Prisma {
     duration: string
     level: $Enums.Level
     enrollmentCount?: number
+    averageRating?: number
+    ratingCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -32093,6 +32266,8 @@ export namespace Prisma {
     duration: string
     level: $Enums.Level
     enrollmentCount?: number
+    averageRating?: number
+    ratingCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -32163,6 +32338,8 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     enrollmentCount?: IntFieldUpdateOperationsInput | number
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    ratingCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32188,6 +32365,8 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     enrollmentCount?: IntFieldUpdateOperationsInput | number
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    ratingCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32425,6 +32604,8 @@ export namespace Prisma {
     duration: string
     level: $Enums.Level
     enrollmentCount?: number
+    averageRating?: number
+    ratingCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -32446,6 +32627,8 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     enrollmentCount?: IntFieldUpdateOperationsInput | number
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    ratingCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32470,6 +32653,8 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     enrollmentCount?: IntFieldUpdateOperationsInput | number
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    ratingCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32491,6 +32676,8 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     enrollmentCount?: IntFieldUpdateOperationsInput | number
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    ratingCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32700,6 +32887,8 @@ export namespace Prisma {
     duration: string
     level: $Enums.Level
     enrollmentCount?: number
+    averageRating?: number
+    ratingCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -32718,6 +32907,8 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     enrollmentCount?: IntFieldUpdateOperationsInput | number
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    ratingCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32742,6 +32933,8 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     enrollmentCount?: IntFieldUpdateOperationsInput | number
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    ratingCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32763,6 +32956,8 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     enrollmentCount?: IntFieldUpdateOperationsInput | number
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    ratingCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32800,6 +32995,8 @@ export namespace Prisma {
     duration: string
     level: $Enums.Level
     enrollmentCount?: number
+    averageRating?: number
+    ratingCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -32818,6 +33015,8 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     enrollmentCount?: IntFieldUpdateOperationsInput | number
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    ratingCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32842,6 +33041,8 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     enrollmentCount?: IntFieldUpdateOperationsInput | number
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    ratingCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32863,6 +33064,8 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     enrollmentCount?: IntFieldUpdateOperationsInput | number
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    ratingCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32898,6 +33101,8 @@ export namespace Prisma {
     duration: string
     level: $Enums.Level
     enrollmentCount?: number
+    averageRating?: number
+    ratingCount?: number
     isPaid?: boolean
     price?: number | null
     createdAt?: Date | string
@@ -32910,6 +33115,8 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     enrollmentCount?: IntFieldUpdateOperationsInput | number
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    ratingCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32934,6 +33141,8 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     enrollmentCount?: IntFieldUpdateOperationsInput | number
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    ratingCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32955,6 +33164,8 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     enrollmentCount?: IntFieldUpdateOperationsInput | number
+    averageRating?: FloatFieldUpdateOperationsInput | number
+    ratingCount?: IntFieldUpdateOperationsInput | number
     isPaid?: BoolFieldUpdateOperationsInput | boolean
     price?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

@@ -97,7 +97,7 @@ export enum SubCategory {
   COMMERCIAL_PHOTOGRAPHY = 'Commercial Photography',
   WEDDING_PHOTOGRAPHY = 'Wedding Photography',
   WILDLIFE_PHOTOGRAPHY = 'Wildlife Photography',
-  PHOTOGRAPHY_VIDEO = 'Video & Design Tools?',
+  PHOTOGRAPHY_VIDEO = 'Video & Design Tools',
   OTHER_PHOTOGRAPHY_VIDEO = 'Other Photography & Video',
 
   // Health & Fitness
@@ -129,8 +129,17 @@ export enum SubCategory {
   MUSIC_SOFTWARE = 'Music Software',
   OTHER_MUSIC = 'Other Music',
 
-  // Academics
-  SOCIAL_SCIENCE = 'Social Science',
-  MATH_SCIENCE = 'Math & Science',
-  HUMANITIES = 'Humanities',
+  // Business
+  ACCOUNTING = 'Accounting',
+  FINANCE = 'Finance',
+  MANAGEMENT = 'Management',
+  ENTREPRENEURSHIP = 'Entrepreneurship',
+  BUSINESS_ANALYTICS = 'Business Analytics',
+  HUMAN_RESOURCES = 'Human Resources',
+  INTERNATIONAL_BUSINESS = 'International Business',
+  OPERATIONS = 'Operations Management',
+  PROJECT_MANAGEMENT = 'Project Management',
+  SALES = 'Sales',
+  STRATEGY = 'Business Strategy',
+  SUPPLY_CHAIN = 'Supply Chain Management',
 }

@@ -70,11 +70,11 @@ export class CoursesController {
     return this.coursesService.findAllCourses(+page, +limit);
   }
 
-  @Public()
-  @Get(':id')
-  findOneCourse(@Param('id') id: string) {
-    return this.coursesService.findOneCourse(+id);
-  }
+  // @Public()
+  // @Get(':id')
+  // findOneCourse(@Param('id') id: string) {
+  //   return this.coursesService.findOneCourse(+id);
+  // }
 
   @Roles(Role.INSTRUCTOR)
   @Put(':id')
@@ -156,7 +156,7 @@ export class CoursesController {
 
   // --- Review endpoints ---
 
-  @Roles(Role.INSTRUCTOR)
+  @Roles(Role.STUDENT)
   @Post('review')
   createReview(@Body() createReviewDto: CreateReviewDto) {
     return this.reviewService.createReview(createReviewDto);
@@ -337,15 +337,21 @@ export class CoursesController {
 
   // --- Category endpoints ---
 
-  @Roles(Role.INSTRUCTOR)
+  @Roles(Role.INSTRUCTOR, Role.STUDENT)
   @Post('category')
   createCategory(@Body() dto: CreateCategoryDto) {
     return this.categoryService.createCategory(dto);
   }
 
+  @Public()
+  @Get('category')
+  findAllCategories() {
+    return this.categoryService.findAllCategories();
+  }
+
   // --- SubCategory endpoints ---
 
-  @Roles(Role.INSTRUCTOR)
+  @Roles(Role.INSTRUCTOR, Role.STUDENT)
   @Post('sub-category')
   createSubCategory(@Body() dto: CreateSubCategoryDto) {
     return this.subCategoryService.createSubCategory(dto);
@@ -353,7 +359,7 @@ export class CoursesController {
 
   // --- Tool endpoints ---
 
-  @Roles(Role.INSTRUCTOR)
+  @Roles(Role.INSTRUCTOR, Role.STUDENT)
   @Post('tool')
   createTool(@Body() dto: CreateToolDto) {
     return this.toolService.createTool(dto);

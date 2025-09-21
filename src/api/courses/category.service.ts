@@ -26,4 +26,42 @@ export class CategoryService {
       throw new BadRequestException('Unable to create category');
     }
   }
+
+  /** Find all categories */
+  async findAllCategories() {
+    try {
+      const categories = await this.DB.category.findMany({
+        orderBy: {
+          name: 'asc',
+        },
+        select: {
+          name: true,
+          icon: true,
+          coursesCount: true,
+          subCategories: {
+            select: {
+              name: true,
+              coursesCount: true,
+            },
+          },
+          courses: {
+            select: {
+              title: true,
+              price: true,
+            },
+          },
+        },
+      });
+      return {
+        success: true,
+        data: categories,
+      };
+    } catch (error) {
+      this.logger.error(
+        `Failed to fetch categories: ${error.message}`,
+        error.stack,
+      );
+      throw new BadRequestException('Unable to fetch categories');
+    }
+  }
 }

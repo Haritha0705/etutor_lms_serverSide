@@ -56,6 +56,24 @@ export class ReviewService {
         },
       });
 
+      const ratings = await this.DB.review.aggregate({
+        where: { courseId },
+        _avg: { rating: true },
+        _count: true,
+      });
+
+      const averageRating = ratings._avg.rating
+        ? parseFloat(ratings._avg.rating.toFixed(2))
+        : 0;
+
+      await this.DB.course.update({
+        where: { id: courseId },
+        data: {
+          averageRating,
+          ratingCount: ratings._count,
+        },
+      });
+
       return { success: true, data: review };
     } catch (error) {
       this.logger.error(

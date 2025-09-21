@@ -121,6 +121,8 @@ model Course {
   duration        String  @db.VarChar(100)
   level           Level
   enrollmentCount Int     @default(0)
+  averageRating   Float   @default(0.0)
+  ratingCount     Int     @default(0)
   isPaid          Boolean @default(false)
   price           Int?
 

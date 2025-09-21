@@ -196,6 +196,8 @@ exports.Prisma.CourseScalarFieldEnum = {
   duration: 'duration',
   level: 'level',
   enrollmentCount: 'enrollmentCount',
+  averageRating: 'averageRating',
+  ratingCount: 'ratingCount',
   isPaid: 'isPaid',
   price: 'price',
   createdAt: 'createdAt',
