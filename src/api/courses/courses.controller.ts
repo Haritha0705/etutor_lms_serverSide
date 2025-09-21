@@ -365,6 +365,11 @@ export class CoursesController {
     return this.toolService.createTool(dto);
   }
 
+  @Public()
+  @Get('tool')
+  findAllTools() {
+    return this.toolService.findAllTools();
+  }
   // --- Filter endpoints ---
 
   @Roles(Role.INSTRUCTOR)

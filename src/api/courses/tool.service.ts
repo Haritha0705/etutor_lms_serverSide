@@ -40,4 +40,30 @@ export class ToolService {
       throw new BadRequestException('Unable to create tool');
     }
   }
+
+  /** Find all tools */
+  async findAllTools() {
+    try {
+      const tools = await this.DB.tool.findMany({
+        orderBy: {
+          name: 'asc',
+        },
+        select: {
+          name: true,
+          coursesCount: true,
+          courses: true,
+        },
+      });
+      return {
+        success: true,
+        data: tools,
+      };
+    } catch (error) {
+      this.logger.error(
+        `Failed to fetch categories: ${error.message}`,
+        error.stack,
+      );
+      throw new BadRequestException('Unable to fetch categories');
+    }
+  }
 }
