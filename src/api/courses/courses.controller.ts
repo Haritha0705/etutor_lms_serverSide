@@ -64,11 +64,11 @@ export class CoursesController {
     return this.coursesService.createCourse(createCourseDto);
   }
 
-  @Public()
-  @Get()
-  findAllCourses(@Query('page') page: string, @Query('limit') limit: string) {
-    return this.coursesService.findAllCourses(+page, +limit);
-  }
+  // @Public()
+  // @Get()
+  // findAllCourses(@Query('page') page: string, @Query('limit') limit: string) {
+  //   return this.coursesService.findAllCourses(+page, +limit);
+  // }
 
   // @Public()
   // @Get(':id')
@@ -370,6 +370,7 @@ export class CoursesController {
   findAllTools() {
     return this.toolService.findAllTools();
   }
+
   // --- Filter endpoints ---
 
   @Roles(Role.INSTRUCTOR)
@@ -394,4 +395,18 @@ export class CoursesController {
       isPaid: isPaidBool,
     });
   }
+
+  //||\\
+  @Public()
+  @Get()
+  findAll(
+    @Query('categories') categories: string,
+    @Query('page') page: string,
+    @Query('limit') limit: string,
+  ) {
+    const categoryList = categories ? categories.split(',') : [];
+    return this.coursesService.findAll(+page, +limit, categoryList);
+  }
+
+
 }

@@ -112,39 +112,39 @@ export class CoursesService {
     }
   }
 
-  /** Fetch all courses */
-  async findAllCourses(page: number, limit: number) {
-    try {
-      const skip = (page - 1) * limit;
-
-      const courses = await this.DB.course.findMany({
-        skip,
-        take: limit,
-        include: {
-          instructor: true,
-          category: true,
-          reviews: true,
-        },
-        orderBy: { createdAt: 'asc' },
-      });
-
-      const totalCount = await this.DB.course.count();
-      const totalPages = Math.ceil(totalCount / limit);
-
-      return {
-        success: true,
-        data: courses,
-        meta: {
-          page,
-          limit,
-          totalPages,
-        },
-      };
-    } catch (error) {
-      this.logger.error('Failed to fetch courses', error);
-      throw new InternalServerErrorException('Failed to fetch courses');
-    }
-  }
+  // /** Fetch all courses */
+  // async findAllCourses(page: number, limit: number) {
+  //   try {
+  //     const skip = (page - 1) * limit;
+  //
+  //     const courses = await this.DB.course.findMany({
+  //       skip,
+  //       take: limit,
+  //       include: {
+  //         instructor: true,
+  //         category: true,
+  //         reviews: true,
+  //       },
+  //       orderBy: { createdAt: 'asc' },
+  //     });
+  //
+  //     const totalCount = await this.DB.course.count();
+  //     const totalPages = Math.ceil(totalCount / limit);
+  //
+  //     return {
+  //       success: true,
+  //       data: courses,
+  //       meta: {
+  //         page,
+  //         limit,
+  //         totalPages,
+  //       },
+  //     };
+  //   } catch (error) {
+  //     this.logger.error('Failed to fetch courses', error);
+  //     throw new InternalServerErrorException('Failed to fetch courses');
+  //   }
+  // }
 
   /** Fetch a course by ID */
   async findOneCourse(id: number) {
@@ -289,6 +289,105 @@ export class CoursesService {
       this.logger.error(`Failed to delete course with ID: ${id}`, error);
       if (error instanceof NotFoundException) throw error;
       throw new InternalServerErrorException('Failed to delete course');
+    }
+  }
+
+  /** Filter all courses */
+  // async findAll(page: number, limit: number, categoryNames?: string[]) {
+  //   try {
+  //     const skip = (page - 1) * limit;
+  //
+  //     if (categoryNames && categoryNames.length > 0) {
+  //       const categories = await this.DB.category.findMany({
+  //         where: { name: { in: categoryNames } },
+  //         select: { id: true },
+  //       });
+  //
+  //       const categoryIds = categories.map((c) => c.id);
+  //
+  //       return await this.DB.course.findMany({
+  //         where: {
+  //           categoryId: { in: categoryIds },
+  //         },
+  //         include: {
+  //           category: true,
+  //           subCategory: true,
+  //           tool: true,
+  //         },
+  //       });
+  //     }
+  //
+  //     const courses = await this.DB.course.findMany({
+  //       skip,
+  //       take: limit,
+  //       include: {
+  //         category: true,
+  //         subCategory: true,
+  //         tool: true,
+  //       },
+  //       orderBy: { createdAt: 'asc' },
+  //     });
+  //
+  //     const totalCount = await this.DB.course.count();
+  //     const totalPages = Math.ceil(totalCount / limit);
+  //
+  //     return {
+  //       success: true,
+  //       data: courses,
+  //       meta: {
+  //         page,
+  //         limit,
+  //         totalPages,
+  //       },
+  //     };
+  //   } catch (e) {
+  //     this.logger.error('Failed to fetch courses', e);
+  //     throw new InternalServerErrorException('Failed to fetch courses');
+  //   }
+  // }
+
+  async findAll(
+    page: number = 1,
+    limit: number = 10,
+    categoryNames?: string[],
+  ) {
+    try {
+      const skip = (page - 1) * limit;
+      const where: any = {};
+
+      if (categoryNames && categoryNames.length > 0) {
+        const categories = await this.DB.category.findMany({
+          where: { name: { in: categoryNames } },
+          select: { id: true },
+        });
+        const categoryIds = categories.map((c) => c.id);
+        where.categoryId = { in: categoryIds };
+      }
+
+      const courses = await this.DB.course.findMany({
+        where,
+        skip,
+        take: limit,
+        include: {
+          category: true,
+          subCategory: true,
+          tool: true,
+          instructor: true,
+        },
+        orderBy: { createdAt: 'desc' },
+      });
+
+      const totalCount = await this.DB.course.count({ where });
+      const totalPages = Math.ceil(totalCount / limit);
+
+      return {
+        success: true,
+        data: courses,
+        meta: { page, limit, totalPages, totalCount },
+      };
+    } catch (e) {
+      this.logger.error('Failed to fetch courses', e);
+      throw new InternalServerErrorException('Failed to fetch courses');
     }
   }
 }
