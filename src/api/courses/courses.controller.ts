@@ -373,40 +373,16 @@ export class CoursesController {
 
   // --- Filter endpoints ---
 
-  @Roles(Role.INSTRUCTOR)
-  @Post('filter')
-  filterCourses(
-    @Query('categoryName') categoryName?: string,
-    @Query('subCategoryName') subCategoryName?: string,
-    @Query('toolName') toolName?: string,
-    @Query('level') level?: string,
-    @Query('duration') duration?: string,
-    @Query('isPaid') isPaid?: string,
-  ) {
-    const isPaidBool =
-      isPaid === undefined ? undefined : isPaid.toLowerCase() === 'true';
-
-    return this.filterService.filterCourses({
-      categoryName,
-      subCategoryName,
-      toolName,
-      level,
-      duration,
-      isPaid: isPaidBool,
-    });
-  }
-
-  //||\\
   @Public()
   @Get()
   findAll(
     @Query('categories') categories: string,
+    @Query('tools') tools: string,
     @Query('page') page: string,
     @Query('limit') limit: string,
   ) {
     const categoryList = categories ? categories.split(',') : [];
-    return this.coursesService.findAll(+page, +limit, categoryList);
+    const toolsList = tools ? tools.split(',') : [];
+    return this.coursesService.findAll(+page, +limit, categoryList, toolsList);
   }
-
-
 }

@@ -292,76 +292,52 @@ export class CoursesService {
     }
   }
 
-  /** Filter all courses */
-  // async findAll(page: number, limit: number, categoryNames?: string[]) {
-  //   try {
-  //     const skip = (page - 1) * limit;
-  //
-  //     if (categoryNames && categoryNames.length > 0) {
-  //       const categories = await this.DB.category.findMany({
-  //         where: { name: { in: categoryNames } },
-  //         select: { id: true },
-  //       });
-  //
-  //       const categoryIds = categories.map((c) => c.id);
-  //
-  //       return await this.DB.course.findMany({
-  //         where: {
-  //           categoryId: { in: categoryIds },
-  //         },
-  //         include: {
-  //           category: true,
-  //           subCategory: true,
-  //           tool: true,
-  //         },
-  //       });
-  //     }
-  //
-  //     const courses = await this.DB.course.findMany({
-  //       skip,
-  //       take: limit,
-  //       include: {
-  //         category: true,
-  //         subCategory: true,
-  //         tool: true,
-  //       },
-  //       orderBy: { createdAt: 'asc' },
-  //     });
-  //
-  //     const totalCount = await this.DB.course.count();
-  //     const totalPages = Math.ceil(totalCount / limit);
-  //
-  //     return {
-  //       success: true,
-  //       data: courses,
-  //       meta: {
-  //         page,
-  //         limit,
-  //         totalPages,
-  //       },
-  //     };
-  //   } catch (e) {
-  //     this.logger.error('Failed to fetch courses', e);
-  //     throw new InternalServerErrorException('Failed to fetch courses');
-  //   }
-  // }
-
   async findAll(
-    page: number = 1,
-    limit: number = 10,
-    categoryNames?: string[],
+    page: number,
+    limit: number,
+    categories?: string[],
+    tools?: string[],
   ) {
     try {
       const skip = (page - 1) * limit;
       const where: any = {};
 
-      if (categoryNames && categoryNames.length > 0) {
-        const categories = await this.DB.category.findMany({
-          where: { name: { in: categoryNames } },
+      if (categories && categories.length > 0) {
+        const subCategories = await this.DB.subCategory.findMany({
+          where: { name: { in: categories } },
           select: { id: true },
         });
-        const categoryIds = categories.map((c) => c.id);
-        where.categoryId = { in: categoryIds };
+
+        const subCategoryIds = subCategories.map((sc) => sc.id);
+
+        if (subCategoryIds.length > 0) {
+          where.subCategoryId = { in: subCategoryIds };
+        } else {
+          return {
+            success: true,
+            data: [],
+            meta: { page, limit, totalPages: 0, totalCount: 0 },
+          };
+        }
+      }
+
+      if (tools && tools.length > 0) {
+        const toolRecords = await this.DB.tool.findMany({
+          where: { name: { in: tools } },
+          select: { id: true },
+        });
+
+        const toolIds = toolRecords.map((t) => t.id);
+
+        if (toolIds.length > 0) {
+          where.toolId = { in: toolIds };
+        } else {
+          return {
+            success: true,
+            data: [],
+            meta: { page, limit, totalPages: 0, totalCount: 0 },
+          };
+        }
       }
 
       const courses = await this.DB.course.findMany({
